@@ -8,11 +8,17 @@ import SuperCheckbox from "./Component/SuperCheckbox";
 function App() {
     return (
         <div className="App">
-            <SuperButton/>
-            <SuperInputText/>
-            <SuperCheckbox />
+            <div>
+                <SuperButton/>
+            </div>
+            <div>
+                <SuperInputText/>
+            </div>
+            <div>
+                <SuperCheckbox/>
+            </div>
         </div>
     );
 }
 
-    export default App;
+export default App;
