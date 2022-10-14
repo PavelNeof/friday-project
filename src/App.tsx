@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SuperButton from "./Component/SuperButton";
-import SuperInputText from "./Component/SuperInputText";
-import SuperCheckbox from "./Component/SuperCheckbox";
+import SuperButton from "./Component/SuperButton/SuperButton";
+import SuperInputText from "./Component/SuperInput/SuperInputText";
+import SuperCheckbox from "./Component/SuperCheckbox/SuperCheckbox";
 import {HashRouter, Routes} from "react-router-dom";
 import Router from "./Route";
-import Header from "./store/Header";
+import Header from "./Component/Header/Header";
 
 export const PATH = {
     LOGIN: '/login',

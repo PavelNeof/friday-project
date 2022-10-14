@@ -1,7 +1,7 @@
 import React from 'react'
 import {NavLink, Route} from "react-router-dom";
-import s from './../Component/SuperButton.module.css'
-import {PATH} from "../Route";
+import s from '../SuperButton/SuperButton.module.css'
+import {PATH} from "../../Route";
 
 function Header() {
     return (
@@ -16,7 +16,6 @@ function Header() {
             <NavLink to={'/passwordRecovery'} className={s.button5}>passwordRecovery</NavLink>
 
             <NavLink to={'/enterPassword'} className={s.button5}>enterPassword</NavLink>
-
 
         </div>
     )
