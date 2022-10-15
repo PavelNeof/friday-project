@@ -11,6 +11,7 @@ export const Profile = () => {
     const name = useSelector<AppStateType ,string>(state => state.auth.data.name)
     const email = useSelector<AppStateType ,string>(state => state.auth.data.email)
     const avatar = useSelector<AppStateType ,string | undefined >(state => state.auth.data.avatar)
+    const disable = useSelector<AppStateType ,boolean>(state => state.auth.disableButton)
 
     const dispatch = useAppDispatch()
 
@@ -54,7 +55,7 @@ export const Profile = () => {
 
         </div>
 
-        <button onClick={()=>{dispatch(logoutTC())}}>LogOut</button>
+        <button disabled={disable} onClick={()=>{dispatch(logoutTC())}}>LogOut</button>
     </>
 
 

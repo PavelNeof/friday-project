@@ -3,6 +3,7 @@ import {Dispatch} from "redux";
 
 const initState = {
     isLoggedIn: false,
+    disableButton:false,
     name: '',
     data: {} as SetDataType
 }
@@ -17,6 +18,8 @@ export const authReducer = (state = initState, action: AuthActionsType): Initial
             return {...state, name: action.name};
         case "profile/SET-DATA":
             return {...state, data: action.data};
+        case "profile/TOGGLE_IS_FOLLOWING_PROGRESS":
+            return {...state, disableButton: action.disableButton};
         default:
             return state
     }
@@ -35,12 +38,16 @@ export const updateName = (name: string) => (dispatch: Dispatch) => {
 
 export const logoutTC = () => (dispatch: Dispatch) => {
     //dispatch(setAppStatusAC('loading'))
+    dispatch(disableButtonAC(true))
     authAPI.logout()
         .then((res) => {
             if (!res.data.error) {
                 dispatch(setIsLoggedInAC(false))
                 // dispatch(setAppStatusAC('succeeded'))
             }
+        })
+        .finally(()=>{
+            dispatch(disableButtonAC(false))
         })
 }
 
@@ -53,12 +60,14 @@ export const setName = (name: string) =>
 export const setDataAC = (data: SetDataType) =>
     ({type: 'profile/SET-DATA', data} as const)
 
+export const disableButtonAC = (disableButton: boolean) =>
+    ({type: 'profile/TOGGLE_IS_FOLLOWING_PROGRESS', disableButton} as const)
 
 export type AuthActionsType =
     ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setName>
     | ReturnType<typeof setDataAC>
-
+    | ReturnType<typeof disableButtonAC>
 
 
 export type SetDataType = {
