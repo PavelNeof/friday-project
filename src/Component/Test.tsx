@@ -1,20 +1,19 @@
-import React from 'react';
+import React from "react";
 import SuperButton from "./SuperButton/SuperButton";
 import SuperInputText from "./SuperInput/SuperInputText";
 import SuperCheckbox from "./SuperCheckbox/SuperCheckbox";
-
 
 function Test() {
     return (
         <div>
             <div>
-                <SuperButton/>
+                <SuperButton />
             </div>
             <div>
-                <SuperInputText/>
+                <SuperInputText />
             </div>
             <div>
-                <SuperCheckbox/>
+                <SuperCheckbox />
             </div>
         </div>
     );

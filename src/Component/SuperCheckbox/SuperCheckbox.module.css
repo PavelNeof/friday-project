@@ -1,13 +1,10 @@
 .checkbox {
-
 }
 
 .spanClassName {
-
 }
 
-.checkboxStyleE{
-
+.checkboxStyleE {
 }
 
 .checkboxStyleE {
@@ -28,7 +25,7 @@
     width: 0;
 }
 .checkboxStyleE input:checked ~ .checkboxCheckmark {
-    background-color: #2EE59D;
+    background-color: #2ee59d;
 }
 .checkboxStyleE input:checked ~ .checkboxCheckmark:after {
     left: 21px;

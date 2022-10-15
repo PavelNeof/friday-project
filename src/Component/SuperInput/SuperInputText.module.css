@@ -1,9 +1,7 @@
 .superInput {
-
-    background: #2EE59D;
-    box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+    background: #2ee59d;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
     border-radius: 10px;
-
 }
 
 .errorInput {
@@ -14,4 +12,3 @@
 .error {
     color: red;
 }
-
