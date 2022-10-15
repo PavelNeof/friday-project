@@ -1,9 +1,9 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import {Route, Routes} from "react-router-dom";
-import Test from "./Component/Test";
-import Error404 from "./Component/Error404";
-import {Profile} from "./Component/Profile/Profile";
+import Test from "../Component/Test";
+import Error404 from "../Component/Error404";
+import {Profile} from "../Component/Profile/Profile";
 
 
 export const PATH = {

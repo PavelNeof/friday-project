@@ -1,7 +1,7 @@
 import React from 'react'
 import {NavLink, Route} from "react-router-dom";
 import s from '../SuperButton/SuperButton.module.css'
-import {PATH} from "../../Route";
+import {PATH} from "../../Common/Route";
 import {Profile} from "../Profile/Profile";
 
 function Header() {

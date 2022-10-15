@@ -1,4 +1,4 @@
-import {authAPI} from "./api";
+import {authAPI} from "../dal/api";
 import {Dispatch} from "redux";
 
 const initState = {
