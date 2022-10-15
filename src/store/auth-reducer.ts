@@ -60,19 +60,6 @@ export type AuthActionsType =
     | ReturnType<typeof setDataAC>
 
 
-export const fetchAuthTC = () => {
-    return (dispatch: Dispatch) => {
-        // dispatch(setAppStatusAC('loading'))
-        authAPI.me()
-            .then((res) => {
-                if (!res.data.error) {
-                    dispatch(setDataAC(res.data.updatedUser))
-                }
-                //     dispatch(setAppStatusAC('succeeded'))
-            })
-    }
-}
-
 
 export type SetDataType = {
     _id: string;
