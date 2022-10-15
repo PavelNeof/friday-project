@@ -22,8 +22,6 @@ function Router() {
         <div>
             <Routes>
 
-
-
                 <Route path={PATH.TEST} element={<Test/>}/>
                 <Route path={PATH.LOGIN} element={<div> LOGIN </div>}/>
                 <Route path={PATH.registration} element={<div> registration </div>}/>

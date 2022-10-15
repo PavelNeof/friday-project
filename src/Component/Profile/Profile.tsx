@@ -3,32 +3,24 @@ import React from "react";
 import { useSelector} from "react-redux";
 import {Navigate} from "react-router-dom";
 import {AppStateType, useAppDispatch} from "../../store/store";
-import {updateName} from "../../store/auth-reducer";
+import {logoutTC, updateName} from "../../store/auth-reducer";
 
 
 export const Profile = () => {
     const isLoggedIn = useSelector<AppStateType ,boolean>((state)=>state.auth.isLoggedIn)
     const name = useSelector<AppStateType ,string>(state => state.auth.data.name)
     const email = useSelector<AppStateType ,string>(state => state.auth.data.email)
+    const avatar = useSelector<AppStateType ,string | undefined >(state => state.auth.data.avatar)
 
     const dispatch = useAppDispatch()
-
-
-    // useEffect(() => {
-    //     if ( !isLoggedIn) {
-    //         return;
-    //     }
-    //     const thunk = fetchTodolistsTC()
-    //     dispatch(thunk)
-    // }, [])
 
 
     let [editMode, setEditMode] = useState(false)
     let [currentName, setCurrentName] = useState(name)
 
-    // useEffect(()=>{
-    //     setCurrentName(currentName)
-    // },[currentName])
+     useEffect(()=>{
+         setCurrentName(currentName)
+     },[currentName])
 
     const activateEditMode = () => {
         setEditMode(true)
@@ -42,13 +34,12 @@ export const Profile = () => {
         setCurrentName(e.currentTarget.value)
     }
 
-
     // if(!isLoggedIn){
     //     return <Navigate to={'/login'}/>
     // }
 
     return <>
-        avatar
+        avatar: {avatar}
         <div>
             {!editMode &&
                 <div>
@@ -62,7 +53,8 @@ export const Profile = () => {
                 </div>}
 
         </div>
-        <button>LogOut</button>
+
+        <button onClick={()=>{dispatch(logoutTC())}}>LogOut</button>
     </>
 
 

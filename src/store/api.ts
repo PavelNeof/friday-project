@@ -13,11 +13,8 @@ export const authAPI = {
     me() {
         return instance.post<{updatedUser: SetDataType, error?: string }>(`auth/me`);
     },
-
-
-
     logout(){
-        return instance.delete<ResponseType>(`/auth/login`);
+        return instance.delete<{info: string, error: string;}>(`/auth/login`);
     },
     updateName(name:string){
         return instance.put(`/auth/me`, {name})
