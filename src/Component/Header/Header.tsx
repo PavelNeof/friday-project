@@ -2,6 +2,7 @@ import React from 'react'
 import {NavLink, Route} from "react-router-dom";
 import s from '../SuperButton/SuperButton.module.css'
 import {PATH} from "../../Route";
+import {Profile} from "../Profile/Profile";
 
 function Header() {
     return (
@@ -13,7 +14,7 @@ function Header() {
 
             <NavLink to={'/error'} className={s.button5}>error</NavLink>
 
-            <NavLink to={'/passwordRecovery'} className={s.button5}>passwordRecovery</NavLink>
+            <NavLink to={'/profile'} className={s.button5}>Profile</NavLink>
 
             <NavLink to={'/enterPassword'} className={s.button5}>enterPassword</NavLink>
 
