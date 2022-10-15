@@ -1,7 +1,7 @@
 import React from "react";
-import SuperButton from "./SuperButton/SuperButton";
-import SuperInputText from "./SuperInput/SuperInputText";
-import SuperCheckbox from "./SuperCheckbox/SuperCheckbox";
+import SuperButton from "../../components/SuperButton/SuperButton";
+import SuperInputText from "../../components/SuperInput/SuperInputText";
+import SuperCheckbox from "../../components/SuperCheckbox/SuperCheckbox";
 
 function Test() {
     return (

@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 import { HashRouter, Routes } from "react-router-dom";
-import Router from "./Common/Route";
-import Header from "./Component/Header/Header";
+import Router from "../common/Routing/Route/Route";
+import Header from "../common/Routing/Header/Header";
 
 function App() {
     return (

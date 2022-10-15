@@ -2,8 +2,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { AppStateType, useAppDispatch } from "../../store/store";
-import { logoutTC, updateName } from "../../store/auth-reducer";
+import { AppStateType, useAppDispatch } from "../../layers/bll/store";
+import { logoutTC, updateName } from "../../layers/bll/auth-reducer";
 
 export const Profile = () => {
     const isLoggedIn = useSelector<AppStateType, boolean>(

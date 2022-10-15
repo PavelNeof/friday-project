@@ -1,17 +1,16 @@
 import React from "react";
-import "../App.css";
+import "../../../app/App.css";
 import { Route, Routes } from "react-router-dom";
-import Test from "../Component/Test";
-import Error404 from "../Component/Error404";
-import { Profile } from "../Component/Profile/Profile";
+import Test from "../../../features/Test/Test";
+import Error404 from "../../../features/Error404/Error404";
+import { Profile } from "../../../features/Profile/Profile";
 
 export const PATH = {
     LOGIN: "/login",
-    registration: "/registration",
-    error: "/error",
-
-    Profile: "/profile",
-    enterPassword: "/enterPassword",
+    REGISTRATION: "/registration",
+    ERROR: "/error",
+    PROFILE: "/profile",
+    ENTER_PASSWORD: "/enterPassword",
     TEST: "/",
     // add paths
 };
@@ -23,11 +22,11 @@ function Router() {
                 <Route path={PATH.TEST} element={<Test />} />
                 <Route path={PATH.LOGIN} element={<div> LOGIN </div>} />
                 <Route
-                    path={PATH.registration}
+                    path={PATH.REGISTRATION}
                     element={<div> registration </div>}
                 />
                 <Route
-                    path={PATH.error}
+                    path={PATH.ERROR}
                     element={
                         <div>
                             {" "}
@@ -36,7 +35,7 @@ function Router() {
                     }
                 />
                 <Route
-                    path={PATH.Profile}
+                    path={PATH.PROFILE}
                     element={
                         <div>
                             {" "}
@@ -45,7 +44,7 @@ function Router() {
                     }
                 />
                 <Route
-                    path={PATH.enterPassword}
+                    path={PATH.ENTER_PASSWORD}
                     element={<div> enter Password </div>}
                 />
 

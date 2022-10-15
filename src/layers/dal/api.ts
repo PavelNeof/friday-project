@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { SetDataType } from "../store/auth-reducer";
+import { SetDataType } from "../bll/auth-reducer";
 
 export const instance = axios.create({
     // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/' ,
