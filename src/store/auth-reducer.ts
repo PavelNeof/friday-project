@@ -3,7 +3,7 @@ import {Dispatch} from "redux";
 
 const initState = {
     isLoggedIn: false,
-    disableButton:false,
+    disableButton: false,
     name: '',
     data: {} as SetDataType
 }
@@ -12,13 +12,13 @@ type InitialStateType = typeof initState
 
 export const authReducer = (state = initState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
-        case 'profile/SET-IS-LOGGED-IN':
+        case 'auth/SET-IS-LOGGED-IN':
             return {...state, isLoggedIn: action.value}
-        case "profile/SET_NAME":
+        case "auth/SET_NAME":
             return {...state, name: action.name};
-        case "profile/SET-DATA":
+        case "auth/SET-DATA":
             return {...state, data: action.data};
-        case "profile/TOGGLE_IS_FOLLOWING_PROGRESS":
+        case "auth/TOGGLE_IS_FOLLOWING_PROGRESS":
             return {...state, disableButton: action.disableButton};
         default:
             return state
@@ -27,12 +27,16 @@ export const authReducer = (state = initState, action: AuthActionsType): Initial
 
 
 export const updateName = (name: string) => (dispatch: Dispatch) => {
+    dispatch(disableButtonAC(true))
     authAPI.updateName(name).then((res) => {
         if (!res.data.error) {
             dispatch(setName(res.data.updatedUser.name))
         }
         //dispatch(setAppStatusAC('succeeded'))
     })
+        .finally(() => {
+            dispatch(disableButtonAC(false))
+        })
 }
 
 
@@ -46,22 +50,22 @@ export const logoutTC = () => (dispatch: Dispatch) => {
                 // dispatch(setAppStatusAC('succeeded'))
             }
         })
-        .finally(()=>{
+        .finally(() => {
             dispatch(disableButtonAC(false))
         })
 }
 
 export const setIsLoggedInAC = (value: boolean) =>
-    ({type: 'profile/SET-IS-LOGGED-IN', value} as const)
+    ({type: 'auth/SET-IS-LOGGED-IN', value} as const)
 
 export const setName = (name: string) =>
-    ({type: "profile/SET_NAME", name} as const)
+    ({type: "auth/SET_NAME", name} as const)
 
 export const setDataAC = (data: SetDataType) =>
-    ({type: 'profile/SET-DATA', data} as const)
+    ({type: 'auth/SET-DATA', data} as const)
 
 export const disableButtonAC = (disableButton: boolean) =>
-    ({type: 'profile/TOGGLE_IS_FOLLOWING_PROGRESS', disableButton} as const)
+    ({type: 'auth/TOGGLE_IS_FOLLOWING_PROGRESS', disableButton} as const)
 
 export type AuthActionsType =
     ReturnType<typeof setIsLoggedInAC>
