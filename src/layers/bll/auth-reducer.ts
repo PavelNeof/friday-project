@@ -58,6 +58,14 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         });
 };
 
+export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
+    authAPI.forgotPassword(newEmail).then((res) => {
+        if (res.data.error) {
+            alert(res.data.error);
+        }
+    });
+};
+
 export const setIsLoggedInAC = (value: boolean) =>
     ({ type: "auth/SET-IS-LOGGED-IN", value } as const);
 
@@ -88,4 +96,10 @@ export type SetDataType = {
     verified: boolean; // подтвердил ли почту
     rememberMe: boolean;
     error?: string;
+};
+
+export type SenMessageForgotPasswordType = {
+    email: string;
+    from: string;
+    message: string;
 };

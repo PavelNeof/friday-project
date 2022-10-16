@@ -39,7 +39,7 @@ export const Profile = () => {
         dispatch(updateName(currentName));
     };
 
-    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setCurrentName(e.currentTarget.value);
     };
 
@@ -62,7 +62,7 @@ export const Profile = () => {
                     <div>
                         <input
                             autoFocus={true}
-                            onChange={onStatusChange}
+                            onChange={onNameChange}
                             onBlur={deactivateEditMode}
                             value={name}
                         />

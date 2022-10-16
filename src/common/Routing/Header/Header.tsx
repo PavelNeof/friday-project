@@ -21,6 +21,13 @@ function Header() {
                 Profile
             </NavLink>
 
+            <NavLink to={"/forgotPassword"} className={s.button5}>
+                forgotPassword
+            </NavLink>
+            <NavLink to={"/set-new-password/:token"} className={s.button5}>
+                newPassword
+            </NavLink>
+
             <NavLink to={"/enterPassword"} className={s.button5}>
                 enterPassword
             </NavLink>
