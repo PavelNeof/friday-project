@@ -8,6 +8,7 @@ import { ForgotPassword } from "../../../features/ForgotPassword/ForgotPassword"
 import { NewPassword } from "../../../features/ForgotPassword/NewPassword";
 
 export const PATH = {
+    MAIN: "/",
     LOGIN: "/login",
     REGISTRATION: "/registration",
     ERROR: "/error",
