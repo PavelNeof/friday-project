@@ -16,7 +16,6 @@ export const PATH = {
     FORGOT_PASSWORD: "/forgotPassword",
     ENTER_PASSWORD: "/enterPassword",
     NEW_PASSWORD: "/set-new-password/:token",
-    TEST: "/",
     // add paths
 };
 
@@ -24,7 +23,7 @@ function Router() {
     return (
         <div>
             <Routes>
-                <Route path={PATH.TEST} element={<Test />} />
+                <Route path={PATH.MAIN} element={<Test />} />
                 <Route path={PATH.LOGIN} element={<div> LOGIN </div>} />
                 <Route
                     path={PATH.NEW_PASSWORD}
