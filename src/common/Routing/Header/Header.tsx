@@ -10,6 +10,10 @@ function Header() {
                 Test
             </NavLink>
 
+            <NavLink to={PATH.LOGIN} className={s.button5}>
+                Login
+            </NavLink>
+
             <NavLink to={PATH.REGISTRATION} className={s.button5}>
                 registration
             </NavLink>
