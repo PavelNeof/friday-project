@@ -9,7 +9,6 @@ export const ForgotPassword = () => {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewEmail(e.currentTarget.value);
-        console.log(newEmail);
     };
 
     const onClickHandler = () => {
@@ -19,6 +18,7 @@ export const ForgotPassword = () => {
     return (
         <>
             <div>
+                Your email:
                 <input onChange={onChangeHandler} value={newEmail} />
             </div>
             <button onClick={onClickHandler}>Send</button>

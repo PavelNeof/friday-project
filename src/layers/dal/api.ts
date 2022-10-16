@@ -27,15 +27,24 @@ export const authAPI = {
             email: newEmail,
             from: "test-front-admin <ai73a@yandex.by>",
             message: `<div style="background-color: lime; padding: 15px">
-password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>
-link</a>
-</div>`,
+            password recovery link: 
+            <a href='http://localhost:3000/#/set-new-password/$token$'>
+            link</a>
+            </div>`,
         };
         return axios.post<{ info: string; error: string }>(
             `https://neko-back.herokuapp.com/2.0/auth/forgot`,
             message,
             { withCredentials: true }
+        );
+    },
+    setNewPassword(password: string, resetPasswordToken: string) {
+        return instance.post<{ info: string; error: string }>(
+            "auth/set-new-password",
+            {
+                password,
+                resetPasswordToken,
+            }
         );
     },
 };

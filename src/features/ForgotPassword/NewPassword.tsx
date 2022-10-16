@@ -1,15 +1,21 @@
 import React, { ChangeEvent, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../layers/bll/store";
+import { setNewPasswordTC } from "../../layers/bll/auth-reducer";
 
 export const NewPassword = () => {
     let [newPassword, setNewPassword] = useState("");
 
+    const dispatch = useAppDispatch();
+
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewPassword(e.currentTarget.value);
-        console.log(e.currentTarget.value);
     };
-    const onClickHandler = () => {};
-    const object = useParams();
+    const { token } = useParams(); //{token: ':token'}
+
+    const onClickHandler = () => {
+        dispatch(setNewPasswordTC(newPassword, { token }));
+    };
 
     return (
         <>

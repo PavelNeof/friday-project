@@ -12,9 +12,9 @@ export const PATH = {
     REGISTRATION: "/registration",
     ERROR: "/error",
     PROFILE: "/profile",
-    FORGOTPASSWORD: "/forgotPassword",
+    FORGOT_PASSWORD: "/forgotPassword",
     ENTER_PASSWORD: "/enterPassword",
-    newPassword: "/set-new-password/:token",
+    NEW_PASSWORD: "/set-new-password/:token",
     TEST: "/",
     // add paths
 };
@@ -26,7 +26,7 @@ function Router() {
                 <Route path={PATH.TEST} element={<Test />} />
                 <Route path={PATH.LOGIN} element={<div> LOGIN </div>} />
                 <Route
-                    path={PATH.newPassword}
+                    path={PATH.NEW_PASSWORD}
                     element={
                         <div>
                             {" "}
@@ -59,7 +59,7 @@ function Router() {
                     }
                 />
                 <Route
-                    path={PATH.FORGOTPASSWORD}
+                    path={PATH.FORGOT_PASSWORD}
                     element={
                         <div>
                             {" "}

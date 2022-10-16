@@ -1,5 +1,6 @@
 import { authAPI } from "../dal/api";
 import { Dispatch } from "redux";
+import { Params } from "react-router-dom";
 
 const initState = {
     isLoggedIn: false,
@@ -65,6 +66,12 @@ export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
         }
     });
 };
+
+export const setNewPasswordTC =
+    (password: string, resetPasswordToken: Readonly<Params<string>>) =>
+    (dispatch: Dispatch) => {
+        // authAPI.setNewPassword(password, { resetPasswordToken });
+    };
 
 export const setIsLoggedInAC = (value: boolean) =>
     ({ type: "auth/SET-IS-LOGGED-IN", value } as const);
