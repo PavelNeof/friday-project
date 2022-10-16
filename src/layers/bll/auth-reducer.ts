@@ -15,13 +15,13 @@ export const authReducer = (
     action: AuthActionsType
 ): InitialStateType => {
     switch (action.type) {
-        case "auth/SET-IS-LOGGED-IN":
+        case "AUTH/SET-IS-LOGGED-IN":
             return { ...state, isLoggedIn: action.value };
-        case "auth/SET_NAME":
+        case "AUTH/SET_NAME":
             return { ...state, name: action.name };
-        case "auth/SET-DATA":
+        case "AUTH/SET-DATA":
             return { ...state, data: action.data };
-        case "auth/TOGGLE_IS_FOLLOWING_PROGRESS":
+        case "AUTH/TOGGLE_IS_FOLLOWING_PROGRESS":
             return { ...state, disableButton: action.disableButton };
         default:
             return state;
@@ -68,22 +68,25 @@ export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
 };
 
 export const setNewPasswordTC =
-    (password: string, resetPasswordToken: Readonly<Params<string>>) =>
-    (dispatch: Dispatch) => {
-        // authAPI.setNewPassword(password, { resetPasswordToken });
+    (password: string, resetPasswordToken: string) => (dispatch: Dispatch) => {
+        authAPI.setNewPassword(password, resetPasswordToken).then((res) => {
+            if (!res.data.error) {
+                alert("успех");
+            }
+        });
     };
 
 export const setIsLoggedInAC = (value: boolean) =>
-    ({ type: "auth/SET-IS-LOGGED-IN", value } as const);
+    ({ type: "AUTH/SET-IS-LOGGED-IN", value } as const);
 
 export const setName = (name: string) =>
-    ({ type: "auth/SET_NAME", name } as const);
+    ({ type: "AUTH/SET_NAME", name } as const);
 
 export const setDataAC = (data: SetDataType) =>
-    ({ type: "auth/SET-DATA", data } as const);
+    ({ type: "AUTH/SET-DATA", data } as const);
 
 export const disableButtonAC = (disableButton: boolean) =>
-    ({ type: "auth/TOGGLE_IS_FOLLOWING_PROGRESS", disableButton } as const);
+    ({ type: "AUTH/TOGGLE_IS_FOLLOWING_PROGRESS", disableButton } as const);
 
 export type AuthActionsType =
     | ReturnType<typeof setIsLoggedInAC>

@@ -11,10 +11,10 @@ export const NewPassword = () => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewPassword(e.currentTarget.value);
     };
-    const { token } = useParams(); //{token: ':token'}
+    const { token } = useParams<{ token: string }>();
 
     const onClickHandler = () => {
-        dispatch(setNewPasswordTC(newPassword, { token }));
+        dispatch(setNewPasswordTC(newPassword, token!));
     };
 
     return (

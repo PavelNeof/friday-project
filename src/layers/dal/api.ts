@@ -34,8 +34,7 @@ export const authAPI = {
         };
         return axios.post<{ info: string; error: string }>(
             `https://neko-back.herokuapp.com/2.0/auth/forgot`,
-            message,
-            { withCredentials: true }
+            message
         );
     },
     setNewPassword(password: string, resetPasswordToken: string) {
