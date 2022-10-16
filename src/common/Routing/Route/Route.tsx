@@ -3,10 +3,11 @@ import "../../../app/App.css";
 import { Route, Routes } from "react-router-dom";
 import Test from "../../../features/Test/Test";
 import Error404 from "../../../features/Error404/Error404";
-import {Profile} from "../../../features/Profile/Profile";
-import {ForgotPassword} from "../../../features/ForgotPassword/ForgotPassword";
-import {NewPassword} from "../../../features/ForgotPassword/NewPassword";
-import {Registration} from "../../../features/Registration/Registration";
+import { Profile } from "../../../features/Profile/Profile";
+import { ForgotPassword } from "../../../features/ForgotPassword/ForgotPassword";
+import { NewPassword } from "../../../features/ForgotPassword/NewPassword";
+import { Registration } from "../../../features/Registration/Registration";
+import Login from "../../../features/Login/Login";
 
 export const PATH = {
     MAIN: "/",
@@ -25,7 +26,7 @@ function Router() {
         <div>
             <Routes>
                 <Route path={PATH.MAIN} element={<Test />} />
-                <Route path={PATH.LOGIN} element={<div> LOGIN </div>} />
+                <Route path={PATH.LOGIN} element={<Login />} />
                 <Route
                     path={PATH.NEW_PASSWORD}
                     element={
