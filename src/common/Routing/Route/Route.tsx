@@ -3,9 +3,10 @@ import "../../../app/App.css";
 import { Route, Routes } from "react-router-dom";
 import Test from "../../../features/Test/Test";
 import Error404 from "../../../features/Error404/Error404";
-import { Profile } from "../../../features/Profile/Profile";
-import { ForgotPassword } from "../../../features/ForgotPassword/ForgotPassword";
-import { NewPassword } from "../../../features/ForgotPassword/NewPassword";
+import {Profile} from "../../../features/Profile/Profile";
+import {ForgotPassword} from "../../../features/ForgotPassword/ForgotPassword";
+import {NewPassword} from "../../../features/ForgotPassword/NewPassword";
+import {Registration} from "../../../features/Registration/Registration";
 
 export const PATH = {
     MAIN: "/",
@@ -37,7 +38,12 @@ function Router() {
 
                 <Route
                     path={PATH.REGISTRATION}
-                    element={<div> registration </div>}
+                    element={
+                        <div>
+                            {" "}
+                            <Registration/>
+                            {" "}
+                        </div>}
                 />
 
                 <Route
