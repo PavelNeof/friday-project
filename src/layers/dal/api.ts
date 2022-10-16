@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios";
-import { SenMessageForgotPasswordType, SetDataType } from "../bll/auth-reducer";
+import axios, {AxiosResponse} from "axios";
+import {RegisterResponseType, SenMessageForgotPasswordType, SetDataType} from "../bll/auth-reducer";
 
 export const instance = axios.create({
     // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/' ,
@@ -20,7 +20,7 @@ export const authAPI = {
         return instance.delete<{ info: string; error: string }>(`/auth/me`);
     },
     updateName(name: string) {
-        return instance.put(`/auth/me`, { name });
+        return instance.put(`/auth/me`, {name});
     },
     forgotPassword(newEmail: string) {
         const message = {
@@ -46,4 +46,13 @@ export const authAPI = {
             }
         );
     },
+    register(email: string, password: string) {
+        return instance.post<RegisterResponseType>(
+            `/auth/register`,
+            {
+                email,
+                password
+            });
+    }
 };
+
