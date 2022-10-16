@@ -1,11 +1,12 @@
 import React from "react";
 import "../../../app/App.css";
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Test from "../../../features/Test/Test";
 import Error404 from "../../../features/Error404/Error404";
-import { Profile } from "../../../features/Profile/Profile";
-import { ForgotPassword } from "../../../features/ForgotPassword/ForgotPassword";
-import { NewPassword } from "../../../features/ForgotPassword/NewPassword";
+import {Profile} from "../../../features/Profile/Profile";
+import {ForgotPassword} from "../../../features/ForgotPassword/ForgotPassword";
+import {NewPassword} from "../../../features/ForgotPassword/NewPassword";
+import {Registration} from "../../../features/Registration/Registration";
 
 export const PATH = {
     MAIN: "/",
@@ -24,21 +25,26 @@ function Router() {
     return (
         <div>
             <Routes>
-                <Route path={PATH.TEST} element={<Test />} />
-                <Route path={PATH.LOGIN} element={<div> LOGIN </div>} />
+                <Route path={PATH.TEST} element={<Test/>}/>
+                <Route path={PATH.LOGIN} element={<div> LOGIN </div>}/>
                 <Route
                     path={PATH.NEW_PASSWORD}
                     element={
                         <div>
                             {" "}
-                            <NewPassword />{" "}
+                            <NewPassword/>{" "}
                         </div>
                     }
                 />
 
                 <Route
                     path={PATH.REGISTRATION}
-                    element={<div> registration </div>}
+                    element={
+                        <div>
+                            {" "}
+                            <Registration/>
+                            {" "}
+                        </div>}
                 />
 
                 <Route
@@ -46,7 +52,7 @@ function Router() {
                     element={
                         <div>
                             {" "}
-                            <Error404 />{" "}
+                            <Error404/>{" "}
                         </div>
                     }
                 />
@@ -55,7 +61,7 @@ function Router() {
                     element={
                         <div>
                             {" "}
-                            <Profile />
+                            <Profile/>
                         </div>
                     }
                 />
@@ -64,7 +70,7 @@ function Router() {
                     element={
                         <div>
                             {" "}
-                            <ForgotPassword />{" "}
+                            <ForgotPassword/>{" "}
                         </div>
                     }
                 />
