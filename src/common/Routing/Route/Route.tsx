@@ -6,6 +6,7 @@ import Error404 from "../../../features/Error404/Error404";
 import { Profile } from "../../../features/Profile/Profile";
 
 export const PATH = {
+    MAIN: "/",
     LOGIN: "/login",
     REGISTRATION: "/registration",
     ERROR: "/error",
