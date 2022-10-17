@@ -1,4 +1,4 @@
-import { authAPI } from "../dal/api";
+import { authAPI, LoginParamsType } from "../dal/api";
 import { Dispatch } from "redux";
 import { Params } from "react-router-dom";
 import { AppDispatchType, AppThunkType } from "./store";
@@ -7,7 +7,7 @@ const initState = {
     isLoggedIn: false,
     disableButton: false,
     name: "",
-    data: {} as SetDataType,
+    data: {} as UserDataType,
     registrationError: "",
     registrationDone: false,
 };
@@ -35,22 +35,41 @@ export const authReducer = (
     }
 };
 
-export const updateName = (name: string) => (dispatch: Dispatch) => {
-    dispatch(disableButtonAC(true));
-    authAPI
-        .updateName(name)
-        .then((res) => {
-            if (!res.data.error) {
-                dispatch(setName(res.data.updatedUser.name));
-            }
-            //dispatch(setAppStatusAC('succeeded'))
-        })
-        .finally(() => {
-            dispatch(disableButtonAC(false));
-        });
-};
+export const updateName =
+    (name: string): AppThunkType =>
+    (dispatch) => {
+        dispatch(disableButtonAC(true));
+        authAPI
+            .updateName(name)
+            .then((res) => {
+                if (!res.data.error) {
+                    dispatch(setName(res.data.updatedUser.name));
+                }
+                //dispatch(setAppStatusAC('succeeded'))
+            })
+            .finally(() => {
+                dispatch(disableButtonAC(false));
+            });
+    };
 
-export const logoutTC = () => (dispatch: Dispatch) => {
+export const loginTC =
+    (data: LoginParamsType): AppThunkType =>
+    (dispatch) => {
+        authAPI
+            .login(data)
+            .then((res) => {
+                dispatch(setIsLoggedInAC(true));
+                dispatch(setDataAC(res.data));
+            })
+            .catch((e) => {
+                const error = e.response
+                    ? e.response.data.error
+                    : e.message + ", more details in the console";
+                console.log("error: ", error);
+            });
+    };
+
+export const logoutTC = (): AppThunkType => (dispatch) => {
     //dispatch(setAppStatusAC('loading'))
     dispatch(disableButtonAC(true));
     authAPI
@@ -58,6 +77,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         .then((res) => {
             if (!res.data.error) {
                 dispatch(setIsLoggedInAC(false));
+                dispatch(setDataAC({} as UserDataType));
                 // dispatch(setAppStatusAC('succeeded'))
             }
         })
@@ -104,7 +124,7 @@ export const setIsLoggedInAC = (value: boolean) =>
 export const setName = (name: string) =>
     ({ type: "AUTH/SET_NAME", name } as const);
 
-export const setDataAC = (data: SetDataType) =>
+export const setDataAC = (data: UserDataType) =>
     ({ type: "AUTH/SET-DATA", data } as const);
 
 export const disableButtonAC = (disableButton: boolean) =>
@@ -124,7 +144,7 @@ export type AuthActionsType =
     | ReturnType<typeof setRegistrationErrorAC>
     | ReturnType<typeof setRegistrationDoneAC>;
 
-export type SetDataType = {
+export type UserDataType = {
     _id: string;
     email: string;
     name: string;
@@ -136,6 +156,9 @@ export type SetDataType = {
     verified: boolean; // подтвердил ли почту
     rememberMe: boolean;
     error?: string;
+    token?: string;
+    tokenDeathTime?: number;
+    __v?: 0;
 };
 
 export type SenMessageForgotPasswordType = {

@@ -6,6 +6,10 @@
     font-family: Montserrat, sans-serif;
 }
 
+.container * {
+    font-family: "Montserrat" !important;
+}
+
 .signUpForm {
     width: 550px;
     height: 650px;
@@ -39,4 +43,8 @@
 h1 {
     font-weight: bold;
     color: black;
+}
+
+.right {
+    text-align: right;
 }

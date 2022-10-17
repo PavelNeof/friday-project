@@ -5,12 +5,12 @@ import {
     legacy_createStore as createStore,
 } from "redux";
 import { AuthActionsType, authReducer } from "./auth-reducer";
-import { appReducer, AppReducerActionsType } from "./app-reducer";
+import { appInitReducer, AppInitActionsType } from "./app-reducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const reducers = combineReducers({
     auth: authReducer,
-    app: appReducer,
+    app: appInitReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));
@@ -31,7 +31,7 @@ export type AppThunkType<ReturnType = void> = ThunkAction<
 export const useAppDispatch = () => useDispatch<AppDispatchType>();
 export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector;
 
-export type AppActionsType = AuthActionsType | AppReducerActionsType;
+export type AppActionsType = AuthActionsType | AppInitActionsType;
 
 export default store;
 

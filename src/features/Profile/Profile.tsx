@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { AppStateType, useAppDispatch } from "../../layers/bll/store";
 import { logoutTC, updateName } from "../../layers/bll/auth-reducer";
+import { PATH } from "../../common/Routing/Route/Route";
 
 export const Profile = () => {
     const isLoggedIn = useSelector<AppStateType, boolean>(
@@ -43,9 +44,9 @@ export const Profile = () => {
         setCurrentName(e.currentTarget.value);
     };
 
-    // if(!isLoggedIn){
-    //     return <Navigate to={'/login'}/>
-    // }
+    if (!isLoggedIn) {
+        return <Navigate to={PATH.LOGIN} />;
+    }
 
     return (
         <>
