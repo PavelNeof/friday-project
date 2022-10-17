@@ -2,7 +2,7 @@ import { authAPI, LoginParamsType } from "../dal/api";
 import { Dispatch } from "redux";
 import { AppDispatchType, AppThunkType } from "./store";
 import { AxiosError } from "axios";
-import { setAppErrorAC } from "./app-reducer";
+import { setAppErrorAC, setAppStatusAC } from "./app-reducer";
 
 const initState = {
     isLoggedIn: false,
@@ -56,6 +56,7 @@ export const updateName =
 export const loginTC =
     (data: LoginParamsType): AppThunkType =>
     (dispatch) => {
+        dispatch(setAppStatusAC("loading"));
         authAPI
             .login(data)
             .then((res) => {
@@ -67,11 +68,12 @@ export const loginTC =
                     ? (e.response.data as { error: string }).error
                     : e.message;
                 dispatch(setAppErrorAC(error));
-            });
+            })
+            .finally(() => dispatch(setAppStatusAC("succeeded")));
     };
 
 export const logoutTC = (): AppThunkType => (dispatch) => {
-    //dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC("loading"));
     dispatch(disableButtonAC(true));
     authAPI
         .logout()
@@ -79,7 +81,6 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
             if (!res.data.error) {
                 dispatch(setIsLoggedInAC(false));
                 dispatch(setDataAC({} as UserDataType));
-                // dispatch(setAppStatusAC('succeeded'))
             }
         })
         .catch((e: AxiosError) => {
@@ -90,6 +91,7 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
         })
         .finally(() => {
             dispatch(disableButtonAC(false));
+            dispatch(setAppStatusAC("succeeded"));
         });
 };
 

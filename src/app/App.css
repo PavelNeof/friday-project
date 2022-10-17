@@ -1,3 +1,6 @@
-.App {
+.App {}
 
+.linearProgress {
+    position: fixed;
+    width: 100%;
 }
