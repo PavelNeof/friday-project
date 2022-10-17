@@ -6,6 +6,7 @@ import { AppBar, Button, CircularProgress, Toolbar } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../layers/bll/store";
 import { logoutTC } from "../layers/bll/auth-reducer";
 import { initializeAppTC } from "../layers/bll/app-reducer";
+import ErrorSnackbars from "../components/ErrorSnackbars/ErrorSnackbars";
 
 function App() {
     const isLoggedIn = useAppSelector<boolean>(
@@ -37,6 +38,7 @@ function App() {
 
     return (
         <div className="App">
+            <ErrorSnackbars />
             <HashRouter>
                 {/*<Header />*/}
                 <AppBar

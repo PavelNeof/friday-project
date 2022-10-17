@@ -1,7 +1,8 @@
 import { authAPI, LoginParamsType } from "../dal/api";
 import { Dispatch } from "redux";
-import { Params } from "react-router-dom";
 import { AppDispatchType, AppThunkType } from "./store";
+import { AxiosError } from "axios";
+import { setAppErrorAC } from "./app-reducer";
 
 const initState = {
     isLoggedIn: false,
@@ -61,11 +62,11 @@ export const loginTC =
                 dispatch(setIsLoggedInAC(true));
                 dispatch(setDataAC(res.data));
             })
-            .catch((e) => {
+            .catch((e: AxiosError) => {
                 const error = e.response
-                    ? e.response.data.error
-                    : e.message + ", more details in the console";
-                console.log("error: ", error);
+                    ? (e.response.data as { error: string }).error
+                    : e.message;
+                dispatch(setAppErrorAC(error));
             });
     };
 

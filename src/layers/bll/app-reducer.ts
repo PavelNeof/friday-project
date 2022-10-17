@@ -4,6 +4,7 @@ import { setDataAC, setIsLoggedInAC } from "./auth-reducer";
 
 const initState = {
     isInitialized: false,
+    error: null as null | string,
 };
 type InitialStateType = typeof initState;
 
@@ -14,6 +15,8 @@ export const appInitReducer = (
     switch (action.type) {
         case "APP/INITIALIZED":
             return { ...state, isInitialized: action.isInitialized };
+        case "APP/SET-ERROR":
+            return { ...state, error: action.error };
         default:
             return state;
     }
@@ -21,6 +24,9 @@ export const appInitReducer = (
 
 export const setIsInitializedAC = (isInitialized: boolean) =>
     ({ type: "APP/INITIALIZED", isInitialized } as const);
+
+export const setAppErrorAC = (error: null | string) =>
+    ({ type: "APP/SET-ERROR", error } as const);
 
 export const initializeAppTC =
     (): AppThunkType => (dispatch, getState: () => AppStateType) => {
@@ -39,4 +45,6 @@ export const initializeAppTC =
             });
     };
 
-export type AppInitActionsType = ReturnType<typeof setIsInitializedAC>;
+export type AppInitActionsType =
+    | ReturnType<typeof setIsInitializedAC>
+    | ReturnType<typeof setAppErrorAC>;
