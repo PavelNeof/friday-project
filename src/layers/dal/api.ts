@@ -27,10 +27,10 @@ export const authAPI = {
         );
     },
     logout() {
-        return instance.delete<{ info: string; error?: string }>(`/auth/me`);
+        return instance.delete<{ info: string; error?: string }>(`auth/me`);
     },
     updateName(name: string) {
-        return instance.put(`/auth/me`, { name });
+        return instance.put(`auth/me`, { name });
     },
     forgotPassword(newEmail: string) {
         const message = {
@@ -57,7 +57,7 @@ export const authAPI = {
         );
     },
     register(email: string, password: string) {
-        return instance.post<RegisterResponseType>(`/auth/register`, {
+        return instance.post<RegisterResponseType>(`auth/register`, {
             email,
             password,
         });
