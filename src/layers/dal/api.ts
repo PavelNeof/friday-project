@@ -16,7 +16,7 @@ export const instance = axios.create({
 
 export const authAPI = {
     me() {
-        return instance.post(`auth/me`);
+        return instance.post<void, AxiosResponse<UserDataType>>(`auth/me`);
     },
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<UserDataType>>(
@@ -25,7 +25,7 @@ export const authAPI = {
         );
     },
     logout() {
-        return instance.delete<{ info: string; error: string }>(`/auth/me`);
+        return instance.delete<{ info: string; error?: string }>(`/auth/me`);
     },
     updateName(name: string) {
         return instance.put(`/auth/me`, { name });
