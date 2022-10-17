@@ -41,6 +41,7 @@ export const Profile = () => {
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.value);
         setCurrentName(e.currentTarget.value);
     };
 
@@ -65,7 +66,7 @@ export const Profile = () => {
                             autoFocus={true}
                             onChange={onNameChange}
                             onBlur={deactivateEditMode}
-                            value={name}
+                            value={currentName}
                         />
                     </div>
                 )}

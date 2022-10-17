@@ -91,6 +91,9 @@ export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
         if (res.data.error) {
             alert(res.data.error);
         }
+        if (!res.data.error) {
+            alert("Check your email!");
+        }
     });
 };
 
@@ -98,7 +101,7 @@ export const setNewPasswordTC =
     (password: string, resetPasswordToken: string) => (dispatch: Dispatch) => {
         authAPI.setNewPassword(password, resetPasswordToken).then((res) => {
             if (!res.data.error) {
-                alert("успех");
+                alert("Success!");
             }
         });
     };
