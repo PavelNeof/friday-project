@@ -1,6 +1,7 @@
 import { AppStateType, AppThunkType } from "./store";
 import { authAPI } from "../dal/api";
 import { setDataAC, setIsLoggedInAC } from "./auth-reducer";
+import { AxiosError } from "axios";
 
 const initState = {
     isInitialized: false,
@@ -39,7 +40,12 @@ export const initializeAppTC =
                 dispatch(setIsLoggedInAC(true));
                 dispatch(setIsInitializedAC(true));
             })
-            .catch((e) => {})
+            .catch((e: AxiosError) => {
+                const error = e.response
+                    ? (e.response.data as { error: string }).error
+                    : e.message;
+                dispatch(setAppErrorAC(error));
+            })
             .finally(() => {
                 dispatch(setIsInitializedAC(true));
             });

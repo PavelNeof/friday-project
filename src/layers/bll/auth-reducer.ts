@@ -82,6 +82,12 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
                 // dispatch(setAppStatusAC('succeeded'))
             }
         })
+        .catch((e: AxiosError) => {
+            const error = e.response
+                ? (e.response.data as { error: string }).error
+                : e.message;
+            dispatch(setAppErrorAC(error));
+        })
         .finally(() => {
             dispatch(disableButtonAC(false));
         });
