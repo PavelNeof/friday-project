@@ -158,7 +158,7 @@ export type UserDataType = {
     error?: string;
     token?: string;
     tokenDeathTime?: number;
-    __v?: 0;
+    __v?: number;
 };
 
 export type SenMessageForgotPasswordType = {
