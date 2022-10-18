@@ -87,23 +87,41 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
 };
 
 export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
-    authAPI.forgotPassword(newEmail).then((res) => {
-        if (res.data.error) {
-            alert(res.data.error);
-        }
-        if (!res.data.error) {
-            alert("Check your email!");
-        }
-    });
+    dispatch(disableButtonAC(true));
+    authAPI
+        .forgotPassword(newEmail)
+        .then((res) => {
+            if (res.data.error) {
+                alert(res.data.error);
+            }
+            if (!res.data.error) {
+                alert("Check your email!");
+            }
+        })
+        .catch((err) => {
+            alert(err.message);
+        })
+        .finally(() => {
+            dispatch(disableButtonAC(false));
+        });
 };
 
 export const setNewPasswordTC =
     (password: string, resetPasswordToken: string) => (dispatch: Dispatch) => {
-        authAPI.setNewPassword(password, resetPasswordToken).then((res) => {
-            if (!res.data.error) {
-                alert("Success!");
-            }
-        });
+        dispatch(disableButtonAC(true));
+        authAPI
+            .setNewPassword(password, resetPasswordToken)
+            .then((res) => {
+                if (!res.data.error) {
+                    alert("Success!");
+                }
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
+            .finally(() => {
+                dispatch(disableButtonAC(false));
+            });
     };
 
 export const setRegistrationTC =
