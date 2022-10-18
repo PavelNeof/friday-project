@@ -1,7 +1,8 @@
 import { authAPI, LoginParamsType } from "../dal/api";
 import { Dispatch } from "redux";
-import { Params } from "react-router-dom";
 import { AppDispatchType, AppThunkType } from "./store";
+import { AxiosError } from "axios";
+import { setAppErrorAC, setAppStatusAC } from "./app-reducer";
 
 const initState = {
     isLoggedIn: false,
@@ -55,22 +56,24 @@ export const updateName =
 export const loginTC =
     (data: LoginParamsType): AppThunkType =>
     (dispatch) => {
+        dispatch(setAppStatusAC("loading"));
         authAPI
             .login(data)
             .then((res) => {
                 dispatch(setIsLoggedInAC(true));
                 dispatch(setDataAC(res.data));
             })
-            .catch((e) => {
+            .catch((e: AxiosError) => {
                 const error = e.response
-                    ? e.response.data.error
-                    : e.message + ", more details in the console";
-                console.log("error: ", error);
-            });
+                    ? (e.response.data as { error: string }).error
+                    : e.message;
+                dispatch(setAppErrorAC(error));
+            })
+            .finally(() => dispatch(setAppStatusAC("succeeded")));
     };
 
 export const logoutTC = (): AppThunkType => (dispatch) => {
-    //dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC("loading"));
     dispatch(disableButtonAC(true));
     authAPI
         .logout()
@@ -78,11 +81,17 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
             if (!res.data.error) {
                 dispatch(setIsLoggedInAC(false));
                 dispatch(setDataAC({} as UserDataType));
-                // dispatch(setAppStatusAC('succeeded'))
             }
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response
+                ? (e.response.data as { error: string }).error
+                : e.message;
+            dispatch(setAppErrorAC(error));
         })
         .finally(() => {
             dispatch(disableButtonAC(false));
+            dispatch(setAppStatusAC("succeeded"));
         });
 };
 
@@ -179,7 +188,7 @@ export type UserDataType = {
     error?: string;
     token?: string;
     tokenDeathTime?: number;
-    __v?: 0;
+    __v?: number;
 };
 
 export type SenMessageForgotPasswordType = {

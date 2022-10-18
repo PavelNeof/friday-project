@@ -27,58 +27,18 @@ function Router() {
             <Routes>
                 <Route path={PATH.MAIN} element={<Test />} />
                 <Route path={PATH.LOGIN} element={<Login />} />
-                <Route
-                    path={PATH.NEW_PASSWORD}
-                    element={
-                        <div>
-                            {" "}
-                            <NewPassword />{" "}
-                        </div>
-                    }
-                />
-
-                <Route
-                    path={PATH.REGISTRATION}
-                    element={
-                        <div>
-                            {" "}
-                            <Registration />{" "}
-                        </div>
-                    }
-                />
-
-                <Route
-                    path={PATH.ERROR}
-                    element={
-                        <div>
-                            {" "}
-                            <Error404 />{" "}
-                        </div>
-                    }
-                />
-                <Route
-                    path={PATH.PROFILE}
-                    element={
-                        <div>
-                            {" "}
-                            <Profile />
-                        </div>
-                    }
-                />
+                <Route path={PATH.NEW_PASSWORD} element={<NewPassword />} />
+                <Route path={PATH.REGISTRATION} element={<Registration />} />
+                <Route path={PATH.ERROR} element={<Error404 />} />
+                <Route path={PATH.PROFILE} element={<Profile />} />
                 <Route
                     path={PATH.FORGOT_PASSWORD}
-                    element={
-                        <div>
-                            {" "}
-                            <ForgotPassword />{" "}
-                        </div>
-                    }
+                    element={<ForgotPassword />}
                 />
                 <Route
                     path={PATH.ENTER_PASSWORD}
                     element={<div> enter Password </div>}
                 />
-
                 <Route path={"*"} element={<Error404 />} />
             </Routes>
         </div>
