@@ -36,23 +36,26 @@ export const authReducer = (
     }
 };
 
-export const updateName =
-    (name: string): AppThunkType =>
-    (dispatch) => {
-        dispatch(disableButtonAC(true));
-        authAPI
-            .updateName(name)
-            .then((res) => {
-                if (!res.data.error) {
-                    dispatch(setName(res.data.updatedUser.name));
-                }
-                //dispatch(setAppStatusAC('succeeded'))
-            })
-            .finally(() => {
-                dispatch(disableButtonAC(false));
-            });
-    };
+// actions
+export const setIsLoggedInAC = (value: boolean) =>
+    ({ type: "AUTH/SET-IS-LOGGED-IN", value } as const);
 
+export const setName = (name: string) =>
+    ({ type: "AUTH/SET_NAME", name } as const);
+
+export const setDataAC = (data: UserDataType) =>
+    ({ type: "AUTH/SET-DATA", data } as const);
+
+export const disableButtonAC = (disableButton: boolean) =>
+    ({ type: "AUTH/TOGGLE_IS_FOLLOWING_PROGRESS", disableButton } as const);
+
+export const setRegistrationErrorAC = (error: string) =>
+    ({ type: "AUTH/REGISTRATION_ERROR", error } as const);
+
+export const setRegistrationDoneAC = (registrationDone: boolean) =>
+    ({ type: "AUTH/REGISTRATION_DONE", registrationDone } as const);
+
+// thunks
 export const loginTC =
     (data: LoginParamsType): AppThunkType =>
     (dispatch) => {
@@ -94,6 +97,23 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
             dispatch(setAppStatusAC("succeeded"));
         });
 };
+
+export const updateName =
+    (name: string): AppThunkType =>
+    (dispatch) => {
+        dispatch(disableButtonAC(true));
+        authAPI
+            .updateName(name)
+            .then((res) => {
+                if (!res.data.error) {
+                    dispatch(setName(res.data.updatedUser.name));
+                }
+                //dispatch(setAppStatusAC('succeeded'))
+            })
+            .finally(() => {
+                dispatch(disableButtonAC(false));
+            });
+    };
 
 export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
     dispatch(disableButtonAC(true));
@@ -148,24 +168,7 @@ export const setRegistrationTC =
             });
     };
 
-export const setIsLoggedInAC = (value: boolean) =>
-    ({ type: "AUTH/SET-IS-LOGGED-IN", value } as const);
-
-export const setName = (name: string) =>
-    ({ type: "AUTH/SET_NAME", name } as const);
-
-export const setDataAC = (data: UserDataType) =>
-    ({ type: "AUTH/SET-DATA", data } as const);
-
-export const disableButtonAC = (disableButton: boolean) =>
-    ({ type: "AUTH/TOGGLE_IS_FOLLOWING_PROGRESS", disableButton } as const);
-
-export const setRegistrationErrorAC = (error: string) =>
-    ({ type: "AUTH/REGISTRATION_ERROR", error } as const);
-
-export const setRegistrationDoneAC = (registrationDone: boolean) =>
-    ({ type: "AUTH/REGISTRATION_DONE", registrationDone } as const);
-
+// types
 export type AuthActionsType =
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setName>

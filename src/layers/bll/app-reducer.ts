@@ -28,6 +28,7 @@ export const appInitReducer = (
     }
 };
 
+// actions
 export const setAppStatusAC = (status: RequestStatusType) =>
     ({ type: "APP/SET-STATUS", status } as const);
 
@@ -37,6 +38,7 @@ export const setIsInitializedAC = (isInitialized: boolean) =>
 export const setAppErrorAC = (error: null | string) =>
     ({ type: "APP/SET-ERROR", error } as const);
 
+// thunks
 export const initializeAppTC =
     (): AppThunkType => (dispatch, getState: () => AppStateType) => {
         authAPI
@@ -59,6 +61,7 @@ export const initializeAppTC =
             });
     };
 
+// types
 export type AppInitActionsType =
     | ReturnType<typeof setIsInitializedAC>
     | ReturnType<typeof setAppErrorAC>
