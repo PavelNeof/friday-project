@@ -115,28 +115,31 @@ export const updateName =
             });
     };
 
-export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
-    dispatch(disableButtonAC(true));
-    authAPI
-        .forgotPassword(newEmail)
-        .then((res) => {
-            if (res.data.error) {
-                alert(res.data.error);
-            }
-            if (!res.data.error) {
-                alert("Check your email!");
-            }
-        })
-        .catch((err) => {
-            alert(err.message);
-        })
-        .finally(() => {
-            dispatch(disableButtonAC(false));
-        });
-};
+export const forgotPasswordTC =
+    (newEmail: string): AppThunkType =>
+    (dispatch) => {
+        dispatch(disableButtonAC(true));
+        authAPI
+            .forgotPassword(newEmail)
+            .then((res) => {
+                if (res.data.error) {
+                    alert(res.data.error);
+                }
+                if (!res.data.error) {
+                    alert("Check your email!");
+                }
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
+            .finally(() => {
+                dispatch(disableButtonAC(false));
+            });
+    };
 
 export const setNewPasswordTC =
-    (password: string, resetPasswordToken: string) => (dispatch: Dispatch) => {
+    (password: string, resetPasswordToken: string): AppThunkType =>
+    (dispatch) => {
         dispatch(disableButtonAC(true));
         authAPI
             .setNewPassword(password, resetPasswordToken)
