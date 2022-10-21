@@ -1,7 +1,7 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import s from "../../../components/SuperButton/SuperButton.module.css";
-import { PATH } from "../Route/Route";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import s from '../../../components/SuperButton/SuperButton.module.css';
+import { PATH } from '../Route/Route';
 
 function Header() {
     return (

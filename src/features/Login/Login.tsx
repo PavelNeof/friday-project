@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     Button,
     Checkbox,
@@ -10,14 +10,14 @@ import {
     Input,
     InputAdornment,
     InputLabel,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Navigate, NavLink } from "react-router-dom";
-import { PATH } from "../../common/Routing/Route/Route";
-import { useFormik } from "formik";
-import styles from "../Registration/Registration.module.css";
-import { loginTC } from "../../layers/bll/auth-reducer";
-import { useAppDispatch, useAppSelector } from "../../layers/bll/store";
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Navigate, NavLink } from 'react-router-dom';
+import { PATH } from '../../common/Routing/Route/Route';
+import { useFormik } from 'formik';
+import styles from '../Registration/Registration.module.css';
+import { loginTC } from '../../layers/bll/auth-reducer';
+import { useAppDispatch, useAppSelector } from '../../layers/bll/store';
 
 type FormikLogErrorType = {
     email?: string;
@@ -28,44 +28,38 @@ type FormikLogErrorType = {
 function Login() {
     const [values, setValues] = React.useState<boolean>(false);
 
-    const isLoggedIn = useAppSelector<boolean>(
-        (state) => state.auth.isLoggedIn
-    );
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
 
     const handleClickShowPassword = () => {
         setValues(!values);
     };
 
-    const handleMouseDownPassword = (
-        event: React.MouseEvent<HTMLButtonElement>
-    ) => {
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
 
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            email: '',
+            password: '',
             rememberMe: false,
         },
-        validate: (values) => {
+        validate: values => {
             const errors: FormikLogErrorType = {};
             if (!values.email) {
-                errors.email = "Required";
-            } else if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-            ) {
-                errors.email = "Invalid email address";
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
             }
             if (!values.password) {
-                errors.password = "Required";
+                errors.password = 'Required';
             } else if (values.password.length <= 3) {
-                errors.password = "Must be 4 characters or more";
+                errors.password = 'Must be 4 characters or more';
             }
             return errors;
         },
-        onSubmit: (values) => {
+        onSubmit: values => {
             dispatch(loginTC(values));
             formik.resetForm();
         },
@@ -80,7 +74,7 @@ function Login() {
             <form onSubmit={formik.handleSubmit}>
                 <FormControl
                     className={styles.signUpForm}
-                    style={{ border: "1px white solid" }}
+                    style={{ border: '1px white solid' }}
                 >
                     <h1>Sign In</h1>
                     <FormGroup className={styles.signUpFormGroup}>
@@ -95,14 +89,12 @@ function Login() {
                                 id="standard-adornment-weight"
                                 aria-describedby="standard-weight-helper-text"
                                 inputProps={{
-                                    "aria-label": "weight",
+                                    'aria-label': 'weight',
                                 }}
-                                {...formik.getFieldProps("email")}
+                                {...formik.getFieldProps('email')}
                             />
                             {formik.touched.email && formik.errors.email ? (
-                                <div style={{ color: "red" }}>
-                                    {formik.errors.email}
-                                </div>
+                                <div style={{ color: 'red' }}>{formik.errors.email}</div>
                             ) : null}
                         </FormControl>
                         <FormControl
@@ -114,29 +106,22 @@ function Login() {
                             </InputLabel>
                             <Input
                                 id="standard-adornment-password"
-                                type={values ? "text" : "password"}
+                                type={values ? 'text' : 'password'}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle password visibility"
                                             onClick={handleClickShowPassword}
-                                            onMouseDown={
-                                                handleMouseDownPassword
-                                            }
+                                            onMouseDown={handleMouseDownPassword}
                                         >
-                                            {values ? (
-                                                <VisibilityOff />
-                                            ) : (
-                                                <Visibility />
-                                            )}
+                                            {values ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                {...formik.getFieldProps("password")}
+                                {...formik.getFieldProps('password')}
                             />
-                            {formik.touched.password &&
-                            formik.errors.password ? (
-                                <div style={{ color: "red" }}>
+                            {formik.touched.password && formik.errors.password ? (
+                                <div style={{ color: 'red' }}>
                                     {formik.errors.password}
                                 </div>
                             ) : null}
@@ -146,12 +131,12 @@ function Login() {
                             variant="standard"
                         >
                             <FormControlLabel
-                                label={"Remember me"}
+                                label={'Remember me'}
                                 control={
                                     <Checkbox
-                                        {...formik.getFieldProps("rememberMe")}
+                                        {...formik.getFieldProps('rememberMe')}
                                         checked={formik.values.rememberMe}
-                                        style={{ fontFamily: "Montserrat" }}
+                                        style={{ fontFamily: 'Montserrat' }}
                                     />
                                 }
                             />
@@ -164,17 +149,17 @@ function Login() {
                     </FormGroup>
                     <FormGroup className={styles.signUpFormGroup}>
                         <Button
-                            type={"submit"}
+                            type={'submit'}
                             className={styles.submitButton}
                             style={{
-                                color: "white",
-                                backgroundColor: "#366EFF",
-                                borderRadius: "30px",
-                                height: "40px",
+                                color: 'white',
+                                backgroundColor: '#366EFF',
+                                borderRadius: '30px',
+                                height: '40px',
                                 boxShadow:
-                                    "0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)",
-                                fontSize: "16px",
-                                textTransform: "capitalize",
+                                    '0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+                                fontSize: '16px',
+                                textTransform: 'capitalize',
                             }}
                         >
                             Sing In

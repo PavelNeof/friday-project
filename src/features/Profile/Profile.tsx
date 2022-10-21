@@ -1,31 +1,23 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import React from "react";
-import { useSelector } from "react-redux";
-import { Navigate, NavLink } from "react-router-dom";
-import { AppStateType, useAppDispatch } from "../../layers/bll/store";
-import { logoutTC, updateName } from "../../layers/bll/auth-reducer";
-import { PATH } from "../../common/Routing/Route/Route";
-import { Button, FormControl, Grid } from "@mui/material";
-import styles from "../Registration/Registration.module.css";
-import styleProfile from "./Profile.module.css";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
+import { ChangeEvent, useEffect, useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, NavLink } from 'react-router-dom';
+import { AppStateType, useAppDispatch } from '../../layers/bll/store';
+import { logoutTC, updateName } from '../../layers/bll/auth-reducer';
+import { PATH } from '../../common/Routing/Route/Route';
+import { Button, FormControl, Grid } from '@mui/material';
+import styles from '../Registration/Registration.module.css';
+import styleProfile from './Profile.module.css';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 export const Profile = () => {
-    const isLoggedIn = useSelector<AppStateType, boolean>(
-        (state) => state.auth.isLoggedIn
-    );
-    const name = useSelector<AppStateType, string>(
-        (state) => state.auth.data.name
-    );
-    const email = useSelector<AppStateType, string>(
-        (state) => state.auth.data.email
-    );
+    const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn);
+    const name = useSelector<AppStateType, string>(state => state.auth.data.name);
+    const email = useSelector<AppStateType, string>(state => state.auth.data.email);
     const avatar = useSelector<AppStateType, string | undefined>(
-        (state) => state.auth.data.avatar
+        state => state.auth.data.avatar,
     );
-    const disable = useSelector<AppStateType, boolean>(
-        (state) => state.auth.disableButton
-    );
+    const disable = useSelector<AppStateType, boolean>(state => state.auth.disableButton);
 
     const dispatch = useAppDispatch();
 
@@ -58,7 +50,7 @@ export const Profile = () => {
             <Grid container className={styles.container}>
                 <FormControl
                     className={styles.signUpForm}
-                    style={{ border: "1px white solid" }}
+                    style={{ border: '1px white solid' }}
                 >
                     <div className={styleProfile.profile}>
                         <h1>Personal Information</h1>
@@ -68,14 +60,14 @@ export const Profile = () => {
                             {!editMode && (
                                 <div>
                                     <span onDoubleClick={activateEditMode}>
-                                        {currentName || email || "---"}
+                                        {currentName || email || '---'}
                                     </span>
                                     <span
-                                        style={{ color: "#414141" }}
+                                        style={{ color: '#414141' }}
                                         onClick={activateEditMode}
                                     >
-                                        {" "}
-                                        <BorderColorIcon />{" "}
+                                        {' '}
+                                        <BorderColorIcon />{' '}
                                     </span>
                                 </div>
                             )}
@@ -90,9 +82,9 @@ export const Profile = () => {
                                     <button
                                         onClick={deactivateEditMode}
                                         style={{
-                                            backgroundColor: "#366eff",
-                                            color: "white",
-                                            border: "#366eff",
+                                            backgroundColor: '#366eff',
+                                            color: 'white',
+                                            border: '#366eff',
                                         }}
                                     >
                                         SAVE
@@ -101,17 +93,17 @@ export const Profile = () => {
                             )}
                         </div>
 
-                        <span style={{ color: "#868686FF" }}> {email} </span>
+                        <span style={{ color: '#868686FF' }}> {email} </span>
                         <Button
                             style={{
-                                color: "black",
-                                backgroundColor: "#ffffff",
+                                color: 'black',
+                                backgroundColor: '#ffffff',
                                 boxShadow:
-                                    "0px 4px 18px rgba(54, 110, 255, 0.6), inset 0px 1px 0px rgba(255, 255, 255, 0.5)",
-                                borderRadius: "30px",
-                                padding: "5px 25px 5px 25px",
-                                fontFamily: "Montserrat",
-                                textTransform: "capitalize",
+                                    '0px 4px 18px rgba(54, 110, 255, 0.6), inset 0px 1px 0px rgba(255, 255, 255, 0.5)',
+                                borderRadius: '30px',
+                                padding: '5px 25px 5px 25px',
+                                fontFamily: 'Montserrat',
+                                textTransform: 'capitalize',
                             }}
                             disabled={disable}
                             onClick={() => {

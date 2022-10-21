@@ -47,7 +47,7 @@
     border-radius: 11px;
 }
 .checkboxStyleE .checkboxCheckmark:after {
-    content: "";
+    content: '';
     position: absolute;
     left: 3px;
     top: 3px;

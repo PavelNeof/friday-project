@@ -4,10 +4,9 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-
 }
 
-.textName{
+.textName {
     color: #868686;
     border: solid 1px red;
 }

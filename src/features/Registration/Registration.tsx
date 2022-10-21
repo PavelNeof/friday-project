@@ -1,7 +1,7 @@
-import React from "react";
-import { Navigate, NavLink } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../layers/bll/store";
-import { useFormik } from "formik";
+import React from 'react';
+import { Navigate, NavLink } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../layers/bll/store';
+import { useFormik } from 'formik';
 import {
     Button,
     FormControl,
@@ -11,11 +11,11 @@ import {
     Input,
     InputAdornment,
     InputLabel,
-} from "@mui/material";
-import { PATH } from "../../common/Routing/Route/Route";
-import { setRegistrationTC } from "../../layers/bll/auth-reducer";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import styles from "./Registration.module.css";
+} from '@mui/material';
+import { PATH } from '../../common/Routing/Route/Route';
+import { setRegistrationTC } from '../../layers/bll/auth-reducer';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import styles from './Registration.module.css';
 
 type FormikRegErrorType = {
     email?: string;
@@ -30,13 +30,9 @@ type State = {
 
 export const Registration = () => {
     //registrationDone - значение авторизации (true/false)
-    const registrationDone = useAppSelector(
-        (state) => state.auth.registrationDone
-    );
+    const registrationDone = useAppSelector(state => state.auth.registrationDone);
     //registrationError - текст ошибки регистрации
-    const registrationError = useAppSelector(
-        (state) => state.auth.registrationError
-    );
+    const registrationError = useAppSelector(state => state.auth.registrationError);
     const dispatch = useAppDispatch();
 
     //локальный стейт для видимости паролей
@@ -46,12 +42,12 @@ export const Registration = () => {
     });
     //колбэк функция - изменение стейта видимости паролей
     const handleClickShowPassword = (setting: string) => {
-        if (setting === "showPassword") {
+        if (setting === 'showPassword') {
             setValues({
                 ...values,
                 showPassword: !values.showPassword,
             });
-        } else if (setting === "showConfirmPassword") {
+        } else if (setting === 'showConfirmPassword') {
             setValues({
                 ...values,
                 showConfirmPassword: !values.showConfirmPassword,
@@ -59,40 +55,36 @@ export const Registration = () => {
         }
     };
 
-    const handleMouseDownPassword = (
-        event: React.MouseEvent<HTMLButtonElement>
-    ) => {
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
     //хук библотики Formik
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
-            confirmPassword: "",
+            email: '',
+            password: '',
+            confirmPassword: '',
         },
-        validate: (values) => {
+        validate: values => {
             const errors: FormikRegErrorType = {};
             if (!values.email) {
-                errors.email = "Required";
-            } else if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-            ) {
-                errors.email = "Invalid email address";
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
             }
             if (!values.password) {
-                errors.password = "Required";
+                errors.password = 'Required';
             } else if (values.password.length <= 3) {
-                errors.password = "Must be 4 characters or more";
+                errors.password = 'Must be 4 characters or more';
             }
             if (!values.confirmPassword) {
-                errors.confirmPassword = "Required";
+                errors.confirmPassword = 'Required';
             } else if (values.confirmPassword !== values.password) {
-                errors.confirmPassword = "Passwords must be same";
+                errors.confirmPassword = 'Passwords must be same';
             }
             return errors;
         },
-        onSubmit: (values) => {
+        onSubmit: values => {
             dispatch(setRegistrationTC(values.email, values.password));
             formik.resetForm();
         },
@@ -107,7 +99,7 @@ export const Registration = () => {
             <form onSubmit={formik.handleSubmit}>
                 <FormControl
                     className={styles.signUpForm}
-                    style={{ border: "1px white solid" }}
+                    style={{ border: '1px white solid' }}
                 >
                     <h1>Sign Up</h1>
                     <FormGroup className={styles.signUpFormGroup}>
@@ -122,14 +114,12 @@ export const Registration = () => {
                                 id="standard-adornment-weight"
                                 aria-describedby="standard-weight-helper-text"
                                 inputProps={{
-                                    "aria-label": "weight",
+                                    'aria-label': 'weight',
                                 }}
-                                {...formik.getFieldProps("email")}
+                                {...formik.getFieldProps('email')}
                             />
                             {formik.touched.email && formik.errors.email ? (
-                                <div style={{ color: "red" }}>
-                                    {formik.errors.email}
-                                </div>
+                                <div style={{ color: 'red' }}>{formik.errors.email}</div>
                             ) : null}
                         </FormControl>
                         <FormControl
@@ -141,19 +131,15 @@ export const Registration = () => {
                             </InputLabel>
                             <Input
                                 id="standard-adornment-password"
-                                type={values.showPassword ? "text" : "password"}
+                                type={values.showPassword ? 'text' : 'password'}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle password visibility"
                                             onClick={() =>
-                                                handleClickShowPassword(
-                                                    "showPassword"
-                                                )
+                                                handleClickShowPassword('showPassword')
                                             }
-                                            onMouseDown={
-                                                handleMouseDownPassword
-                                            }
+                                            onMouseDown={handleMouseDownPassword}
                                         >
                                             {values.showPassword ? (
                                                 <VisibilityOff />
@@ -163,11 +149,10 @@ export const Registration = () => {
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                {...formik.getFieldProps("password")}
+                                {...formik.getFieldProps('password')}
                             />
-                            {formik.touched.password &&
-                            formik.errors.password ? (
-                                <div style={{ color: "red" }}>
+                            {formik.touched.password && formik.errors.password ? (
+                                <div style={{ color: 'red' }}>
                                     {formik.errors.password}
                                 </div>
                             ) : null}
@@ -181,23 +166,17 @@ export const Registration = () => {
                             </InputLabel>
                             <Input
                                 id="standard-adornment-password"
-                                type={
-                                    values.showConfirmPassword
-                                        ? "text"
-                                        : "password"
-                                }
+                                type={values.showConfirmPassword ? 'text' : 'password'}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle password visibility"
                                             onClick={() =>
                                                 handleClickShowPassword(
-                                                    "showConfirmPassword"
+                                                    'showConfirmPassword',
                                                 )
                                             }
-                                            onMouseDown={
-                                                handleMouseDownPassword
-                                            }
+                                            onMouseDown={handleMouseDownPassword}
                                         >
                                             {values.showConfirmPassword ? (
                                                 <VisibilityOff />
@@ -207,34 +186,32 @@ export const Registration = () => {
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                {...formik.getFieldProps("confirmPassword")}
+                                {...formik.getFieldProps('confirmPassword')}
                             />
                             {formik.touched.confirmPassword &&
                             formik.errors.confirmPassword ? (
-                                <div style={{ color: "red" }}>
+                                <div style={{ color: 'red' }}>
                                     {formik.errors.confirmPassword}
                                 </div>
                             ) : null}
                             {registrationError && (
-                                <div style={{ color: "red" }}>
-                                    {registrationError}
-                                </div>
+                                <div style={{ color: 'red' }}>{registrationError}</div>
                             )}
                         </FormControl>
                     </FormGroup>
                     <FormGroup className={styles.signUpFormGroup}>
                         <Button
-                            type={"submit"}
+                            type={'submit'}
                             className={styles.submitButton}
                             style={{
-                                color: "white",
-                                backgroundColor: "#366EFF",
-                                borderRadius: "30px",
-                                height: "40px",
+                                color: 'white',
+                                backgroundColor: '#366EFF',
+                                borderRadius: '30px',
+                                height: '40px',
                                 boxShadow:
-                                    "0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)",
-                                fontSize: "16px",
-                                textTransform: "capitalize",
+                                    '0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+                                fontSize: '16px',
+                                textTransform: 'capitalize',
                             }}
                         >
                             Sing Up

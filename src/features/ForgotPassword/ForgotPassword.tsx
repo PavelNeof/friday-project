@@ -1,13 +1,11 @@
-import React, { ChangeEvent, useState } from "react";
-import { AppStateType, useAppDispatch } from "../../layers/bll/store";
-import { forgotPasswordTC } from "../../layers/bll/auth-reducer";
-import { useSelector } from "react-redux";
+import React, { ChangeEvent, useState } from 'react';
+import { AppStateType, useAppDispatch } from '../../layers/bll/store';
+import { forgotPasswordTC } from '../../layers/bll/auth-reducer';
+import { useSelector } from 'react-redux';
 
 export const ForgotPassword = () => {
-    let [newEmail, setNewEmail] = useState("");
-    const disable = useSelector<AppStateType, boolean>(
-        (state) => state.auth.disableButton
-    );
+    let [newEmail, setNewEmail] = useState('');
+    const disable = useSelector<AppStateType, boolean>(state => state.auth.disableButton);
 
     const dispatch = useAppDispatch();
 
