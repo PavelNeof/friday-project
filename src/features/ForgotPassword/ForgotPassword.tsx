@@ -1,9 +1,13 @@
 import React, { ChangeEvent, useState } from "react";
-import { useAppDispatch } from "../../layers/bll/store";
+import { AppStateType, useAppDispatch } from "../../layers/bll/store";
 import { forgotPasswordTC } from "../../layers/bll/auth-reducer";
+import { useSelector } from "react-redux";
 
 export const ForgotPassword = () => {
     let [newEmail, setNewEmail] = useState("");
+    const disable = useSelector<AppStateType, boolean>(
+        (state) => state.auth.disableButton
+    );
 
     const dispatch = useAppDispatch();
 
@@ -21,7 +25,9 @@ export const ForgotPassword = () => {
                 Your email:
                 <input onChange={onChangeHandler} value={newEmail} />
             </div>
-            <button onClick={onClickHandler}>Send</button>
+            <button disabled={disable} onClick={onClickHandler}>
+                Send
+            </button>
         </>
     );
 };

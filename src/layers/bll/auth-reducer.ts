@@ -1,7 +1,8 @@
 import { authAPI, LoginParamsType } from "../dal/api";
 import { Dispatch } from "redux";
-import { Params } from "react-router-dom";
 import { AppDispatchType, AppThunkType } from "./store";
+import { AxiosError } from "axios";
+import { setAppErrorAC, setAppStatusAC } from "./app-reducer";
 
 const initState = {
     isLoggedIn: false,
@@ -35,92 +36,7 @@ export const authReducer = (
     }
 };
 
-export const updateName =
-    (name: string): AppThunkType =>
-    (dispatch) => {
-        dispatch(disableButtonAC(true));
-        authAPI
-            .updateName(name)
-            .then((res) => {
-                if (!res.data.error) {
-                    dispatch(setName(res.data.updatedUser.name));
-                }
-                //dispatch(setAppStatusAC('succeeded'))
-            })
-            .finally(() => {
-                dispatch(disableButtonAC(false));
-            });
-    };
-
-export const loginTC =
-    (data: LoginParamsType): AppThunkType =>
-    (dispatch) => {
-        authAPI
-            .login(data)
-            .then((res) => {
-                dispatch(setIsLoggedInAC(true));
-                dispatch(setDataAC(res.data));
-            })
-            .catch((e) => {
-                const error = e.response
-                    ? e.response.data.error
-                    : e.message + ", more details in the console";
-                console.log("error: ", error);
-            });
-    };
-
-export const logoutTC = (): AppThunkType => (dispatch) => {
-    //dispatch(setAppStatusAC('loading'))
-    dispatch(disableButtonAC(true));
-    authAPI
-        .logout()
-        .then((res) => {
-            if (!res.data.error) {
-                dispatch(setIsLoggedInAC(false));
-                dispatch(setDataAC({} as UserDataType));
-                // dispatch(setAppStatusAC('succeeded'))
-            }
-        })
-        .finally(() => {
-            dispatch(disableButtonAC(false));
-        });
-};
-
-export const forgotPasswordTC = (newEmail: string) => (dispatch: Dispatch) => {
-    authAPI.forgotPassword(newEmail).then((res) => {
-        if (res.data.error) {
-            alert(res.data.error);
-        }
-        if (!res.data.error) {
-            alert("Check your email!");
-        }
-    });
-};
-
-export const setNewPasswordTC =
-    (password: string, resetPasswordToken: string) => (dispatch: Dispatch) => {
-        authAPI.setNewPassword(password, resetPasswordToken).then((res) => {
-            if (!res.data.error) {
-                alert("Success!");
-            }
-        });
-    };
-
-export const setRegistrationTC =
-    (email: string, password: string): AppThunkType =>
-    (dispatch: AppDispatchType) => {
-        return authAPI
-            .register(email, password)
-            .then((res) => {
-                console.log(res);
-                dispatch(setRegistrationDoneAC(true));
-            })
-            .catch((e) => {
-                const error = e.response.data as RegisterErrorType;
-                dispatch(setRegistrationErrorAC(error.error));
-            });
-    };
-
+// actions
 export const setIsLoggedInAC = (value: boolean) =>
     ({ type: "AUTH/SET-IS-LOGGED-IN", value } as const);
 
@@ -139,6 +55,123 @@ export const setRegistrationErrorAC = (error: string) =>
 export const setRegistrationDoneAC = (registrationDone: boolean) =>
     ({ type: "AUTH/REGISTRATION_DONE", registrationDone } as const);
 
+// thunks
+export const loginTC =
+    (data: LoginParamsType): AppThunkType =>
+    (dispatch) => {
+        dispatch(setAppStatusAC("loading"));
+        authAPI
+            .login(data)
+            .then((res) => {
+                dispatch(setIsLoggedInAC(true));
+                dispatch(setDataAC(res.data));
+            })
+            .catch((e: AxiosError) => {
+                const error = e.response
+                    ? (e.response.data as { error: string }).error
+                    : e.message;
+                dispatch(setAppErrorAC(error));
+            })
+            .finally(() => dispatch(setAppStatusAC("succeeded")));
+    };
+
+export const logoutTC = (): AppThunkType => (dispatch) => {
+    dispatch(setAppStatusAC("loading"));
+    dispatch(disableButtonAC(true));
+    authAPI
+        .logout()
+        .then((res) => {
+            if (!res.data.error) {
+                dispatch(setIsLoggedInAC(false));
+                dispatch(setDataAC({} as UserDataType));
+            }
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response
+                ? (e.response.data as { error: string }).error
+                : e.message;
+            dispatch(setAppErrorAC(error));
+        })
+        .finally(() => {
+            dispatch(disableButtonAC(false));
+            dispatch(setAppStatusAC("succeeded"));
+        });
+};
+
+export const updateName =
+    (name: string): AppThunkType =>
+    (dispatch) => {
+        dispatch(disableButtonAC(true));
+        authAPI
+            .updateName(name)
+            .then((res) => {
+                if (!res.data.error) {
+                    dispatch(setName(res.data.updatedUser.name));
+                }
+                //dispatch(setAppStatusAC('succeeded'))
+            })
+            .finally(() => {
+                dispatch(disableButtonAC(false));
+            });
+    };
+
+export const forgotPasswordTC =
+    (newEmail: string): AppThunkType =>
+    (dispatch) => {
+        dispatch(disableButtonAC(true));
+        authAPI
+            .forgotPassword(newEmail)
+            .then((res) => {
+                if (res.data.error) {
+                    alert(res.data.error);
+                }
+                if (!res.data.error) {
+                    alert("Check your email!");
+                }
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
+            .finally(() => {
+                dispatch(disableButtonAC(false));
+            });
+    };
+
+export const setNewPasswordTC =
+    (password: string, resetPasswordToken: string): AppThunkType =>
+    (dispatch) => {
+        dispatch(disableButtonAC(true));
+        authAPI
+            .setNewPassword(password, resetPasswordToken)
+            .then((res) => {
+                if (!res.data.error) {
+                    alert("Success!");
+                }
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
+            .finally(() => {
+                dispatch(disableButtonAC(false));
+            });
+    };
+
+export const setRegistrationTC =
+    (email: string, password: string): AppThunkType =>
+    (dispatch: AppDispatchType) => {
+        return authAPI
+            .register(email, password)
+            .then((res) => {
+                console.log(res);
+                dispatch(setRegistrationDoneAC(true));
+            })
+            .catch((e) => {
+                const error = e.response.data as RegisterErrorType;
+                dispatch(setRegistrationErrorAC(error.error));
+            });
+    };
+
+// types
 export type AuthActionsType =
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setName>

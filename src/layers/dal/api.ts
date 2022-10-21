@@ -38,7 +38,7 @@ export const authAPI = {
             from: "test-front-admin <ai73a@yandex.by>",
             message: `<div style="background-color: #98d398; padding: 15px">
             password recovery link: 
-            <a href='http://localhost:3000/#/set-new-password/$token$'>
+            <a href='https://neko-back.herokuapp.com/2.0/#/set-new-password/$token$'>
             link</a>
             </div>`,
         };
