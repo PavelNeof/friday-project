@@ -28,7 +28,7 @@ type FormikLogErrorType = {
 function Login() {
     const [values, setValues] = React.useState<boolean>(false);
 
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn);
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
 
     const handleClickShowPassword = () => {

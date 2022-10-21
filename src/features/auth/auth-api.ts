@@ -13,7 +13,7 @@ export const authAPI = {
         return instance.delete<{ info: string; error?: string }>(`/auth/me`);
     },
     me() {
-        return instance.post<void, AxiosResponse<UserDataType>>(`auth/me`);
+        return instance.post<UserDataType>(`auth/me`);
     },
     updateName(name: string) {
         return instance.put(`/auth/me`, { name });

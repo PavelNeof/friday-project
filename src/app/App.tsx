@@ -5,14 +5,14 @@ import Router, { PATH } from '../common/routing/Route/Route';
 import { AppBar, Button, CircularProgress, Toolbar } from '@mui/material';
 import { useAppDispatch, useAppSelector } from './store';
 import { logoutTC } from '../features/auth/auth-reducer';
-import { initializeAppTC, RequestStatusType } from './app-reducer';
+import { initializeAppTC } from './app-reducer';
 import ErrorSnackbars from '../common/components/ErrorSnackbars/ErrorSnackbars';
 import LinearProgress from '@mui/material/LinearProgress';
 
 function App() {
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn);
-    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized);
-    const status = useAppSelector<RequestStatusType>(state => state.app.status);
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+    const isInitialized = useAppSelector(state => state.app.isInitialized);
+    const status = useAppSelector(state => state.app.status);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
