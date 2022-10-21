@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import { HashRouter, NavLink } from 'react-router-dom';
-import Router, { PATH } from '../common/Routing/Route/Route';
+import Router, { PATH } from '../common/routing/Route/Route';
 import { AppBar, Button, CircularProgress, Toolbar } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../layers/bll/store';
-import { logoutTC } from '../layers/bll/auth-reducer';
-import { initializeAppTC, RequestStatusType } from '../layers/bll/app-reducer';
-import ErrorSnackbars from '../components/ErrorSnackbars/ErrorSnackbars';
+import { useAppDispatch, useAppSelector } from './store';
+import { logoutTC } from '../features/auth/auth-reducer';
+import { initializeAppTC, RequestStatusType } from './app-reducer';
+import ErrorSnackbars from '../common/components/ErrorSnackbars/ErrorSnackbars';
 import LinearProgress from '@mui/material/LinearProgress';
 
 function App() {
