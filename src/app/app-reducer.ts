@@ -47,11 +47,10 @@ export const initializeAppTC =
                 dispatch(setDataAC(res.data));
             }
             dispatch(setIsLoggedInAC(true));
-            dispatch(setIsInitializedAC(true));
         } catch (e) {
             const err = e as Error | AxiosError;
             if (!axios.isAxiosError(err)) {
-                dispatch(setAppErrorAC(`Native error ${err.message}`));
+                dispatch(setAppErrorAC(`Native error: ${err.message}`));
             }
         } finally {
             dispatch(setIsInitializedAC(true));
