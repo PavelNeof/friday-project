@@ -3,7 +3,7 @@ import { AppThunkType } from '../../app/store';
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer';
 import { AxiosError } from 'axios';
 import { setDataAC, setIsLoggedInAC } from '../auth/auth-reducer';
-import { CardPacksType, packsAPI } from '../../api/packs-api';
+import { CardPacksType, packsAPI } from './packs-api';
 
 const initState = {
     data: [] as CardPacksType[],

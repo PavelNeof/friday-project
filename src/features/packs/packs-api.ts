@@ -1,4 +1,4 @@
-import { instance } from './api-config';
+import { instance } from '../../api/api-config';
 
 export const packsAPI = {
     getPacks() {
