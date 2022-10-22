@@ -39,6 +39,10 @@ export const Profile = () => {
         setCurrentName(e.currentTarget.value);
     };
 
+    const onClickHandler = () => {
+        dispatch(logoutTC());
+    };
+
     if (!isLoggedIn) {
         return <Navigate to={PATH.LOGIN} />;
     }
@@ -104,9 +108,7 @@ export const Profile = () => {
                                 textTransform: 'capitalize',
                             }}
                             disabled={disable}
-                            onClick={() => {
-                                dispatch(logoutTC());
-                            }}
+                            onClick={onClickHandler}
                         >
                             LogOut
                         </Button>

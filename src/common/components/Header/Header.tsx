@@ -44,8 +44,6 @@ export function Header() {
                             fontFamily: 'Montserrat',
                             textTransform: 'capitalize',
                         }}
-                        // onClick={isLoggedIn ? () => dispatch(logoutTC()) : undefined}
-                        // onClick={onClickHandlerProfile}
                     >
                         {isLoggedIn ? (
                             <NavLink

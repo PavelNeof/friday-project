@@ -8,6 +8,7 @@ import { NewPassword } from '../../../features/auth/ForgotPassword/NewPassword';
 import { Registration } from '../../../features/auth/Registration/Registration';
 import Login from '../../../features/auth/Login/Login';
 import { Packs } from '../../../features/packs/Packs';
+import { AddNewPack } from '../../../features/packs/AddNewPack/AddNewPack';
 
 export const PATH = {
     MAIN: '/',
@@ -19,6 +20,7 @@ export const PATH = {
     ENTER_PASSWORD: '/enterPassword',
     NEW_PASSWORD: '/set-new-password/:token',
     PACKS: '/packs',
+    ADD_NEW_PACK: '/add-new-pack',
 };
 
 function Router() {
@@ -33,7 +35,16 @@ function Router() {
                 <Route path={PATH.PROFILE} element={<Profile />} />
                 <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
                 <Route path={PATH.PACKS} element={<Packs />} />
-                <Route path={PATH.ENTER_PASSWORD} element={<div> enter Password </div>} />
+                <Route path={PATH.PACKS} element={<Packs />} />
+                <Route
+                    path={PATH.ADD_NEW_PACK}
+                    element={
+                        <div>
+                            {' '}
+                            <AddNewPack />{' '}
+                        </div>
+                    }
+                />
                 <Route path={'*'} element={<Navigate to={PATH.ERROR_404} />} />
             </Routes>
         </div>

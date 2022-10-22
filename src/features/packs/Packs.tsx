@@ -8,6 +8,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import TableCell from '@mui/material/TableCell';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { NavLink } from 'react-router-dom';
+import { PATH } from '../../common/routing/Route/Route';
 
 export function Packs() {
     const dispatch = useAppDispatch();
@@ -57,7 +59,15 @@ export function Packs() {
                         margin: '25px 10px 0px 0px',
                     }}
                 >
-                    Add new packs
+                    <NavLink
+                        to={PATH.ADD_NEW_PACK}
+                        style={{
+                            textDecoration: 'none',
+                            color: 'white',
+                        }}
+                    >
+                        Add new pack
+                    </NavLink>
                 </Button>
             </div>
             <Box sx={{ height: 400, width: '100%' }}>
@@ -70,28 +80,6 @@ export function Packs() {
                     onRowClick={params => console.log(params.row.name)}
                 />
             </Box>
-
-            {/*{data.map((headCell) => (*/}
-            {/*    <TableCell*/}
-            {/*        key={headCell._id}*/}
-            {/*        align={headCell.numeric ? 'right' : 'left'}*/}
-            {/*        padding={headCell.disablePadding ? 'none' : 'normal'}*/}
-            {/*        sortDirection={orderBy === headCell._id ? order : false}*/}
-            {/*    >*/}
-            {/*        <TableSortLabel*/}
-            {/*            active={orderBy === headCell._id}*/}
-            {/*            direction={orderBy === headCell._id ? order : 'asc'}*/}
-            {/*            onClick={createSortHandler(headCell._id)}*/}
-            {/*        >*/}
-            {/*            {headCell.label}*/}
-            {/*            {orderBy === headCell._id ? (*/}
-            {/*                <Box component="span" sx={visuallyHidden}>*/}
-            {/*                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}*/}
-            {/*                </Box>*/}
-            {/*            ) : null}*/}
-            {/*        </TableSortLabel>*/}
-
-            {/*        );*/}
         </div>
     );
 }
