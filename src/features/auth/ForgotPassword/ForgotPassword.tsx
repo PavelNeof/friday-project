@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
-import { AppStateType, useAppDispatch } from '../../../app/store';
+import { AppStateType, useAppDispatch, useAppSelector } from '../../../app/store';
 import { forgotPasswordTC } from '../auth-reducer';
 import { useSelector } from 'react-redux';
 
 export const ForgotPassword = () => {
     let [newEmail, setNewEmail] = useState('');
-    const disable = useSelector<AppStateType, boolean>(state => state.auth.disableButton);
+    const disable = useAppSelector(state => state.auth.disableButton);
 
     const dispatch = useAppDispatch();
 

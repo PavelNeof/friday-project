@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { AppStateType, useAppDispatch } from '../../app/store';
+import { AppStateType, useAppDispatch, useAppSelector } from '../../app/store';
 import { logoutTC, updateName } from '../auth/auth-reducer';
 import { PATH } from '../../common/routing/Route/Route';
 import { Button, FormControl, Grid } from '@mui/material';
@@ -11,13 +11,11 @@ import styleProfile from './Profile.module.css';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 export const Profile = () => {
-    const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn);
-    const name = useSelector<AppStateType, string>(state => state.auth.data.name);
-    const email = useSelector<AppStateType, string>(state => state.auth.data.email);
-    const avatar = useSelector<AppStateType, string | undefined>(
-        state => state.auth.data.avatar,
-    );
-    const disable = useSelector<AppStateType, boolean>(state => state.auth.disableButton);
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+    const name = useAppSelector(state => state.auth.data.name);
+    const email = useAppSelector(state => state.auth.data.email);
+    const avatar = useAppSelector(state => state.auth.data.avatar);
+    const disable = useAppSelector(state => state.auth.disableButton);
 
     const dispatch = useAppDispatch();
 
