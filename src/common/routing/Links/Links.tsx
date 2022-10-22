@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import s from '../../components/SuperButton/SuperButton.module.css';
 import { PATH } from '../Route/Route';
 
-function Header() {
+function Links() {
     return (
         <div className={s.header}>
             <NavLink to={PATH.MAIN} className={s.button5}>
@@ -41,4 +41,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default Links;
