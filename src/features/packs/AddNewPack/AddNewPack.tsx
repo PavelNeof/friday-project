@@ -40,7 +40,6 @@ export const AddNewPack = () => {
                                 marginTop: '40px',
                             }}
                         >
-                            {' '}
                             Add new card
                         </Button>
                     </div>
