@@ -7,6 +7,7 @@ import { ForgotPassword } from '../../../features/auth/ForgotPassword/ForgotPass
 import { NewPassword } from '../../../features/auth/ForgotPassword/NewPassword';
 import { Registration } from '../../../features/auth/Registration/Registration';
 import Login from '../../../features/auth/Login/Login';
+import { Packs } from '../../../features/packs/Packs';
 
 export const PATH = {
     MAIN: '/',
@@ -17,6 +18,7 @@ export const PATH = {
     FORGOT_PASSWORD: '/forgotPassword',
     ENTER_PASSWORD: '/enterPassword',
     NEW_PASSWORD: '/set-new-password/:token',
+    PACKS: '/packs',
 };
 
 function Router() {
@@ -30,6 +32,7 @@ function Router() {
                 <Route path={PATH.ERROR_404} element={<Error404 />} />
                 <Route path={PATH.PROFILE} element={<Profile />} />
                 <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
+                <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={PATH.ENTER_PASSWORD} element={<div> enter Password </div>} />
                 <Route path={'*'} element={<Navigate to={PATH.ERROR_404} />} />
             </Routes>

@@ -7,10 +7,12 @@ import {
 import { AuthActionsType, authReducer } from '../features/auth/auth-reducer';
 import { appInitReducer, AppInitActionsType } from './app-reducer';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { PacksActionsType, packsReducer } from '../features/packs/Packs-reducer';
 
 const reducers = combineReducers({
     auth: authReducer,
     app: appInitReducer,
+    packs: packsReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));
@@ -27,7 +29,7 @@ export type AppThunkType<ReturnType = void> = ThunkAction<
 export const useAppDispatch = () => useDispatch<AppDispatchType>();
 export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector;
 
-export type AppActionsType = AuthActionsType | AppInitActionsType;
+export type AppActionsType = AuthActionsType | AppInitActionsType | PacksActionsType;
 
 export default store;
 
