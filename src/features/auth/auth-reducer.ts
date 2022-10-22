@@ -1,7 +1,8 @@
 import { authAPI, LoginParamsType } from './auth-api';
 import { AppDispatchType, AppThunkType } from '../../app/store';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer';
+import { errorsHandling } from '../../common/utils/error-utils';
 
 const initState = {
     isLoggedIn: false,
@@ -56,44 +57,32 @@ export const setRegistrationDoneAC = (registrationDone: boolean) =>
 // thunks
 export const loginTC =
     (data: LoginParamsType): AppThunkType =>
-    dispatch => {
-        dispatch(setAppStatusAC('loading'));
-        authAPI
-            .login(data)
-            .then(res => {
-                dispatch(setIsLoggedInAC(true));
-                dispatch(setDataAC(res.data));
-            })
-            .catch((e: AxiosError) => {
-                const error = e.response
-                    ? (e.response.data as { error: string }).error
-                    : e.message;
-                dispatch(setAppErrorAC(error));
-            })
-            .finally(() => dispatch(setAppStatusAC('succeeded')));
+    async dispatch => {
+        try {
+            dispatch(setAppStatusAC('loading'));
+            const res = await authAPI.login(data);
+            dispatch(setIsLoggedInAC(true));
+            dispatch(setDataAC(res.data));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        } finally {
+            dispatch(setAppStatusAC('succeeded'));
+        }
     };
 
-export const logoutTC = (): AppThunkType => dispatch => {
-    dispatch(setAppStatusAC('loading'));
-    dispatch(disableButtonAC(true));
-    authAPI
-        .logout()
-        .then(res => {
-            if (!res.data.error) {
-                dispatch(setIsLoggedInAC(false));
-                dispatch(setDataAC({} as UserDataType));
-            }
-        })
-        .catch((e: AxiosError) => {
-            const error = e.response
-                ? (e.response.data as { error: string }).error
-                : e.message;
-            dispatch(setAppErrorAC(error));
-        })
-        .finally(() => {
-            dispatch(disableButtonAC(false));
-            dispatch(setAppStatusAC('succeeded'));
-        });
+export const logoutTC = (): AppThunkType => async dispatch => {
+    try {
+        dispatch(setAppStatusAC('loading'));
+        dispatch(disableButtonAC(true));
+        await authAPI.logout();
+        dispatch(setIsLoggedInAC(false));
+        dispatch(setDataAC({} as UserDataType));
+    } catch (e) {
+        errorsHandling(e as Error | AxiosError, dispatch);
+    } finally {
+        dispatch(disableButtonAC(false));
+        dispatch(setAppStatusAC('succeeded'));
+    }
 };
 
 export const updateName =

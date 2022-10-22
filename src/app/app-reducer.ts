@@ -1,7 +1,7 @@
 import { AppStateType, AppThunkType } from './store';
 import { authAPI } from '../features/auth/auth-api';
 import { setDataAC, setIsLoggedInAC } from '../features/auth/auth-reducer';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
@@ -40,25 +40,22 @@ export const setAppErrorAC = (error: null | string) =>
 
 // thunks
 export const initializeAppTC =
-    (): AppThunkType => (dispatch, getState: () => AppStateType) => {
-        authAPI
-            .me()
-            .then(res => {
-                if (!getState().auth.data.email) {
-                    dispatch(setDataAC(res.data));
-                }
-                dispatch(setIsLoggedInAC(true));
-                dispatch(setIsInitializedAC(true));
-            })
-            .catch((e: AxiosError) => {
-                // const error = e.response
-                //     ? (e.response.data as { error: string }).error
-                //     : e.message;
-                // dispatch(setAppErrorAC(error));
-            })
-            .finally(() => {
-                dispatch(setIsInitializedAC(true));
-            });
+    (): AppThunkType => async (dispatch, getState: () => AppStateType) => {
+        try {
+            const res = await authAPI.me();
+            if (!getState().auth.data.email) {
+                dispatch(setDataAC(res.data));
+            }
+            dispatch(setIsLoggedInAC(true));
+            dispatch(setIsInitializedAC(true));
+        } catch (e) {
+            const err = e as Error | AxiosError;
+            if (!axios.isAxiosError(err)) {
+                dispatch(setAppErrorAC(`Native error ${err.message}`));
+            }
+        } finally {
+            dispatch(setIsInitializedAC(true));
+        }
     };
 
 // types
