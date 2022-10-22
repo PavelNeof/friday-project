@@ -1,9 +1,7 @@
 import { instance } from './api-config';
-import { PacksDataType } from '../features/packs/Packs-reducer';
 
 export const packsAPI = {
     getPacks() {
-        // @ts-ignore
         return instance.get<PacksResponseType>(`/cards/pack`);
     },
 };

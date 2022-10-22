@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { getPacksTC } from './Packs-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import s from './Packs.module.css';
 
 export function Packs() {
     const dispatch = useAppDispatch();
@@ -40,8 +41,26 @@ export function Packs() {
     ];
 
     return (
-        <div>
-            packs
+        <div className={s.container}>
+            <div className={s.packsHeader}>
+                <h1>Packs list</h1>
+                <Button
+                    style={{
+                        color: 'white',
+                        backgroundColor: '#366EFF',
+                        boxShadow:
+                            '0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+                        borderRadius: '30px',
+                        padding: '5px 25px 5px 25px',
+                        fontFamily: 'Montserrat',
+                        textTransform: 'capitalize',
+                        height: '40px',
+                        margin: '25px 10px 0px 0px',
+                    }}
+                >
+                    Add new packs
+                </Button>
+            </div>
             <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
                     getRowId={(row: any) => row._id}

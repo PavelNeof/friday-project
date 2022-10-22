@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Button, Toolbar } from '@mui/material';
 import { logoutTC } from '../../../features/auth/auth-reducer';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import { PATH } from '../../routing/Route/Route';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -11,6 +11,10 @@ export function Header() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const status = useAppSelector(state => state.app.status);
     const dispatch = useAppDispatch();
+
+    const onClickHandlerProfile = () => {};
+
+    //  return <Navigate to={PATH.PROFILE}
 
     return (
         <div>
@@ -27,6 +31,7 @@ export function Header() {
                     backgroundColor: 'white',
                 }}
             >
+                {/*<div style={{ height: '100%', width: '90%', margin: '0 auto' }}>*/}
                 <Toolbar>
                     <Button
                         style={{
@@ -39,10 +44,19 @@ export function Header() {
                             fontFamily: 'Montserrat',
                             textTransform: 'capitalize',
                         }}
-                        onClick={isLoggedIn ? () => dispatch(logoutTC()) : undefined}
+                        // onClick={isLoggedIn ? () => dispatch(logoutTC()) : undefined}
+                        // onClick={onClickHandlerProfile}
                     >
                         {isLoggedIn ? (
-                            <>Log Out</>
+                            <NavLink
+                                to={PATH.PROFILE}
+                                style={{
+                                    textDecoration: 'none',
+                                    color: 'white',
+                                }}
+                            >
+                                Profile
+                            </NavLink>
                         ) : (
                             <NavLink
                                 to={PATH.LOGIN}
@@ -56,6 +70,7 @@ export function Header() {
                         )}
                     </Button>
                 </Toolbar>
+                {/*</div>*/}
             </AppBar>
         </div>
     );
