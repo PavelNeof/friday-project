@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import { getPacksTC } from './Packs-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Box, Button } from '@mui/material';
+import { Box, Button, TableSortLabel } from '@mui/material';
 import s from './Packs.module.css';
+import SchoolIcon from '@mui/icons-material/School';
+import TableCell from '@mui/material/TableCell';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export function Packs() {
     const dispatch = useAppDispatch();
@@ -20,24 +24,19 @@ export function Packs() {
         { field: 'cardsCount', headerName: 'Cards', width: 150 },
         { field: 'updated', headerName: 'Last updated', width: 150 },
         { field: 'user_name', headerName: 'Created by', width: 150 },
-        { field: '', headerName: 'Actions', width: 150 },
-        // { field: 'firstName', headerName: 'First name', width: 130 },
-        // { field: 'lastName', headerName: 'Last name', width: 130 },
-        // {
-        //     field: 'age',
-        //     headerName: 'Age',
-        //     type: 'number',
-        //     width: 90,
-        // },
-        // {
-        //     field: 'fullName',
-        //     headerName: 'Full name',
-        //     description: 'This column has a value getter and is not sortable.',
-        //     sortable: false,
-        //     width: 160,
-        //     valueGetter: (params: GridValueGetterParams) =>
-        //         `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-        // },
+        {
+            field: '',
+            headerName: 'Actions',
+            width: 150,
+            renderCell: params => {
+                console.log({ params });
+                return (
+                    <div>
+                        <SchoolIcon /> <BorderColorIcon /> <DeleteIcon />
+                    </div>
+                );
+            },
+        },
     ];
 
     return (
@@ -68,9 +67,31 @@ export function Packs() {
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    checkboxSelection
+                    onRowClick={params => console.log(params.row.name)}
                 />
             </Box>
+
+            {/*{data.map((headCell) => (*/}
+            {/*    <TableCell*/}
+            {/*        key={headCell._id}*/}
+            {/*        align={headCell.numeric ? 'right' : 'left'}*/}
+            {/*        padding={headCell.disablePadding ? 'none' : 'normal'}*/}
+            {/*        sortDirection={orderBy === headCell._id ? order : false}*/}
+            {/*    >*/}
+            {/*        <TableSortLabel*/}
+            {/*            active={orderBy === headCell._id}*/}
+            {/*            direction={orderBy === headCell._id ? order : 'asc'}*/}
+            {/*            onClick={createSortHandler(headCell._id)}*/}
+            {/*        >*/}
+            {/*            {headCell.label}*/}
+            {/*            {orderBy === headCell._id ? (*/}
+            {/*                <Box component="span" sx={visuallyHidden}>*/}
+            {/*                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}*/}
+            {/*                </Box>*/}
+            {/*            ) : null}*/}
+            {/*        </TableSortLabel>*/}
+
+            {/*        );*/}
         </div>
     );
 }
