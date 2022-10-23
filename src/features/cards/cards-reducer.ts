@@ -1,6 +1,6 @@
 import { AppThunkType } from '../../app/store';
 import { AxiosError } from 'axios';
-import { cardsApi } from './Cards-api';
+import { ardsApi } from './cards-api';
 import { setAppStatusAC } from '../../app/app-reducer';
 
 const initState = {
@@ -8,7 +8,7 @@ const initState = {
 };
 type InitialStateType = typeof initState;
 
-export const cardsReducer = (
+export const ardsReducer = (
     state = initState,
     action: CardsActionsType,
 ): InitialStateType => {
@@ -29,7 +29,7 @@ export const getCardsTC =
     (id: string | undefined): AppThunkType =>
     dispatch => {
         dispatch(setAppStatusAC('loading'));
-        cardsApi
+        ardsApi
             .getCards(id)
             .then(res => {
                 dispatch(getCardsAC(res.data));

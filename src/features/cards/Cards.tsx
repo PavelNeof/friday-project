@@ -6,7 +6,7 @@ import { Box, Button } from '@mui/material';
 import { NavLink, useParams } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { getCardsTC } from './Cards-reducer';
+import { getCardsTC } from './cards-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 
 export function Cards() {

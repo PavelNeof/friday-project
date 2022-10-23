@@ -1,6 +1,6 @@
 import { AppThunkType } from '../../app/store';
 import { AxiosError } from 'axios';
-import { packsApi } from './Packs-api';
+import { packsApi } from './packs-api';
 import { setAppStatusAC } from '../../app/app-reducer';
 
 const initState = {
