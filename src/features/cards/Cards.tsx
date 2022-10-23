@@ -6,43 +6,26 @@ import { Box, Button } from '@mui/material';
 import { NavLink, useParams } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import SchoolIcon from '@mui/icons-material/School';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { getPacksTC } from '../packs/Packs-reducer';
 import { getCardsTC } from './Cards-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 
 export function Cards() {
     const dispatch = useAppDispatch();
     let { cardPackId } = useParams();
-    //const data = useAppSelector(state => state.cards);
-
-    let id = '63543eb13bdc0a000471f332';
+    const cards = useAppSelector(state => state.cards.data.cards);
+    // const { cards } = data || {};
+    // console.log(data);
 
     useEffect(() => {
         //dispatch(getCardsTC(cardPackId ?? ''));
-        dispatch(getCardsTC(id));
+        dispatch(getCardsTC(cardPackId));
     }, []);
 
     const columns: GridColDef[] = [
-        { field: 'name', headerName: 'name', width: 150 },
-        { field: 'cardsCount', headerName: 'Cards', width: 150 },
+        { field: 'question', headerName: 'Question', width: 150 },
+        { field: 'answer', headerName: 'Answer', width: 150 },
         { field: 'updated', headerName: 'Last updated', width: 150 },
-        { field: 'user_name', headerName: 'Created by', width: 150 },
-        {
-            field: '',
-            headerName: 'Actions',
-            width: 150,
-            renderCell: params => {
-                console.log({ params });
-                return (
-                    <div>
-                        <SchoolIcon /> <BorderColorIcon /> <DeleteIcon />
-                    </div>
-                );
-            },
-        },
+        { field: 'grade', headerName: 'Grade', width: 150 },
     ];
 
     return (
@@ -83,14 +66,14 @@ export function Cards() {
                     </div>
                 </div>
                 <Box sx={{ height: 400, width: '100%' }}>
-                    {/*<DataGrid*/}
-                    {/*    getRowId={(row: any) => row._id}*/}
-                    {/*    rows={data}*/}
-                    {/*    columns={columns}*/}
-                    {/*    pageSize={5}*/}
-                    {/*    rowsPerPageOptions={[5]}*/}
-                    {/*    onRowClick={params => console.log(params.row.name)}*/}
-                    {/*/>*/}
+                    <DataGrid
+                        getRowId={(row: any) => row._id}
+                        rows={cards || []}
+                        columns={columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        onRowClick={params => console.log(params.row.name)}
+                    />
                 </Box>
             </div>
         </div>

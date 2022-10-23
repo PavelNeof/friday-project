@@ -1,6 +1,7 @@
 import { AppThunkType } from '../../app/store';
 import { AxiosError } from 'axios';
-import { CardPacksType, packsApi } from './Packs-api';
+import { packsApi } from './Packs-api';
+import { setAppStatusAC } from '../../app/app-reducer';
 
 const initState = {
     data: [] as CardPacksType[],
@@ -26,6 +27,7 @@ export const getPacksAC = (data: CardPacksType[]) =>
 
 // thunks
 export const getPacksTC = (): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'));
     packsApi
         .getPacks()
         .then(res => {
@@ -33,8 +35,40 @@ export const getPacksTC = (): AppThunkType => dispatch => {
             console.log(res);
         })
         .catch((e: AxiosError) => {})
-        .finally();
+        .finally(() => {
+            dispatch(setAppStatusAC('succeeded'));
+        });
 };
 
 // types
 export type PacksActionsType = ReturnType<typeof getPacksAC>;
+
+export type PacksResponseType = {
+    cardPacks: CardPacksType[];
+    page: number;
+    pageCount: number;
+    cardPacksTotalCount: number;
+    minCardsCount: number;
+    maxCardsCount: number;
+    token: string;
+    tokenDeathTime: number;
+};
+
+export type CardPacksType = {
+    _id: string;
+    user_id: string;
+    user_name: string;
+    private: boolean;
+    name: string;
+    path: string;
+    grade: number;
+    shots: number;
+    deckCover: string;
+    cardsCount: number;
+    type: string;
+    rating: number;
+    created: string;
+    updated: string;
+    more_id: string;
+    __v: number;
+};
