@@ -9,6 +9,7 @@ import { Registration } from '../../../features/auth/Registration/Registration';
 import Login from '../../../features/auth/Login/Login';
 import { Packs } from '../../../features/packs/Packs';
 import { AddNewPack } from '../../../features/packs/AddNewPack/AddNewPack';
+import { Cards } from '../../../features/cards/Cards';
 
 export const PATH = {
     MAIN: '/',
@@ -20,6 +21,7 @@ export const PATH = {
     ENTER_PASSWORD: '/enterPassword',
     NEW_PASSWORD: '/set-new-password/:token',
     PACKS: '/packs',
+    CARDS: '/cards',
     ADD_NEW_PACK: '/add-new-pack',
 };
 
@@ -36,6 +38,7 @@ function Router() {
                 <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
                 <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={PATH.PACKS} element={<Packs />} />
+                <Route path={`${PATH.CARDS}/:cardPackId`} element={<Cards />} />
                 <Route
                     path={PATH.ADD_NEW_PACK}
                     element={

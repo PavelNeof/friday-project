@@ -8,11 +8,13 @@ import { AuthActionsType, authReducer } from '../features/auth/auth-reducer';
 import { appInitReducer, AppInitActionsType } from './app-reducer';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { PacksActionsType, packsReducer } from '../features/packs/Packs-reducer';
+import { CardsActionsType, cardsReducer } from '../features/cards/Cards-reducer';
 
 const reducers = combineReducers({
     auth: authReducer,
     app: appInitReducer,
     packs: packsReducer,
+    cards: cardsReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));
@@ -29,7 +31,11 @@ export type AppThunkType<ReturnType = void> = ThunkAction<
 export const useAppDispatch = () => useDispatch<AppDispatchType>();
 export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector;
 
-export type AppActionsType = AuthActionsType | AppInitActionsType | PacksActionsType;
+export type AppActionsType =
+    | AuthActionsType
+    | AppInitActionsType
+    | PacksActionsType
+    | CardsActionsType;
 
 export default store;
 

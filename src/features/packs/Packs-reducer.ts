@@ -1,9 +1,6 @@
-import { authAPI, LoginParamsType } from '../auth/auth-api';
 import { AppThunkType } from '../../app/store';
-import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer';
 import { AxiosError } from 'axios';
-import { setDataAC, setIsLoggedInAC } from '../auth/auth-reducer';
-import { CardPacksType, packsAPI } from './packs-api';
+import { CardPacksType, packsApi } from './Packs-api';
 
 const initState = {
     data: [] as CardPacksType[],
@@ -29,7 +26,7 @@ export const getPacksAC = (data: CardPacksType[]) =>
 
 // thunks
 export const getPacksTC = (): AppThunkType => dispatch => {
-    packsAPI
+    packsApi
         .getPacks()
         .then(res => {
             dispatch(getPacksAC(res.data.cardPacks));
@@ -41,26 +38,3 @@ export const getPacksTC = (): AppThunkType => dispatch => {
 
 // types
 export type PacksActionsType = ReturnType<typeof getPacksAC>;
-
-export type PacksDataType = {
-    name: string;
-    updated: string;
-    cardsCount: number;
-    user_name: string;
-
-    _id: string;
-    user_id: string;
-
-    private: boolean;
-
-    path: string;
-    grade: number;
-    shots: number;
-    deckCover: string;
-
-    type: string;
-    rating: number;
-
-    more_id: string;
-    __v: number;
-};

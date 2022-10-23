@@ -1,6 +1,6 @@
 import { instance } from '../../api/api-config';
 
-export const packsAPI = {
+export const packsApi = {
     getPacks() {
         return instance.get<PacksResponseType>(`/cards/pack`);
     },

@@ -5,15 +5,16 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Box, Button, Slider, TableSortLabel } from '@mui/material';
 import s from './Packs.module.css';
 import SchoolIcon from '@mui/icons-material/School';
-import TableCell from '@mui/material/TableCell';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 export function Packs() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
     const data = useAppSelector(state => state.packs.data);
 
     console.log(data);
@@ -144,7 +145,7 @@ export function Packs() {
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    onRowClick={params => console.log(params.row.name)}
+                    onRowClick={params => navigate(`${PATH.CARDS}/${params.id}`)}
                 />
             </Box>
         </div>

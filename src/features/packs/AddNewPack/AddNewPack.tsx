@@ -1,25 +1,13 @@
 import React from 'react';
 import s from '../Packs.module.css';
 import style from './AddNewPack.module.css';
-import WestIcon from '@mui/icons-material/West';
-import { NavLink } from 'react-router-dom';
-import { PATH } from '../../../common/routing/Route/Route';
 import { Button } from '@mui/material';
+import { BackToPackList } from '../../../common/components/BackToPackList';
 
 export const AddNewPack = () => {
     return (
         <div className={s.container}>
-            <div>
-                <NavLink
-                    to={PATH.PACKS}
-                    style={{
-                        textDecoration: 'none',
-                        color: 'black',
-                    }}
-                >
-                    <WestIcon /> Back to Pack List
-                </NavLink>
-            </div>
+            <BackToPackList />
             <h1>Name Pack</h1>
             <div className={style.addNewCardCentre}>
                 <div className={style.oneUnderTheOther}>

@@ -35,7 +35,10 @@ function Links() {
             </NavLink>
 
             <NavLink to={PATH.PACKS} className={s.button5}>
-                newPassword
+                packs
+            </NavLink>
+            <NavLink to={PATH.CARDS} className={s.button5}>
+                cards
             </NavLink>
 
             <NavLink to={PATH.ENTER_PASSWORD} className={s.button5}>
