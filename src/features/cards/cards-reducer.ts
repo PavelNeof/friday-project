@@ -1,48 +1,126 @@
 import { AppThunkType } from '../../app/store';
 import { AxiosError } from 'axios';
-import { ardsApi } from './cards-api';
+import { cardsApi } from './cards-api';
 import { setAppStatusAC } from '../../app/app-reducer';
+import { errorsHandling } from '../../common/utils/error-utils';
 
-const initState = {
-    data: {} as CardsResponseType,
+const initState: CardsResponseType = {
+    cards: [],
+    cardsTotalCount: 3,
+    maxGrade: 5,
+    minGrade: 2,
+    packCreated: '',
+    packDeckCover: null,
+    packName: '',
+    packPrivate: false,
+    packUpdated: '',
+    packUserId: '',
+    page: 1,
+    pageCount: 4,
+    token: '',
+    tokenDeathTime: '',
 };
-type InitialStateType = typeof initState;
 
-export const ardsReducer = (
+export const cardsReducer = (
     state = initState,
     action: CardsActionsType,
-): InitialStateType => {
+): CardsResponseType => {
     switch (action.type) {
         case 'CARDS/GET_CARDS':
-            return { ...state, data: action.data };
-
+            return { ...state, ...action.data };
+        case 'CARDS/ADD_NEW_CARD':
+            return { ...state, cards: [action.data, ...state.cards] };
+        case 'CARDS/DELETE_CARD':
+            return {
+                ...state,
+                cards: state.cards.filter(card => card._id !== action.cardId),
+            };
+        case 'CARDS/UPDATE_CARD':
+            return {
+                ...state,
+                cards: state.cards.map(card =>
+                    card._id === action.cardId
+                        ? {
+                              ...card,
+                              question: action.newQuestion,
+                          }
+                        : card,
+                ),
+            };
         default:
             return state;
     }
 };
 
 // actions
-export const getCardsAC = (data: any) => ({ type: 'CARDS/GET_CARDS', data } as const);
+export const getCardsAC = (data: CardsResponseType[]) =>
+    ({ type: 'CARDS/GET_CARDS', data } as const);
+export const addNewCardAC = (data: CardType) =>
+    ({ type: 'CARDS/ADD_NEW_CARD', data } as const);
+export const deleteCardAC = (cardId: string) =>
+    ({ type: 'CARDS/DELETE_CARD', cardId } as const);
+export const updateCardAC = (cardId: string, newQuestion: string) =>
+    ({ type: 'CARDS/UPDATE_CARD', cardId, newQuestion } as const);
 
 // thunks
 export const getCardsTC =
-    (id: string | undefined): AppThunkType =>
-    dispatch => {
+    (cardPackId: string | undefined): AppThunkType =>
+    async dispatch => {
         dispatch(setAppStatusAC('loading'));
-        ardsApi
-            .getCards(id)
-            .then(res => {
-                dispatch(getCardsAC(res.data));
-                console.log(res);
-            })
-            .catch((e: AxiosError) => {})
-            .finally(() => {
-                dispatch(setAppStatusAC('succeeded'));
-            });
+        try {
+            const res = await cardsApi.getCards(cardPackId);
+            dispatch(getCardsAC(res));
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        }
+    };
+
+export const addNewCardTC =
+    (cardPackId: string | undefined): AppThunkType =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'));
+        try {
+            const res = await cardsApi.postCard(cardPackId);
+            dispatch(addNewCardAC(res.cards));
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        }
+    };
+
+export const deleteCardTC =
+    (cardId: string): AppThunkType =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'));
+        try {
+            await cardsApi.deleteCard(cardId);
+            dispatch(deleteCardAC(cardId));
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        }
+    };
+
+export const updateCardTC =
+    (cardId: string, newQuestion: string): AppThunkType =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'));
+        try {
+            await cardsApi.updateCard(cardId, newQuestion);
+            dispatch(updateCardAC(cardId, newQuestion));
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        }
     };
 
 // types
-export type CardsActionsType = ReturnType<typeof getCardsAC>;
+export type CardsActionsType =
+    | ReturnType<typeof getCardsAC>
+    | ReturnType<typeof addNewCardAC>
+    | ReturnType<typeof deleteCardAC>
+    | ReturnType<typeof updateCardAC>;
 
 export type CardsResponseType = {
     cards: CardType[];
@@ -58,7 +136,7 @@ export type CardsResponseType = {
     page: number;
     pageCount: number;
     token: string;
-    tokenDeathTime: number;
+    tokenDeathTime: string;
 };
 
 export type CardType = {

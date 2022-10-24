@@ -1,10 +1,18 @@
 import React from 'react';
-import s from '../Packs.module.css';
-import style from './AddNewPack.module.css';
+import s from '../../packs/Packs.module.css';
+import style from './AddNewCard.module.css';
 import { Button } from '@mui/material';
 import { BackToPackList } from '../../../common/components/BackToPackList';
+import { useAppDispatch } from '../../../app/store';
+import { addNewPackTC } from '../../packs/Packs-reducer';
 
-export const AddNewPack = () => {
+export const AddNewCard = () => {
+    const dispatch = useAppDispatch();
+
+    const addPackHandler = () => {
+        dispatch(addNewPackTC('Pack name'));
+    };
+
     return (
         <div className={s.container}>
             <BackToPackList />
@@ -27,6 +35,7 @@ export const AddNewPack = () => {
                                 textTransform: 'capitalize',
                                 marginTop: '40px',
                             }}
+                            onClick={addPackHandler}
                         >
                             Add new card
                         </Button>

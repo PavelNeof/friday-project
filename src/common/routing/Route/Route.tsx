@@ -8,7 +8,7 @@ import { NewPassword } from '../../../features/auth/ForgotPassword/NewPassword';
 import { Registration } from '../../../features/auth/Registration/Registration';
 import Login from '../../../features/auth/Login/Login';
 import { Packs } from '../../../features/packs/Packs';
-import { AddNewPack } from '../../../features/packs/AddNewPack/AddNewPack';
+import { AddNewCard } from '../../../features/cards/AddNewCard/AddNewCard';
 import { Cards } from '../../../features/cards/Cards';
 
 export const PATH = {
@@ -22,7 +22,7 @@ export const PATH = {
     NEW_PASSWORD: '/set-new-password/:token',
     PACKS: '/packs',
     CARDS: '/cards',
-    ADD_NEW_PACK: '/add-new-pack',
+    ADD_NEW_CARD: '/add-new-card',
 };
 
 function Router() {
@@ -39,15 +39,7 @@ function Router() {
                 <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={`${PATH.CARDS}/:cardPackId`} element={<Cards />} />
-                <Route
-                    path={PATH.ADD_NEW_PACK}
-                    element={
-                        <div>
-                            {' '}
-                            <AddNewPack />{' '}
-                        </div>
-                    }
-                />
+                <Route path={PATH.ADD_NEW_CARD} element={<AddNewCard />} />
                 <Route path={'*'} element={<Navigate to={PATH.ERROR_404} />} />
             </Routes>
         </div>

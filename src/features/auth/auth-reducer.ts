@@ -1,7 +1,7 @@
 import { authAPI, LoginParamsType } from './auth-api';
 import { AppDispatchType, AppThunkType } from '../../app/store';
-import axios, { AxiosError } from 'axios';
-import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer';
+import { AxiosError } from 'axios';
+import { setAppStatusAC } from '../../app/app-reducer';
 import { errorsHandling } from '../../common/utils/error-utils';
 
 const initState = {
@@ -27,8 +27,6 @@ export const authReducer = (
             return { ...state, data: action.data };
         case 'AUTH/TOGGLE_IS_FOLLOWING_PROGRESS':
             return { ...state, disableButton: action.disableButton };
-        case 'AUTH/REGISTRATION_ERROR':
-            return { ...state, registrationError: action.error };
         case 'AUTH/REGISTRATION_DONE':
             return { ...state, registrationDone: action.registrationDone };
         default:
@@ -145,17 +143,13 @@ export const setNewPasswordTC =
 
 export const setRegistrationTC =
     (email: string, password: string): AppThunkType =>
-    (dispatch: AppDispatchType) => {
-        return authAPI
-            .register(email, password)
-            .then(res => {
-                console.log(res);
-                dispatch(setRegistrationDoneAC(true));
-            })
-            .catch(e => {
-                const error = e.response.data as RegisterErrorType;
-                dispatch(setRegistrationErrorAC(error.error));
-            });
+    async (dispatch: AppDispatchType) => {
+        try {
+            await authAPI.register(email, password);
+            dispatch(setRegistrationDoneAC(true));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        }
     };
 
 // types
@@ -164,7 +158,6 @@ export type AuthActionsType =
     | ReturnType<typeof setName>
     | ReturnType<typeof setDataAC>
     | ReturnType<typeof disableButtonAC>
-    | ReturnType<typeof setRegistrationErrorAC>
     | ReturnType<typeof setRegistrationDoneAC>;
 
 export type UserDataType = {

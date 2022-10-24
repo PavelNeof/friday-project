@@ -1,21 +1,28 @@
 import React, { useEffect } from 'react';
-import { getPacksTC } from './Packs-reducer';
+import {
+    addNewPackTC,
+    deletePackTC,
+    getPacksTC,
+    updateNamePackTC,
+} from './Packs-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Box, Button, Slider, TableSortLabel } from '@mui/material';
+import { Box, Button, IconButton, Slider } from '@mui/material';
 import s from './Packs.module.css';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { Delete } from '@mui/icons-material';
 
-export function Packs() {
+export const Packs = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const data = useAppSelector(state => state.packs.data);
+    const data = useAppSelector(state => state.packs.cardPacks);
+    const status = useAppSelector(state => state.app.status);
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
     console.log(data);
 
@@ -24,7 +31,16 @@ export function Packs() {
     }, []);
 
     const columns: GridColDef[] = [
-        { field: 'name', headerName: 'name', width: 150 },
+        {
+            field: 'name',
+            headerName: 'name',
+            width: 150,
+            renderCell: params => {
+                return (
+                    <NavLink to={`${PATH.CARDS}/${params.id}`}>{params.row.name}</NavLink>
+                );
+            },
+        },
         { field: 'cardsCount', headerName: 'Cards', width: 150 },
         { field: 'updated', headerName: 'Last updated', width: 150 },
         { field: 'user_name', headerName: 'Created by', width: 150 },
@@ -36,20 +52,50 @@ export function Packs() {
                 console.log({ params });
                 return (
                     <div>
-                        <SchoolIcon /> <BorderColorIcon /> <DeleteIcon />
+                        <IconButton disabled={status === 'loading'}>
+                            <SchoolIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={() => deletePackHandler(params.row._id)}
+                            disabled={status === 'loading'}
+                        >
+                            <BorderColorIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={() => updateNamePackHandler(params.row._id)}
+                            disabled={status === 'loading'}
+                        >
+                            <Delete />
+                        </IconButton>
                     </div>
                 );
             },
         },
     ];
+
     function valuetext(value: number) {
         return `${value}`;
     }
+
     const [value, setValue] = React.useState<number[]>([0, 100]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
     };
+
+    const addPackHandler = () => {
+        dispatch(addNewPackTC('Pack name'));
+    };
+    const deletePackHandler = (id: string) => {
+        dispatch(deletePackTC(id));
+    };
+    const updateNamePackHandler = (id: string) => {
+        dispatch(updateNamePackTC(id, 'New name'));
+    };
+
+    if (!isLoggedIn) {
+        navigate(`${PATH.LOGIN}`);
+    }
 
     return (
         <div className={s.container}>
@@ -68,16 +114,9 @@ export function Packs() {
                         height: '40px',
                         margin: '25px 10px 0px 0px',
                     }}
+                    onClick={addPackHandler}
                 >
-                    <NavLink
-                        to={PATH.ADD_NEW_PACK}
-                        style={{
-                            textDecoration: 'none',
-                            color: 'white',
-                        }}
-                    >
-                        Add new pack
-                    </NavLink>
+                    Add new pack
                 </Button>
             </div>
 
@@ -117,7 +156,7 @@ export function Packs() {
                 <div>
                     <div>Number of cards</div>
                     <div className={s.slider}>
-                        <div className={s.number}> 1 </div>
+                        <div className={s.number}> 1</div>
                         <Box sx={{ width: 200, padding: '0 10px' }}>
                             <Slider
                                 getAriaLabel={() => 'Temperature range'}
@@ -127,7 +166,7 @@ export function Packs() {
                                 getAriaValueText={valuetext}
                             />
                         </Box>
-                        <div className={s.number}> 10 </div>
+                        <div className={s.number}> 10</div>
                     </div>
                 </div>
 
@@ -145,9 +184,8 @@ export function Packs() {
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    onRowClick={params => navigate(`${PATH.CARDS}/${params.id}`)}
                 />
             </Box>
         </div>
     );
-}
+};

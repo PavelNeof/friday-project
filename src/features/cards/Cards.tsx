@@ -3,7 +3,7 @@ import stylePacks from '../packs/Packs.module.css';
 import s from './Cards.module.css';
 import { BackToPackList } from '../../common/components/BackToPackList';
 import { Box, Button } from '@mui/material';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { getCardsTC } from './cards-reducer';
@@ -11,8 +11,10 @@ import { useAppDispatch, useAppSelector } from '../../app/store';
 
 export function Cards() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     let { cardPackId } = useParams();
-    const cards = useAppSelector(state => state.cards.data.cards);
+    const cards = useAppSelector(state => state.cards.cards);
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     // const { cards } = data || {};
     // console.log(data);
 
@@ -27,6 +29,25 @@ export function Cards() {
         { field: 'updated', headerName: 'Last updated', width: 150 },
         { field: 'grade', headerName: 'Grade', width: 150 },
     ];
+
+    /*
+    const addNewCardHandler = () => {
+        dispatch(addNewCardTC(cardPackId));
+    };
+    const deleteCardHandler = (cardId: string) => {
+        dispatch(deleteCardTC(cardId));
+    };
+    const updateCardHandler = (cardId: string) => {
+        dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
+    };
+    if (!cards) {
+        navigate(`${PATH.ADD_NEW_CARD}`);
+    }
+    */
+
+    if (!isLoggedIn) {
+        navigate(`${PATH.LOGIN}`);
+    }
 
     return (
         <div>

@@ -8,13 +8,13 @@ import { AuthActionsType, authReducer } from '../features/auth/auth-reducer';
 import { appInitReducer, AppInitActionsType } from './app-reducer';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { PacksActionsType, packsReducer } from '../features/packs/Packs-reducer';
-import { CardsActionsType, ardsReducer } from '../features/cards/cards-reducer';
+import { CardsActionsType, cardsReducer } from '../features/cards/cards-reducer';
 
 const reducers = combineReducers({
     auth: authReducer,
     app: appInitReducer,
     packs: packsReducer,
-    cards: ardsReducer,
+    cards: cardsReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));
