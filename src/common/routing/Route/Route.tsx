@@ -10,6 +10,7 @@ import Login from '../../../features/auth/Login/Login';
 import { Packs } from '../../../features/packs/Packs';
 import { AddNewCard } from '../../../features/cards/AddNewCard/AddNewCard';
 import { Cards } from '../../../features/cards/Cards';
+import { MyCards } from '../../../features/cards/MyCards/MyCards';
 
 export const PATH = {
     MAIN: '/',
@@ -22,6 +23,7 @@ export const PATH = {
     NEW_PASSWORD: '/set-new-password/:token',
     PACKS: '/packs',
     CARDS: '/cards',
+    MY_CARDS: '/my-cards',
     ADD_NEW_CARD: '/add-new-card',
 };
 
@@ -39,6 +41,7 @@ function Router() {
                 <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={`${PATH.CARDS}/:cardPackId`} element={<Cards />} />
+                <Route path={`${PATH.MY_CARDS}/:cardPackId`} element={<MyCards />} />
                 <Route path={PATH.ADD_NEW_CARD} element={<AddNewCard />} />
                 <Route path={'*'} element={<Navigate to={PATH.ERROR_404} />} />
             </Routes>

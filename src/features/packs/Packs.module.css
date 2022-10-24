@@ -8,6 +8,11 @@
     display: flex;
     justify-content: space-between;
 }
+.packsHeaderIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .rowAboveTable{
     display: flex;

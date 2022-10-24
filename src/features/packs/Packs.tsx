@@ -23,6 +23,7 @@ export const Packs = () => {
     const data = useAppSelector(state => state.packs.cardPacks);
     const status = useAppSelector(state => state.app.status);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+    const userId = useAppSelector(state => state.auth.data._id);
 
     console.log(data);
 
@@ -36,8 +37,16 @@ export const Packs = () => {
             headerName: 'name',
             width: 150,
             renderCell: params => {
+                let link;
+                if (params.row.user_id === userId) {
+                    link = PATH.MY_CARDS;
+                } else {
+                    link = PATH.CARDS;
+                }
                 return (
-                    <NavLink to={`${PATH.CARDS}/${params.id}`}>{params.row.name}</NavLink>
+                    <div>
+                        <NavLink to={`${link}/${params.id}`}>{params.row.name}</NavLink>
+                    </div>
                 );
             },
         },

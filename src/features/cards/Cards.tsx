@@ -6,8 +6,9 @@ import { Box, Button } from '@mui/material';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { getCardsTC } from './cards-reducer';
+import { addNewCardTC, getCardsTC } from './cards-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 export function Cards() {
     const dispatch = useAppDispatch();
@@ -15,11 +16,12 @@ export function Cards() {
     let { cardPackId } = useParams();
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+    const userId = useAppSelector(state => state.auth.data._id);
+    const packUserId = useAppSelector(state => state.cards.packUserId);
     // const { cards } = data || {};
     // console.log(data);
 
     useEffect(() => {
-        //dispatch(getCardsTC(cardPackId ?? ''));
         dispatch(getCardsTC(cardPackId));
     }, []);
 
@@ -31,19 +33,20 @@ export function Cards() {
     ];
 
     /*
-    const addNewCardHandler = () => {
-        dispatch(addNewCardTC(cardPackId));
-    };
-    const deleteCardHandler = (cardId: string) => {
-        dispatch(deleteCardTC(cardId));
-    };
-    const updateCardHandler = (cardId: string) => {
-        dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
-    };
-    if (!cards) {
-        navigate(`${PATH.ADD_NEW_CARD}`);
-    }
-    */
+        const addNewCardHandler = () => {
+            dispatch(addNewCardTC(cardPackId));
+        };
+
+        const deleteCardHandler = (cardId: string) => {
+            dispatch(deleteCardTC(cardId));
+        };
+        const updateCardHandler = (cardId: string) => {
+            dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
+        };
+        if (!cards) {
+            navigate(`${PATH.ADD_NEW_CARD}`);
+        }
+        */
 
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);
