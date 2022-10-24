@@ -56,13 +56,13 @@ export const Packs = () => {
                             <SchoolIcon />
                         </IconButton>
                         <IconButton
-                            onClick={() => deletePackHandler(params.row._id)}
+                            onClick={() => updateNamePackHandler(params.row._id)}
                             disabled={status === 'loading'}
                         >
                             <BorderColorIcon />
                         </IconButton>
                         <IconButton
-                            onClick={() => updateNamePackHandler(params.row._id)}
+                            onClick={() => deletePackHandler(params.row._id)}
                             disabled={status === 'loading'}
                         >
                             <Delete />
