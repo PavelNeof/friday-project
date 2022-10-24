@@ -5,12 +5,15 @@ import { Button } from '@mui/material';
 import { BackToPackList } from '../../../common/components/BackToPackList';
 import { useAppDispatch } from '../../../app/store';
 import { addNewPackTC } from '../../packs/Packs-reducer';
+import { useParams } from 'react-router-dom';
+import { addNewCardTC } from '../cards-reducer';
 
 export const AddNewCard = () => {
     const dispatch = useAppDispatch();
+    let { cardPackId } = useParams();
 
     const addPackHandler = () => {
-        dispatch(addNewPackTC('Pack name'));
+        dispatch(addNewCardTC(cardPackId));
     };
 
     return (

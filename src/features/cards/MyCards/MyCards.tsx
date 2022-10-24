@@ -78,9 +78,10 @@ export function MyCards() {
         dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
     };
 
-    if (!cards) {
-        navigate(`${PATH.ADD_NEW_CARD}`);
-    }
+    //if (!cards) {
+    // if (cards.length === 0) {
+    //     navigate(`${PATH.ADD_NEW_CARD}`);
+    // }
 
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);
@@ -93,13 +94,13 @@ export function MyCards() {
                 <div className={stylePacks.packsHeader}>
                     <div className={stylePacks.packsHeaderIcon}>
                         <h1>My Pack</h1>
-                        <div>
+                        <div style={{ color: '#757575' }}>
                             <BorderColorIcon />
                         </div>
-                        <div>
+                        <div style={{ color: '#757575' }}>
                             <Delete />
                         </div>
-                        <div>
+                        <div style={{ color: '#757575' }}>
                             <SchoolIcon />
                         </div>
                     </div>
