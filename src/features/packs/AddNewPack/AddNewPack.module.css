@@ -1,0 +1,14 @@
+.addNewCardCentre {
+    display: flex;
+    justify-content: center;
+}
+
+.oneUnderTheOther{
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+}

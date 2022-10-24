@@ -1,6 +1,15 @@
-.App {}
+.App {
+}
 
 .linearProgress {
     position: fixed;
     width: 100%;
+}
+
+.loader {
+    position: fixed;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+    transform: translate(0, -50%);
 }
