@@ -16,6 +16,7 @@ import { PATH } from '../../../common/routing/Route/Route';
 import { setRegistrationTC } from '../auth-reducer';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import styles from './Registration.module.css';
+import ErrorSnackbars from '../../../common/components/ErrorSnackbars/ErrorSnackbars';
 
 type FormikRegErrorType = {
     email?: string;
@@ -31,8 +32,6 @@ type State = {
 export const Registration = () => {
     //registrationDone - значение авторизации (true/false)
     const registrationDone = useAppSelector(state => state.auth.registrationDone);
-    //registrationError - текст ошибки регистрации
-    const registrationError = useAppSelector(state => state.auth.registrationError);
     const dispatch = useAppDispatch();
 
     //локальный стейт для видимости паролей
@@ -58,7 +57,7 @@ export const Registration = () => {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-    //хук библотики Formik
+    //хук библиотеки Formik
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -86,7 +85,6 @@ export const Registration = () => {
         },
         onSubmit: values => {
             dispatch(setRegistrationTC(values.email, values.password));
-            formik.resetForm();
         },
     });
     //проверка успешной регистрации пользователя (при значении registrationDone - True) - навигация на страницу Login
@@ -96,6 +94,7 @@ export const Registration = () => {
 
     return (
         <Grid container className={styles.container}>
+            <ErrorSnackbars />
             <form onSubmit={formik.handleSubmit}>
                 <FormControl
                     className={styles.signUpForm}
@@ -194,9 +193,6 @@ export const Registration = () => {
                                     {formik.errors.confirmPassword}
                                 </div>
                             ) : null}
-                            {registrationError && (
-                                <div style={{ color: 'red' }}>{registrationError}</div>
-                            )}
                         </FormControl>
                     </FormGroup>
                     <FormGroup className={styles.signUpFormGroup}>

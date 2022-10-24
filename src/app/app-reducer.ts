@@ -1,6 +1,10 @@
 import { AppStateType, AppThunkType } from './store';
 import { authAPI } from '../features/auth/auth-api';
-import { setDataAC, setIsLoggedInAC } from '../features/auth/auth-reducer';
+import {
+    setDataAC,
+    setIsLoggedInAC,
+    setRegistrationErrorAC,
+} from '../features/auth/auth-reducer';
 import axios, { AxiosError } from 'axios';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -23,6 +27,8 @@ export const appInitReducer = (
             return { ...state, error: action.error };
         case 'APP/SET-STATUS':
             return { ...state, status: action.status };
+        case 'AUTH/REGISTRATION_ERROR':
+            return { ...state, error: action.error };
         default:
             return state;
     }
@@ -61,4 +67,5 @@ export const initializeAppTC =
 export type AppInitActionsType =
     | ReturnType<typeof setIsInitializedAC>
     | ReturnType<typeof setAppErrorAC>
-    | ReturnType<typeof setAppStatusAC>;
+    | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setRegistrationErrorAC>;
