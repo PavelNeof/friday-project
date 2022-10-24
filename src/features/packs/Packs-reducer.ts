@@ -77,7 +77,7 @@ export const addNewPackTC =
         dispatch(setAppStatusAC('loading'));
         try {
             const res = await packsApi.postPack(name);
-            dispatch(addNewPackAC(res.data.newCardsPack));
+            dispatch(addNewPackAC(res.newCardsPack));
             dispatch(setAppStatusAC('succeeded'));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
