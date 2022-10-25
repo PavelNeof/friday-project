@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Slider.module.css';
 import { Box, Slider as SliderMUI } from '@mui/material';
 
-const Slider = () => {
+export const Slider = () => {
     const [value, setValue] = React.useState<number[]>([0, 100]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
@@ -32,5 +32,3 @@ const Slider = () => {
         </div>
     );
 };
-
-export default Slider;

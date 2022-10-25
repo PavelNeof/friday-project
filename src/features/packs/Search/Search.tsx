@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Search.module.css';
 
-const Search = () => {
+export const Search = () => {
     return (
         <div>
             <div>Search</div>
@@ -11,5 +11,3 @@ const Search = () => {
         </div>
     );
 };
-
-export default Search;

@@ -17,10 +17,10 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { Delete } from '@mui/icons-material';
-import Search from './Search/Search';
-import MyPacksToggle from './MyPacksToggle/MyPacksToggle';
-import Slider from './Slider/Slider';
-import Reset from './Reset/Reset';
+import { Search } from './Search/Search';
+import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
+import { Slider } from './Slider/Slider';
+import { Reset } from './Reset/Reset';
 
 export const Packs = () => {
     const dispatch = useAppDispatch();

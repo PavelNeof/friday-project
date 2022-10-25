@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { changeIsMyPacksAC } from '../Packs-reducer';
 
-const MyPacksToggle = () => {
+export const MyPacksToggle = () => {
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
     const dispatch = useAppDispatch();
 
@@ -26,5 +26,3 @@ const MyPacksToggle = () => {
         </div>
     );
 };
-
-export default MyPacksToggle;
