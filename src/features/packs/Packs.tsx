@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import {
     addNewPackTC,
+    CardPacksType,
+    changePageAC,
+    changePageCountAC,
     deletePackTC,
     getPacksTC,
     updateNamePackTC,
@@ -24,13 +27,20 @@ export const Packs = () => {
     const status = useAppSelector(state => state.app.status);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const userId = useAppSelector(state => state.auth.data._id);
-
-
-    console.log(packs);
+    const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
+    const pageCount = useAppSelector(state => state.packs.pageCount);
+    const page = useAppSelector(state => state.packs.page);
 
     useEffect(() => {
-        dispatch(getPacksTC(1, 5));
-    }, []);
+        dispatch(getPacksTC(page, pageCount));
+    }, [page, pageCount]);
+
+    const onPageChangeHandle = (page: number) => {
+        dispatch(changePageAC(page + 1));
+    };
+    const onPageSizeChangeHandle = (pageSize: number) => {
+        dispatch(changePageCountAC(pageSize));
+    };
 
     const columns: GridColDef[] = [
         {
@@ -47,7 +57,6 @@ export const Packs = () => {
                 } else {
                     link = PATH.CARDS;
                 }
-                console.log(params.id);
                 return (
                     <div>
                         <NavLink to={`${link}/${params.id}`}>{params.row.name}</NavLink>
@@ -63,7 +72,6 @@ export const Packs = () => {
             headerName: 'Actions',
             width: 150,
             renderCell: params => {
-                console.log('teste', { params });
                 return (
                     <div>
                         <IconButton disabled={status === 'loading'}>
@@ -193,13 +201,16 @@ export const Packs = () => {
 
             <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    getRowId={(row: any) => row._id}
-                    pageSize={5}
-                    pagination
+                    getRowId={(row: CardPacksType) => row._id}
                     rows={packs}
                     columns={columns}
-                    rowsPerPageOptions={[5, 10, 15]}
-                    rowCount={14}
+                    paginationMode={'server'}
+                    page={page - 1} // текущая страница
+                    pageSize={pageCount} // кол-во колод на странице
+                    rowsPerPageOptions={[5, 10, 15]} // варианты кол-ва колод на странице
+                    rowCount={cardPacksTotalCount} // сколько всего колод
+                    onPageChange={onPageChangeHandle} // переход на страницу
+                    onPageSizeChange={onPageSizeChangeHandle} // изменение кол-ва колод на странице
                 />
             </Box>
         </div>
