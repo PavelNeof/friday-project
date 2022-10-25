@@ -7,10 +7,10 @@ import { errorsHandling } from '../../common/utils/error-utils';
 const initState: PacksResponseType = {
     cardPacks: [],
     page: 1,
-    pageCount: 4,
+    pageCount: 5,
     cardPacksTotalCount: 14,
-    minCardsCount: 0,
-    maxCardsCount: 4,
+    minCardsCount: 110,
+    maxCardsCount: 0,
     token: '',
     tokenDeathTime: '',
 };
@@ -44,6 +44,10 @@ export const packsReducer = (
                         : pack,
                 ),
             };
+        case 'PACKS/CHANGE_PAGE':
+            return { ...state, page: action.page };
+        case 'PACKS/CHANGE_PAGE_COUNT':
+            return { ...state, pageCount: action.pageSize };
         default:
             return state;
     }
@@ -58,6 +62,10 @@ export const deletePackAC = (packId: string) =>
     ({ type: 'PACKS/DELETE_PACK', packId } as const);
 export const updatePackAC = (packId: string, newName: string) =>
     ({ type: 'PACKS/UPDATE_PACK', packId, newName } as const);
+export const changePageAC = (page: number) =>
+    ({ type: 'PACKS/CHANGE_PAGE', page } as const);
+export const changePageCountAC = (pageSize: number) =>
+    ({ type: 'PACKS/CHANGE_PAGE_COUNT', pageSize } as const);
 
 // thunks
 export const getPacksTC =
@@ -117,7 +125,9 @@ export type PacksActionsType =
     | ReturnType<typeof getPacksAC>
     | ReturnType<typeof addNewPackAC>
     | ReturnType<typeof deletePackAC>
-    | ReturnType<typeof updatePackAC>;
+    | ReturnType<typeof updatePackAC>
+    | ReturnType<typeof changePageAC>
+    | ReturnType<typeof changePageCountAC>;
 
 export type PacksResponseType = {
     cardPacks: CardPacksType[];
