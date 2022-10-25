@@ -14,9 +14,8 @@ import { Box, Button, IconButton } from '@mui/material';
 import s from './Packs.module.css';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Delete } from '@mui/icons-material';
 import Search from './Search/Search';
 import MyPacksToggle from './MyPacksToggle/MyPacksToggle';
@@ -34,10 +33,12 @@ export const Packs = () => {
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
     const pageCount = useAppSelector(state => state.packs.pageCount);
     const page = useAppSelector(state => state.packs.page);
+    const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
 
     useEffect(() => {
-        dispatch(getPacksTC(page, pageCount));
-    }, [page, pageCount]);
+        const user_id = isMyPacks ? userId : '';
+        dispatch(getPacksTC(page, pageCount, user_id));
+    }, [page, pageCount, isMyPacks]);
 
     const onPageChangeHandle = (page: number) => {
         dispatch(changePageAC(page + 1));
@@ -45,6 +46,10 @@ export const Packs = () => {
     const onPageSizeChangeHandle = (pageSize: number) => {
         dispatch(changePageCountAC(pageSize));
     };
+
+    if (!isLoggedIn) {
+        return <Navigate to={PATH.LOGIN} />;
+    }
 
     const columns: GridColDef[] = [
         {

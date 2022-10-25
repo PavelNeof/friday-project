@@ -1,30 +1,25 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { changeIsMyPacksAC } from '../Packs-reducer';
 
 const MyPacksToggle = () => {
+    const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
+    const dispatch = useAppDispatch();
+
+    const my = isMyPacks ? 'contained' : 'outlined';
+    const all = isMyPacks ? 'outlined' : 'contained';
+
+    const toggle = (value: boolean) => dispatch(changeIsMyPacksAC(value));
+
     return (
         <div>
             <div>Show packs cards</div>
             <div>
-                <Button
-                    style={{
-                        boxSizing: 'border-box',
-                        background: '#FFFFFF',
-                        border: '1px solid #D9D9D9',
-                        borderRadius: '2px',
-                    }}
-                >
+                <Button variant={my} onClick={() => toggle(true)}>
                     My
                 </Button>
-                <Button
-                    style={{
-                        boxSizing: 'border-box',
-                        background: '#366EFF',
-                        color: 'white',
-                        border: '1px solid #D9D9D9',
-                        borderRadius: '0px 2px 2px 0px',
-                    }}
-                >
+                <Button variant={all} onClick={() => toggle(false)}>
                     All
                 </Button>
             </div>

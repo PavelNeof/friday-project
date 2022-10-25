@@ -4,16 +4,19 @@ import { packsApi } from './packs-api';
 import { setAppStatusAC } from '../../app/app-reducer';
 import { errorsHandling } from '../../common/utils/error-utils';
 
-const initState: PacksResponseType = {
-    cardPacks: [],
+const initState = {
+    cardPacks: [] as CardPacksType[],
     page: 1,
     pageCount: 5,
     cardPacksTotalCount: 14,
     minCardsCount: 110,
     maxCardsCount: 0,
+    isMyPacks: false,
     token: '',
     tokenDeathTime: '',
 };
+
+export type PacksResponseType = typeof initState;
 
 export const packsReducer = (
     state = initState,
@@ -48,6 +51,8 @@ export const packsReducer = (
             return { ...state, page: action.page };
         case 'PACKS/CHANGE_PAGE_COUNT':
             return { ...state, pageCount: action.pageSize };
+        case 'PACKS/CHANGE_IS_MY_PACKS':
+            return { ...state, isMyPacks: action.isMyPacks };
         default:
             return state;
     }
@@ -66,18 +71,21 @@ export const changePageAC = (page: number) =>
     ({ type: 'PACKS/CHANGE_PAGE', page } as const);
 export const changePageCountAC = (pageSize: number) =>
     ({ type: 'PACKS/CHANGE_PAGE_COUNT', pageSize } as const);
+export const changeIsMyPacksAC = (isMyPacks: boolean) =>
+    ({ type: 'PACKS/CHANGE_IS_MY_PACKS', isMyPacks } as const);
 
 // thunks
 export const getPacksTC =
-    (page: number, pageCount: number): AppThunkType =>
+    (page: number, pageCount: number, id: string): AppThunkType =>
     async dispatch => {
         dispatch(setAppStatusAC('loading'));
         try {
-            const res = await packsApi.getPacks(page, pageCount);
+            const res = await packsApi.getPacks(page, pageCount, id);
             dispatch(getPacksAC(res));
-            dispatch(setAppStatusAC('succeeded'));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
+        } finally {
+            dispatch(setAppStatusAC('succeeded'));
         }
     };
 
@@ -88,9 +96,10 @@ export const addNewPackTC =
         try {
             const res = await packsApi.postPack(name);
             dispatch(addNewPackAC(res.newCardsPack));
-            dispatch(setAppStatusAC('succeeded'));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
+        } finally {
+            dispatch(setAppStatusAC('succeeded'));
         }
     };
 
@@ -101,9 +110,10 @@ export const deletePackTC =
         try {
             await packsApi.deletePack(id);
             dispatch(deletePackAC(id));
-            dispatch(setAppStatusAC('succeeded'));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
+        } finally {
+            dispatch(setAppStatusAC('succeeded'));
         }
     };
 
@@ -114,9 +124,10 @@ export const updateNamePackTC =
         try {
             await packsApi.updatePack(id, name);
             dispatch(updatePackAC(id, name));
-            dispatch(setAppStatusAC('succeeded'));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
+        } finally {
+            dispatch(setAppStatusAC('succeeded'));
         }
     };
 
@@ -127,18 +138,8 @@ export type PacksActionsType =
     | ReturnType<typeof deletePackAC>
     | ReturnType<typeof updatePackAC>
     | ReturnType<typeof changePageAC>
-    | ReturnType<typeof changePageCountAC>;
-
-export type PacksResponseType = {
-    cardPacks: CardPacksType[];
-    page: number;
-    pageCount: number;
-    cardPacksTotalCount: number;
-    minCardsCount: number;
-    maxCardsCount: number;
-    token: string;
-    tokenDeathTime: string;
-};
+    | ReturnType<typeof changePageCountAC>
+    | ReturnType<typeof changeIsMyPacksAC>;
 
 export type CardPacksType = {
     _id: string;
