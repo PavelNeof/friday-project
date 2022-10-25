@@ -20,15 +20,15 @@ export const Packs = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const data = useAppSelector(state => state.packs.cardPacks);
+    const packs = useAppSelector(state => state.packs.cardPacks);
     const status = useAppSelector(state => state.app.status);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const userId = useAppSelector(state => state.auth.data._id);
 
-    console.log(data);
+    console.log(packs);
 
     useEffect(() => {
-        dispatch(getPacksTC());
+        dispatch(getPacksTC(1, 5));
     }, []);
 
     const columns: GridColDef[] = [
@@ -40,9 +40,13 @@ export const Packs = () => {
                 let link;
                 if (params.row.user_id === userId) {
                     link = PATH.MY_CARDS;
+                    if (params.row.cardsCount === 0) {
+                        link = PATH.ADD_NEW_CARD;
+                    }
                 } else {
                     link = PATH.CARDS;
                 }
+                console.log(params.id);
                 return (
                     <div>
                         <NavLink to={`${link}/${params.id}`}>{params.row.name}</NavLink>
@@ -189,10 +193,11 @@ export const Packs = () => {
             <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
                     getRowId={(row: any) => row._id}
-                    rows={data}
-                    columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
+                    pagination
+                    rows={packs}
+                    columns={columns}
                 />
             </Box>
         </div>

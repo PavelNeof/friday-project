@@ -2,8 +2,15 @@ import { instance } from '../../api/api-config';
 import { PacksResponseType } from './Packs-reducer';
 
 export const packsApi = {
-    getPacks() {
-        return instance.get<PacksResponseType>(`/cards/pack`).then(res => res.data);
+    getPacks(page: number, pageCount: number) {
+        return instance
+            .get<PacksResponseType>(`/cards/pack`, {
+                params: {
+                    page,
+                    pageCount,
+                },
+            })
+            .then(res => res.data);
     },
     postPack(name: string) {
         return instance

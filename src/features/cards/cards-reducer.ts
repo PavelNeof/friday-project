@@ -82,7 +82,8 @@ export const addNewCardTC =
         dispatch(setAppStatusAC('loading'));
         try {
             const res = await cardsApi.postCard(cardPackId);
-            dispatch(addNewCardAC(res.cards));
+            console.log(res);
+            dispatch(addNewCardAC(res.newCard));
             dispatch(setAppStatusAC('succeeded'));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);

@@ -3,7 +3,7 @@ import stylePacks from '../../packs/Packs.module.css';
 import s from './../Cards.module.css';
 import { BackToPackList } from '../../../common/components/BackToPackList';
 import { Box, Button, IconButton } from '@mui/material';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { addNewCardTC, deleteCardTC, getCardsTC, updateCardTC } from '../cards-reducer';
@@ -23,6 +23,8 @@ export function MyCards() {
     // const { cards } = data || {};
     // console.log(data);
 
+    console.log(cards);
+    console.log(cardPackId);
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
     }, []);
@@ -40,9 +42,9 @@ export function MyCards() {
                 console.log({ params });
                 return (
                     <div>
-                        <IconButton disabled={status === 'loading'}>
+                        {/*<IconButton disabled={status === 'loading'}>
                             <SchoolIcon />
-                        </IconButton>
+                        </IconButton>*/}
                         <IconButton
                             onClick={() => updateCardHandler(params.row._id)}
                             disabled={status === 'loading'}
@@ -77,11 +79,6 @@ export function MyCards() {
     const updateCardHandler = (cardId: string) => {
         dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
     };
-
-    //if (!cards) {
-    // if (cards.length === 0) {
-    //     navigate(`${PATH.ADD_NEW_CARD}`);
-    // }
 
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);

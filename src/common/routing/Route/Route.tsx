@@ -42,7 +42,10 @@ function Router() {
                 <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={`${PATH.CARDS}/:cardPackId`} element={<Cards />} />
                 <Route path={`${PATH.MY_CARDS}/:cardPackId`} element={<MyCards />} />
-                <Route path={PATH.ADD_NEW_CARD} element={<AddNewCard />} />
+                <Route
+                    path={`${PATH.ADD_NEW_CARD}/:cardPackId`}
+                    element={<AddNewCard />}
+                />
                 <Route path={'*'} element={<Navigate to={PATH.ERROR_404} />} />
             </Routes>
         </div>

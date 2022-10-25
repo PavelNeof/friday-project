@@ -60,16 +60,18 @@ export const updatePackAC = (packId: string, newName: string) =>
     ({ type: 'PACKS/UPDATE_PACK', packId, newName } as const);
 
 // thunks
-export const getPacksTC = (): AppThunkType => async dispatch => {
-    dispatch(setAppStatusAC('loading'));
-    try {
-        const res = await packsApi.getPacks();
-        dispatch(getPacksAC(res));
-        dispatch(setAppStatusAC('succeeded'));
-    } catch (e) {
-        errorsHandling(e as Error | AxiosError, dispatch);
-    }
-};
+export const getPacksTC =
+    (page: number, pageCount: number): AppThunkType =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'));
+        try {
+            const res = await packsApi.getPacks(page, pageCount);
+            dispatch(getPacksAC(res));
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        }
+    };
 
 export const addNewPackTC =
     (name: string): AppThunkType =>

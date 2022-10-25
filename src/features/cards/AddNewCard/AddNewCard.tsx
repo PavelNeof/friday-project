@@ -3,18 +3,23 @@ import s from '../../packs/Packs.module.css';
 import style from './AddNewCard.module.css';
 import { Button } from '@mui/material';
 import { BackToPackList } from '../../../common/components/BackToPackList';
-import { useAppDispatch } from '../../../app/store';
-import { addNewPackTC } from '../../packs/Packs-reducer';
-import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addNewCardTC } from '../cards-reducer';
+import { PATH } from '../../../common/routing/Route/Route';
 
 export const AddNewCard = () => {
+    const cards = useAppSelector(state => state.cards.cards);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     let { cardPackId } = useParams();
 
     const addPackHandler = () => {
         dispatch(addNewCardTC(cardPackId));
     };
+    if (cards.length !== 0) {
+        navigate(`${PATH.MY_CARDS}/${cardPackId}`);
+    }
 
     return (
         <div className={s.container}>
