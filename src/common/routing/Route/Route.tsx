@@ -39,7 +39,6 @@ function Router() {
                 <Route path={PATH.PROFILE} element={<Profile />} />
                 <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
                 <Route path={PATH.PACKS} element={<Packs />} />
-                <Route path={PATH.PACKS} element={<Packs />} />
                 <Route path={`${PATH.CARDS}/:cardPackId`} element={<Cards />} />
                 <Route path={`${PATH.MY_CARDS}/:cardPackId`} element={<MyCards />} />
                 <Route

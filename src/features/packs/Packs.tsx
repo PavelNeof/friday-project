@@ -62,7 +62,7 @@ export const Packs = () => {
             headerName: 'Actions',
             width: 150,
             renderCell: params => {
-                console.log({ params });
+                console.log('teste', { params });
                 return (
                     <div>
                         <IconButton disabled={status === 'loading'}>
@@ -194,10 +194,11 @@ export const Packs = () => {
                 <DataGrid
                     getRowId={(row: any) => row._id}
                     pageSize={5}
-                    rowsPerPageOptions={[5]}
                     pagination
                     rows={packs}
                     columns={columns}
+                    rowsPerPageOptions={[5, 10, 15]}
+                    rowCount={14}
                 />
             </Box>
         </div>
