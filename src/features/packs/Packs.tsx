@@ -10,7 +10,7 @@ import {
 } from './Packs-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Box, Button, IconButton, Slider } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import s from './Packs.module.css';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -18,6 +18,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Delete } from '@mui/icons-material';
+import Search from './Search/Search';
+import MyPacksToggle from './MyPacksToggle/MyPacksToggle';
+import Slider from './Slider/Slider';
+import Reset from './Reset/Reset';
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -95,16 +99,6 @@ export const Packs = () => {
         },
     ];
 
-    function valuetext(value: number) {
-        return `${value}`;
-    }
-
-    const [value, setValue] = React.useState<number[]>([0, 100]);
-
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
-    };
-
     const addPackHandler = () => {
         dispatch(addNewPackTC('Pack name'));
     };
@@ -143,60 +137,10 @@ export const Packs = () => {
             </div>
 
             <div className={s.rowAboveTable}>
-                <div>
-                    <div>Search</div>
-                    <div>
-                        <input className={s.input} placeholder={'Provide your text'} />
-                    </div>
-                </div>
-                <div>
-                    <div>Show packs cards</div>
-                    <div>
-                        <Button
-                            style={{
-                                boxSizing: 'border-box',
-                                background: '#FFFFFF',
-                                border: '1px solid #D9D9D9',
-                                borderRadius: '2px',
-                            }}
-                        >
-                            My
-                        </Button>
-                        <Button
-                            style={{
-                                boxSizing: 'border-box',
-                                background: '#366EFF',
-                                color: 'white',
-                                border: '1px solid #D9D9D9',
-                                borderRadius: '0px 2px 2px 0px',
-                            }}
-                        >
-                            All
-                        </Button>
-                    </div>
-                </div>
-                <div>
-                    <div>Number of cards</div>
-                    <div className={s.slider}>
-                        <div className={s.number}> 1</div>
-                        <Box sx={{ width: 200, padding: '0 10px' }}>
-                            <Slider
-                                getAriaLabel={() => 'Temperature range'}
-                                value={value}
-                                onChange={handleChange}
-                                valueLabelDisplay="auto"
-                                getAriaValueText={valuetext}
-                            />
-                        </Box>
-                        <div className={s.number}> 10</div>
-                    </div>
-                </div>
-
-                <div className={s.filter}>
-                    <div className={s.filterBox}>
-                        <FilterAltIcon />
-                    </div>
-                </div>
+                <Search />
+                <MyPacksToggle />
+                <Slider />
+                <Reset />
             </div>
 
             <Box sx={{ height: 400, width: '100%' }}>
