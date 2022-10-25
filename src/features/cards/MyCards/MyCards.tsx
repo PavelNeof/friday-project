@@ -20,6 +20,7 @@ export function MyCards() {
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const status = useAppSelector(state => state.app.status);
+    const packName = useAppSelector(state => state.cards.packName)
     // const { cards } = data || {};
     // console.log(data);
 
@@ -90,7 +91,7 @@ export function MyCards() {
                 <BackToPackList />
                 <div className={stylePacks.packsHeader}>
                     <div className={stylePacks.packsHeaderIcon}>
-                        <h1>My Pack</h1>
+                        <h1>{packName}</h1>
                         <div style={{ color: '#757575' }}>
                             <BorderColorIcon />
                         </div>

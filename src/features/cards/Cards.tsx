@@ -18,6 +18,7 @@ export function Cards() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const userId = useAppSelector(state => state.auth.data._id);
     const packUserId = useAppSelector(state => state.cards.packUserId);
+    const packName = useAppSelector(state => state.cards.packName)
     // const { cards } = data || {};
     // console.log(data);
 
@@ -57,7 +58,7 @@ export function Cards() {
             <div className={stylePacks.container}>
                 <BackToPackList />
                 <div className={stylePacks.packsHeader}>
-                    <h1>Friend's Pack</h1>
+                    <h1>{packName}</h1>
                     <Button
                         style={{
                             color: 'white',

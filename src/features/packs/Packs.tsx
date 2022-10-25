@@ -25,6 +25,7 @@ export const Packs = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const userId = useAppSelector(state => state.auth.data._id);
 
+
     console.log(packs);
 
     useEffect(() => {
