@@ -1,4 +1,4 @@
-import { AppThunkType, useAppSelector } from '../../app/store';
+import { AppThunkType } from '../../app/store';
 import { AxiosError } from 'axios';
 import { packsApi } from './packs-api';
 import { setAppStatusAC } from '../../app/app-reducer';
@@ -12,6 +12,7 @@ const initState = {
     minCardsCount: 110,
     maxCardsCount: 0,
     isMyPacks: false,
+    search: '',
     token: '',
     tokenDeathTime: '',
 };
@@ -53,6 +54,8 @@ export const packsReducer = (
             return { ...state, pageCount: action.pageSize };
         case 'PACKS/CHANGE_IS_MY_PACKS':
             return { ...state, isMyPacks: action.isMyPacks };
+        case 'PACKS/CHANGE_SEARCH':
+            return { ...state, search: action.search };
         default:
             return state;
     }
@@ -73,15 +76,17 @@ export const changePageCountAC = (pageSize: number) =>
     ({ type: 'PACKS/CHANGE_PAGE_COUNT', pageSize } as const);
 export const changeIsMyPacksAC = (isMyPacks: boolean) =>
     ({ type: 'PACKS/CHANGE_IS_MY_PACKS', isMyPacks } as const);
+export const changeSearchAC = (search: string) =>
+    ({ type: 'PACKS/CHANGE_SEARCH', search } as const);
 
 // thunks
 export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     dispatch(setAppStatusAC('loading'));
     try {
         const userId = getState().auth.data._id;
-        const { page, pageCount, isMyPacks } = getState().packs;
+        const { page, pageCount, isMyPacks, search } = getState().packs;
         const user_id = isMyPacks ? userId : '';
-        const res = await packsApi.getPacks(page, pageCount, user_id);
+        const res = await packsApi.getPacks(page, pageCount, user_id, search);
         dispatch(getPacksAC(res));
     } catch (e) {
         errorsHandling(e as Error | AxiosError, dispatch);
@@ -140,7 +145,8 @@ export type PacksActionsType =
     | ReturnType<typeof updatePackAC>
     | ReturnType<typeof changePageAC>
     | ReturnType<typeof changePageCountAC>
-    | ReturnType<typeof changeIsMyPacksAC>;
+    | ReturnType<typeof changeIsMyPacksAC>
+    | ReturnType<typeof changeSearchAC>;
 
 export type CardPacksType = {
     _id: string;

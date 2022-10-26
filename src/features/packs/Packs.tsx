@@ -21,6 +21,7 @@ import { Search } from './Search/Search';
 import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
 import { Slider } from './Slider/Slider';
 import { Reset } from './Reset/Reset';
+import useDebounce from '../../common/hooks/useDebounce';
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -34,10 +35,13 @@ export const Packs = () => {
     const pageCount = useAppSelector(state => state.packs.pageCount);
     const page = useAppSelector(state => state.packs.page);
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
+    const search = useAppSelector(state => state.packs.search);
+
+    const debouncedSearch = useDebounce<string>(search, 1000);
 
     useEffect(() => {
         dispatch(getPacksTC());
-    }, [page, pageCount, isMyPacks]);
+    }, [page, pageCount, isMyPacks, debouncedSearch]);
 
     const onPageChangeHandle = (page: number) => {
         dispatch(changePageAC(page + 1));

@@ -1,12 +1,30 @@
 import React from 'react';
-import s from './Search.module.css';
+import TextField from '@mui/material/TextField';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { changeSearchAC } from '../Packs-reducer';
 
 export const Search = () => {
+    const search = useAppSelector(state => state.packs.search);
+    const dispatch = useAppDispatch();
+
+    const onChangeHandler = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        dispatch(changeSearchAC(e.currentTarget.value));
+    };
+
     return (
         <div>
             <div>Search</div>
             <div>
-                <input className={s.input} placeholder={'Provide your text'} />
+                <TextField
+                    type="search"
+                    size="small"
+                    placeholder="Search by pack name"
+                    sx={{ width: '465px', marginBottom: '8px' }}
+                    value={search}
+                    onChange={onChangeHandler}
+                />
             </div>
         </div>
     );
