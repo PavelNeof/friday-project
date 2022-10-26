@@ -9,8 +9,10 @@ const initState = {
     page: 1,
     pageCount: 5,
     cardPacksTotalCount: 14,
-    minCardsCount: 110,
-    maxCardsCount: 0,
+    minCardsCount: 0,
+    maxCardsCount: 6,
+    min: 0,
+    max: 6,
     isMyPacks: false,
     search: '',
     token: '',
@@ -56,6 +58,8 @@ export const packsReducer = (
             return { ...state, isMyPacks: action.isMyPacks };
         case 'PACKS/CHANGE_SEARCH':
             return { ...state, search: action.search };
+        case 'PACKS/CHANGE_MIN_MAX_CURRENT':
+            return { ...state, ...action.payload };
         default:
             return state;
     }
@@ -78,15 +82,17 @@ export const changeIsMyPacksAC = (isMyPacks: boolean) =>
     ({ type: 'PACKS/CHANGE_IS_MY_PACKS', isMyPacks } as const);
 export const changeSearchAC = (search: string) =>
     ({ type: 'PACKS/CHANGE_SEARCH', search } as const);
+export const changeMinMaxCurrentAC = (min: number, max: number) =>
+    ({ type: 'PACKS/CHANGE_MIN_MAX_CURRENT', payload: { min, max } } as const);
 
 // thunks
 export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     dispatch(setAppStatusAC('loading'));
     try {
         const userId = getState().auth.data._id;
-        const { page, pageCount, isMyPacks, search } = getState().packs;
+        const { page, pageCount, isMyPacks, search, min, max } = getState().packs;
         const user_id = isMyPacks ? userId : '';
-        const res = await packsApi.getPacks(page, pageCount, user_id, search);
+        const res = await packsApi.getPacks(page, pageCount, user_id, search, min, max);
         dispatch(getPacksAC(res));
     } catch (e) {
         errorsHandling(e as Error | AxiosError, dispatch);
@@ -146,7 +152,8 @@ export type PacksActionsType =
     | ReturnType<typeof changePageAC>
     | ReturnType<typeof changePageCountAC>
     | ReturnType<typeof changeIsMyPacksAC>
-    | ReturnType<typeof changeSearchAC>;
+    | ReturnType<typeof changeSearchAC>
+    | ReturnType<typeof changeMinMaxCurrentAC>;
 
 export type CardPacksType = {
     _id: string;

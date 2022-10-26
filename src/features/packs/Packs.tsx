@@ -14,7 +14,7 @@ import { Box, Button, IconButton } from '@mui/material';
 import s from './Packs.module.css';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { Delete } from '@mui/icons-material';
 import { Search } from './Search/Search';
@@ -36,12 +36,14 @@ export const Packs = () => {
     const page = useAppSelector(state => state.packs.page);
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
     const search = useAppSelector(state => state.packs.search);
+    const min = useAppSelector(state => state.packs.min);
+    const max = useAppSelector(state => state.packs.max);
 
     const debouncedSearch = useDebounce<string>(search, 1000);
 
     useEffect(() => {
         dispatch(getPacksTC());
-    }, [page, pageCount, isMyPacks, debouncedSearch]);
+    }, [page, pageCount, isMyPacks, debouncedSearch, min, max]);
 
     const onPageChangeHandle = (page: number) => {
         dispatch(changePageAC(page + 1));
@@ -49,10 +51,6 @@ export const Packs = () => {
     const onPageSizeChangeHandle = (pageSize: number) => {
         dispatch(changePageCountAC(pageSize));
     };
-
-    if (!isLoggedIn) {
-        return <Navigate to={PATH.LOGIN} />;
-    }
 
     const columns: GridColDef[] = [
         {

@@ -1,33 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './Slider.module.css';
 import { Box, Slider as SliderMUI } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { changeMinMaxCurrentAC } from '../Packs-reducer';
 
 export const Slider = () => {
-    const [value, setValue] = React.useState<number[]>([0, 100]);
+    const minCardsCount = useAppSelector(state => state.packs.minCardsCount);
+    const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
+    const dispatch = useAppDispatch();
+
+    const [value, setValue] = React.useState<number[]>([minCardsCount, maxCardsCount]);
+
+    useEffect(() => {
+        setValue([minCardsCount, maxCardsCount]);
+    }, [minCardsCount, maxCardsCount]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
     };
 
-    function valuetext(value: number) {
-        return `${value}`;
-    }
+    const handleChangeCommitted = (
+        event: Event | React.SyntheticEvent<Element, Event>,
+        value: number | number[],
+    ) => {
+        if (Array.isArray(value)) {
+            dispatch(changeMinMaxCurrentAC(value[0], value[1]));
+        }
+    };
 
     return (
         <div>
             <div>Number of cards</div>
             <div className={s.slider}>
-                <div className={s.number}> 1</div>
+                <div className={s.number}>{value[0]}</div>
                 <Box sx={{ width: 200, padding: '0 10px' }}>
                     <SliderMUI
-                        getAriaLabel={() => 'Temperature range'}
+                        getAriaLabel={() => 'Packs range'}
                         value={value}
-                        onChange={handleChange}
+                        min={minCardsCount}
+                        max={maxCardsCount}
                         valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
+                        onChange={handleChange}
+                        onChangeCommitted={handleChangeCommitted}
+                        disableSwap
                     />
                 </Box>
-                <div className={s.number}> 10</div>
+                <div className={s.number}>{value[1]}</div>
             </div>
         </div>
     );
