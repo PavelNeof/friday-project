@@ -36,8 +36,7 @@ export const Packs = () => {
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
 
     useEffect(() => {
-        const user_id = isMyPacks ? userId : '';
-        dispatch(getPacksTC(page, pageCount, user_id));
+        dispatch(getPacksTC());
     }, [page, pageCount, isMyPacks]);
 
     const onPageChangeHandle = (page: number) => {

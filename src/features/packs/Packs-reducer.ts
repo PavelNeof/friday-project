@@ -1,4 +1,4 @@
-import { AppThunkType } from '../../app/store';
+import { AppThunkType, useAppSelector } from '../../app/store';
 import { AxiosError } from 'axios';
 import { packsApi } from './packs-api';
 import { setAppStatusAC } from '../../app/app-reducer';
@@ -75,19 +75,20 @@ export const changeIsMyPacksAC = (isMyPacks: boolean) =>
     ({ type: 'PACKS/CHANGE_IS_MY_PACKS', isMyPacks } as const);
 
 // thunks
-export const getPacksTC =
-    (page: number, pageCount: number, id: string): AppThunkType =>
-    async dispatch => {
-        dispatch(setAppStatusAC('loading'));
-        try {
-            const res = await packsApi.getPacks(page, pageCount, id);
-            dispatch(getPacksAC(res));
-        } catch (e) {
-            errorsHandling(e as Error | AxiosError, dispatch);
-        } finally {
-            dispatch(setAppStatusAC('succeeded'));
-        }
-    };
+export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
+    dispatch(setAppStatusAC('loading'));
+    try {
+        const userId = getState().auth.data._id;
+        const { page, pageCount, isMyPacks } = getState().packs;
+        const user_id = isMyPacks ? userId : '';
+        const res = await packsApi.getPacks(page, pageCount, user_id);
+        dispatch(getPacksAC(res));
+    } catch (e) {
+        errorsHandling(e as Error | AxiosError, dispatch);
+    } finally {
+        dispatch(setAppStatusAC('succeeded'));
+    }
+};
 
 export const addNewPackTC =
     (name: string): AppThunkType =>
