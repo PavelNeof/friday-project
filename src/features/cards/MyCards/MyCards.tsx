@@ -5,13 +5,15 @@ import { BackToPackList } from '../../../common/components/BackToPackList';
 import { Box, Button, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../../app/store';
+import {AppStateType, useAppDispatch, useAppSelector} from '../../../app/store';
 import { addNewCardTC, deleteCardTC, getCardsTC, updateCardTC } from '../cards-reducer';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { PATH } from '../../../common/routing/Route/Route';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SchoolIcon from '@mui/icons-material/School';
 import { Delete } from '@mui/icons-material';
+import {updateNamePackTC} from "../../packs/Packs-reducer";
+import {useSelector} from "react-redux";
 
 export function MyCards() {
     const dispatch = useAppDispatch();
@@ -21,6 +23,7 @@ export function MyCards() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const status = useAppSelector(state => state.app.status);
     const packName = useAppSelector(state => state.cards.packName)
+
     // const { cards } = data || {};
     // console.log(data);
 
@@ -79,6 +82,10 @@ export function MyCards() {
     };
     const updateCardHandler = (cardId: string) => {
         dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
+    };
+
+    const updateNamePackHandler = (id: string) => {
+        dispatch(updateNamePackTC(id, 'New name'));
     };
 
     if (!isLoggedIn) {
