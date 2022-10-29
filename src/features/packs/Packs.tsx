@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     addNewPackTC,
     CardPacksType,
@@ -23,7 +23,8 @@ import { Slider } from './Slider/Slider';
 import { Reset } from './Reset/Reset';
 import useDebounce from '../../common/hooks/useDebounce';
 import {AddNewPackModal} from "../modal/AddNewPackModal";
-import {addNewPackModalAC, isOpenModalAC} from "../modal/modal-reducer";
+import {addNewPackModalAC, editPackModalAC, isOpenModalAC} from "../modal/modal-reducer";
+import {EditPackModal} from "../modal/EditPackModal";
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -41,6 +42,7 @@ export const Packs = () => {
     const min = useAppSelector(state => state.packs.min);
     const max = useAppSelector(state => state.packs.max);
     const addNewPack = useAppSelector(state=>state.modal.AddNewPack)
+    const editPack = useAppSelector(state=>state.modal.editPack)
 
 
     const debouncedSearch = useDebounce<string>(search, 1000);
@@ -55,6 +57,8 @@ export const Packs = () => {
     const onPageSizeChangeHandle = (pageSize: number) => {
         dispatch(changePageCountAC(pageSize));
     };
+
+    const [isEdit, setIsEdit] = useState(false)
 
     const columns: GridColDef[] = [
         {
@@ -86,13 +90,16 @@ export const Packs = () => {
             headerName: 'Actions',
             width: 150,
             renderCell: params => {
+
                 return (
                     <div>
+                        {isEdit && <EditPackModal pack={params.row} setIsEdit={setIsEdit}/>}
                         <IconButton disabled={status === 'loading'}>
                             <SchoolIcon />
                         </IconButton>
                         <IconButton
-                            onClick={() => updateNamePackHandler(params.row._id)}
+                            //onClick={() => updateNamePackHandler(params.row._id)}
+                            onClick={() => setIsEdit(true)}
                             disabled={status === 'loading'}
                         >
                             <BorderColorIcon />
@@ -110,7 +117,6 @@ export const Packs = () => {
     ];
 
     const addPackHandler = () => {
-        //dispatch(addNewPackTC('Pack name'))
         dispatch(addNewPackModalAC(true))
         dispatch(isOpenModalAC(true))
 
@@ -119,7 +125,10 @@ export const Packs = () => {
         dispatch(deletePackTC(id));
     };
     const updateNamePackHandler = (id: string) => {
-        dispatch(updateNamePackTC(id, 'New name'));
+        //      dispatch(updateNamePackTC(id, 'New name'));
+         dispatch(editPackModalAC(true))
+          dispatch(isOpenModalAC(true))
+
     };
 
     if (!isLoggedIn) {
@@ -171,6 +180,7 @@ export const Packs = () => {
                 />
             </Box>
             {addNewPack && <AddNewPackModal />}
+           {/* {editPack && <EditPackModal />}*/}
         </div>
     );
 };
