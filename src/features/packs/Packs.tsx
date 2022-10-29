@@ -23,7 +23,7 @@ import { Slider } from './Slider/Slider';
 import { Reset } from './Reset/Reset';
 import useDebounce from '../../common/hooks/useDebounce';
 import {AddNewPackModal} from "../modal/AddNewPackModal";
-import {addNewPackModalAC} from "../modal/modal-reducer";
+import {addNewPackModalAC, isOpenModalAC} from "../modal/modal-reducer";
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -41,6 +41,7 @@ export const Packs = () => {
     const min = useAppSelector(state => state.packs.min);
     const max = useAppSelector(state => state.packs.max);
     const addNewPack = useAppSelector(state=>state.modal.AddNewPack)
+
 
     const debouncedSearch = useDebounce<string>(search, 1000);
 
@@ -111,7 +112,8 @@ export const Packs = () => {
     const addPackHandler = () => {
         //dispatch(addNewPackTC('Pack name'))
         dispatch(addNewPackModalAC(true))
-        ;
+        dispatch(isOpenModalAC(true))
+
     };
     const deletePackHandler = (id: string) => {
         dispatch(deletePackTC(id));

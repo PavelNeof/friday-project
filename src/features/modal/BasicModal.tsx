@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {ReactNode} from "react";
 import zIndex from "@mui/material/styles/zIndex";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {isOpenModalAC} from "./modal-reducer";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -24,15 +26,22 @@ type PropsType = {
 }
 
 export default function BasicModal(props: PropsType) {
+
+    const dispatch = useAppDispatch();
+
+    const isOpen = useAppSelector(state=>state.modal.isOpen)
+
+
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    //const handleOpen = () => setOpen(true); dispatch(isOpenModalAC(false))
+    const handleOpen = () => dispatch(isOpenModalAC(false))
     const handleClose = () => setOpen(false);
 
     return (
         <div>
             <Button onClick={handleOpen}>Open modal</Button>
             <Modal
-                open={open}
+                open={isOpen}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
