@@ -1,0 +1,38 @@
+.container {
+    width: 395px;
+    height: 311px;
+}
+
+.modalContainer{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.text{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.input{
+    border: none;
+    border-bottom-width: 2px; /* Толщина линии внизу */
+    border-bottom-style: solid; /* Стиль линии внизу */
+    border-bottom-color: #868686; /* Цвет линии внизу */
+    width: 347px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.divButton{
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+}

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {ReactNode} from "react";
 import zIndex from "@mui/material/styles/zIndex";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {isOpenModalAC} from "./modal-reducer";
+import s from "./BasicModal.module.css"
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -18,7 +17,7 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    zIndex:10,
+    zIndex: 10,
 };
 
 type PropsType = {
@@ -29,17 +28,18 @@ export default function BasicModal(props: PropsType) {
 
     const dispatch = useAppDispatch();
 
-    const isOpen = useAppSelector(state=>state.modal.isOpen)
+    const isOpen = useAppSelector(state => state.modal.isOpen)
 
+    const handleClose = (event: object, reason: string) => {
+        if (reason === "backdropClick") {
+            console.log(reason)
+            dispatch(isOpenModalAC(false));
+        }
+    }
 
-    const [open, setOpen] = React.useState(false);
-    //const handleOpen = () => setOpen(true); dispatch(isOpenModalAC(false))
-    const handleOpen = () => dispatch(isOpenModalAC(false))
-    const handleClose = () => setOpen(false);
 
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={isOpen}
                 onClose={handleClose}
@@ -47,13 +47,9 @@ export default function BasicModal(props: PropsType) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
+                    <div className={s.container}>
                     {props.children}
-                    {/*<Typography id="modal-modal-title" variant="h6" component="h2">*/}
-                    {/*    Text in a modal*/}
-                    {/*</Typography>*/}
-                    {/*<Typography id="modal-modal-description" sx={{ mt: 2 }}>*/}
-                    {/*    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.*/}
-                    {/*</Typography>*/}
+                    </div>
                 </Box>
             </Modal>
         </div>
