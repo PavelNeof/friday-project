@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import stylePacks from '../packs/Packs.module.css';
 import s from './Cards.module.css';
-import { BackToPackList } from '../../common/components/BackToPackList';
-import { Box, Button } from '@mui/material';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { PATH } from '../../common/routing/Route/Route';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { addNewCardTC, getCardsTC } from './cards-reducer';
-import { useAppDispatch, useAppSelector } from '../../app/store';
+import {BackToPackList} from '../../common/components/BackToPackList';
+import {Box, Button} from '@mui/material';
+import {NavLink, useNavigate, useParams} from 'react-router-dom';
+import {PATH} from '../../common/routing/Route/Route';
+import {DataGrid, GridColDef} from '@mui/x-data-grid';
+import {addNewCardTC, getCardsTC} from './cards-reducer';
+import {useAppDispatch, useAppSelector} from '../../app/store';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 export function Cards() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    let { cardPackId } = useParams();
+    let {cardPackId} = useParams();
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const userId = useAppSelector(state => state.auth.data._id);
@@ -27,10 +27,10 @@ export function Cards() {
     }, []);
 
     const columns: GridColDef[] = [
-        { field: 'question', headerName: 'Question', width: 150 },
-        { field: 'answer', headerName: 'Answer', width: 150 },
-        { field: 'updated', headerName: 'Last updated', width: 150 },
-        { field: 'grade', headerName: 'Grade', width: 150 },
+        {field: 'question', headerName: 'Question', width: 150},
+        {field: 'answer', headerName: 'Answer', width: 150},
+        {field: 'updated', headerName: 'Last updated', width: 150},
+        {field: 'grade', headerName: 'Grade', width: 150},
     ];
 
     /*
@@ -56,7 +56,7 @@ export function Cards() {
     return (
         <div>
             <div className={stylePacks.container}>
-                <BackToPackList />
+                <BackToPackList/>
                 <div className={stylePacks.packsHeader}>
                     <h1>{packName}</h1>
                     <Button
@@ -87,10 +87,10 @@ export function Cards() {
                 <div>
                     <div>Search</div>
                     <div>
-                        <input className={s.input} placeholder={'Provide your text'} />
+                        <input className={s.input} placeholder={'Provide your text'}/>
                     </div>
                 </div>
-                <Box sx={{ height: 400, width: '100%' }}>
+                <Box sx={{height: 400, width: '100%'}}>
                     <DataGrid
                         getRowId={(row: any) => row._id}
                         rows={cards || []}

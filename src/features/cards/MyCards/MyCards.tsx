@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import stylePacks from '../../packs/Packs.module.css';
 import s from './../Cards.module.css';
 import { BackToPackList } from '../../../common/components/BackToPackList';
@@ -14,6 +14,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import { Delete } from '@mui/icons-material';
 import {updateNamePackTC} from "../../packs/Packs-reducer";
 import {useSelector} from "react-redux";
+import {AddNewCardModel} from "../../modal/AddNewCardModel";
 
 export function MyCards() {
     const dispatch = useAppDispatch();
@@ -25,10 +26,12 @@ export function MyCards() {
     const packName = useAppSelector(state => state.cards.packName)
 
     // const { cards } = data || {};
-    // console.log(data);
+     //console.log(cards);
 
-    console.log(cards);
-    console.log(cardPackId);
+    const [isAddCard, setIsAddCard] = useState(false)
+
+   // console.log(cards);
+   // console.log(cardPackId);
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
     }, []);
@@ -43,7 +46,7 @@ export function MyCards() {
             headerName: '',
             width: 150,
             renderCell: params => {
-                console.log({ params });
+              //  console.log({ params });
                 return (
                     <div>
                         {/*<IconButton disabled={status === 'loading'}>
@@ -74,7 +77,9 @@ export function MyCards() {
     // }
 
     const addNewCardHandler = () => {
-        dispatch(addNewCardTC(cardPackId));
+        //dispatch(addNewCardTC(cardPackId));
+        setIsAddCard(true)
+
     };
 
     const deleteCardHandler = (cardId: string) => {
@@ -140,10 +145,11 @@ export function MyCards() {
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        onRowClick={params => console.log(params.row.name)}
+                        onRowClick={params => console.log(params)}
                     />
                 </Box>
             </div>
+            {isAddCard && <AddNewCardModel isAddCard={isAddCard} setIsAddCard={setIsAddCard} />}
         </div>
     );
 }

@@ -9,14 +9,13 @@ import { appInitReducer, AppInitActionsType } from './app-reducer';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { PacksActionsType, packsReducer } from '../features/packs/Packs-reducer';
 import { CardsActionsType, cardsReducer } from '../features/cards/cards-reducer';
-import {ModalActionsType, modalReducer} from "../features/modal/modal-reducer";
+
 
 const reducers = combineReducers({
     auth: authReducer,
     app: appInitReducer,
     packs: packsReducer,
     cards: cardsReducer,
-    modal: modalReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));
@@ -37,8 +36,7 @@ export type AppActionsType =
     | AuthActionsType
     | AppInitActionsType
     | PacksActionsType
-    | CardsActionsType
-    | ModalActionsType;
+    | CardsActionsType;
 
 export default store;
 

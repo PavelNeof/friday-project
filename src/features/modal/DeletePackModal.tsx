@@ -1,5 +1,5 @@
-import BasicModal from "./BasicModal";
-import s from "./BasicModal.module.css";
+import BasicModal from "./BasicModal/BasicModal";
+import s from "./BasicModal/BasicModal.module.css";
 import {Button} from "@mui/material";
 import React from "react";
 import {deletePackTC} from "../packs/Packs-reducer";

@@ -1,30 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {
-    addNewPackTC,
     CardPacksType,
     changePageAC,
     changePageCountAC,
-    deletePackTC,
     getPacksTC,
-    updateNamePackTC,
 } from './Packs-reducer';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import s from './Packs.module.css';
-import SchoolIcon from '@mui/icons-material/School';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
-import { Delete } from '@mui/icons-material';
 import { Search } from './Search/Search';
 import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
 import { Slider } from './Slider/Slider';
 import { Reset } from './Reset/Reset';
 import useDebounce from '../../common/hooks/useDebounce';
 import {AddNewPackModal} from "../modal/AddNewPackModal";
-import {addNewPackModalAC, editPackModalAC, isOpenModalAC} from "../modal/modal-reducer";
-import {EditPackModal} from "../modal/EditPackModal";
 import {RenderCellComponent} from "../modal/RenderCellComponent";
 
 export const Packs = () => {

@@ -1,8 +1,8 @@
-import BasicModal from "./BasicModal";
+import BasicModal from "./BasicModal/BasicModal";
 import React, {ChangeEvent, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {updateNamePackTC} from "../packs/Packs-reducer";
-import s from "./BasicModal.module.css"
+import s from "./BasicModal/BasicModal.module.css"
 import {Button} from "@mui/material";
 
 export const EditPackModal = (props:any) => {
