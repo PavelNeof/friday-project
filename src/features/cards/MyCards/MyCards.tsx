@@ -15,6 +15,7 @@ import { Delete } from '@mui/icons-material';
 import {updateNamePackTC} from "../../packs/Packs-reducer";
 import {useSelector} from "react-redux";
 import {AddNewCardModel} from "../../modal/AddNewCardModel";
+import {RenderCellCardComponent} from "../../modal/RenderCellCardComponent";
 
 export function MyCards() {
     const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ export function MyCards() {
 
     const [isAddCard, setIsAddCard] = useState(false)
 
-   // console.log(cards);
+   //console.log(cards);
    // console.log(cardPackId);
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
@@ -46,26 +47,27 @@ export function MyCards() {
             headerName: '',
             width: 150,
             renderCell: params => {
-              //  console.log({ params });
-                return (
-                    <div>
-                        {/*<IconButton disabled={status === 'loading'}>
-                            <SchoolIcon />
-                        </IconButton>*/}
-                        <IconButton
-                            onClick={() => updateCardHandler(params.row._id)}
-                            disabled={status === 'loading'}
-                        >
-                            <BorderColorIcon />
-                        </IconButton>
-                        <IconButton
-                            onClick={() => deleteCardHandler(params.row._id)}
-                            disabled={status === 'loading'}
-                        >
-                            <Delete />
-                        </IconButton>
-                    </div>
-                );
+                console.log({ params });
+                return <RenderCellCardComponent id={params.row._id} name={params.row.question}/>
+              //   return (
+              //       <div>
+              //           {/*<IconButton disabled={status === 'loading'}>
+              //               <SchoolIcon />
+              //           </IconButton>*/}
+              //           <IconButton
+              //               onClick={() => updateCardHandler(params.row._id)}
+              //               disabled={status === 'loading'}
+              //           >
+              //               <BorderColorIcon />
+              //           </IconButton>
+              //           <IconButton
+              //               onClick={() => deleteCardHandler(params.row._id)}
+              //               disabled={status === 'loading'}
+              //           >
+              //               <Delete />
+              //           </IconButton>
+              //       </div>
+              //   );
             },
         },
     ];

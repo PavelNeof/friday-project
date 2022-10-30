@@ -5,16 +5,16 @@ import {
     changePageCountAC,
     getPacksTC,
 } from './Packs-reducer';
-import { useAppDispatch, useAppSelector } from '../../app/store';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Box, Button } from '@mui/material';
+import {useAppDispatch, useAppSelector} from '../../app/store';
+import {DataGrid, GridColDef} from '@mui/x-data-grid';
+import {Box, Button} from '@mui/material';
 import s from './Packs.module.css';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { PATH } from '../../common/routing/Route/Route';
-import { Search } from './Search/Search';
-import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
-import { Slider } from './Slider/Slider';
-import { Reset } from './Reset/Reset';
+import {NavLink, useNavigate} from 'react-router-dom';
+import {PATH} from '../../common/routing/Route/Route';
+import {Search} from './Search/Search';
+import {MyPacksToggle} from './MyPacksToggle/MyPacksToggle';
+import {Slider} from './Slider/Slider';
+import {Reset} from './Reset/Reset';
 import useDebounce from '../../common/hooks/useDebounce';
 import {AddNewPackModal} from "../modal/AddNewPackModal";
 import {RenderCellComponent} from "../modal/RenderCellComponent";
@@ -73,9 +73,9 @@ export const Packs = () => {
                 );
             },
         },
-        { field: 'cardsCount', headerName: 'Cards', width: 150 },
-        { field: 'updated', headerName: 'Last updated', width: 150 },
-        { field: 'user_name', headerName: 'Created by', width: 150 },
+        {field: 'cardsCount', headerName: 'Cards', width: 150},
+        {field: 'updated', headerName: 'Last updated', width: 150},
+        {field: 'user_name', headerName: 'Created by', width: 150},
         {
             field: '',
             headerName: 'Actions',
@@ -118,13 +118,13 @@ export const Packs = () => {
             </div>
 
             <div className={s.rowAboveTable}>
-                <Search />
-                <MyPacksToggle />
-                <Slider />
-                <Reset />
+                <Search/>
+                <MyPacksToggle/>
+                <Slider/>
+                <Reset/>
             </div>
 
-            <Box sx={{ height: 400, width: '100%' }}>
+            <Box sx={{height: 400, width: '100%'}}>
                 <DataGrid
                     getRowId={(row: CardPacksType) => row._id}
                     rows={packs}
