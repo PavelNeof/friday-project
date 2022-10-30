@@ -1,9 +1,7 @@
 import BasicModal from "./BasicModal";
 import React, {ChangeEvent, useState} from "react";
-import {AppStateType, useAppDispatch, useAppSelector} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import {addNewPackTC} from "../packs/Packs-reducer";
-import {addNewPackModalAC, isOpenModalAC} from "./modal-reducer";
-import {useSelector} from "react-redux";
 import s from "./BasicModal.module.css"
 import {Button} from "@mui/material";
 
@@ -14,14 +12,10 @@ export const AddNewPackModal = (props: any) => {
 
     const addPackHandler = () => {
         dispatch(addNewPackTC(currentName));
-        // dispatch(addNewPackModalAC(false));
-        // dispatch(isOpenModalAC(false));
-        // props.setIsEdit(false)
         props.setIsAddPack(false)
     };
 
     const closePack = () => {
-        //  dispatch(addNewPackModalAC(false));
         props.setIsAddPack(false)
     };
 

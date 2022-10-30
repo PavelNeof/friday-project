@@ -32,7 +32,7 @@ export const Packs = () => {
     const navigate = useNavigate();
 
     const packs = useAppSelector(state => state.packs.cardPacks);
-    const status = useAppSelector(state => state.app.status);
+    // const status = useAppSelector(state => state.app.status);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const userId = useAppSelector(state => state.auth.data._id);
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
@@ -42,10 +42,8 @@ export const Packs = () => {
     const search = useAppSelector(state => state.packs.search);
     const min = useAppSelector(state => state.packs.min);
     const max = useAppSelector(state => state.packs.max);
-    const addNewPack = useAppSelector(state=>state.modal.AddNewPack)
-    const editPack = useAppSelector(state=>state.modal.editPack)
 
-    //console.log(editPack)
+
     const debouncedSearch = useDebounce<string>(search, 1000);
 
     const [isAddPack, setIsAddPack] = useState(false)
@@ -60,8 +58,6 @@ export const Packs = () => {
     const onPageSizeChangeHandle = (pageSize: number) => {
         dispatch(changePageCountAC(pageSize));
     };
-
-   // const [isEdit, setIsEdit] = useState(false)
 
     const columns: GridColDef[] = [
         {
@@ -94,46 +90,12 @@ export const Packs = () => {
             width: 150,
             renderCell: params => {
                 return <RenderCellComponent id={params.row._id} name={params.row.name}/>;
-
-                // return (
-                //     <div>
-                //         {editPack && <EditPackModal pack={params.row} />} {/*setIsEdit={setIsEdit}*/}
-                //         <IconButton disabled={status === 'loading'}>
-                //             <SchoolIcon />
-                //         </IconButton>
-                //         <IconButton
-                //             onClick={() => updateNamePackHandler(params.row._id)}
-                //           //  onClick={() => setIsEdit(true)}
-                //             disabled={status === 'loading'}
-                //         >
-                //             <BorderColorIcon />
-                //         </IconButton>
-                //         <IconButton
-                //             onClick={() => deletePackHandler(params.row._id)}
-                //             disabled={status === 'loading'}
-                //         >
-                //             <Delete />
-                //         </IconButton>
-                //     </div>
-               // );
             },
         },
     ];
 
     const addPackHandler = () => {
-        //dispatch(addNewPackModalAC(true))
-       // dispatch(isOpenModalAC(true))
         setIsAddPack(true)
-    };
-    const deletePackHandler = (id: string) => {
-        dispatch(deletePackTC(id));
-    };
-    const updateNamePackHandler = (id: string) => {
-        //      dispatch(updateNamePackTC(id, 'New name'));
-         dispatch(editPackModalAC(true))
-          dispatch(isOpenModalAC(true))
-      //  setIsEdit(false)
-
     };
 
     if (!isLoggedIn) {
@@ -185,7 +147,6 @@ export const Packs = () => {
                 />
             </Box>
             {isAddPack && <AddNewPackModal isAddPack={isAddPack} setIsAddPack={setIsAddPack}/>}
-           {/* {editPack && <EditPackModal />}*/}
         </div>
     );
 };

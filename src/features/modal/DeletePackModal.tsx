@@ -17,8 +17,6 @@ export const DeletePackModal = (props:any) => {
 
     const closePack = () => {
         props.setIsDelete(false)
-        //  dispatch(editPackModalAC(false))
-        //  dispatch(isOpenModalAC(false));
     };
 
     return(

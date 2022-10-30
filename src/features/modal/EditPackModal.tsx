@@ -1,31 +1,23 @@
 import BasicModal from "./BasicModal";
 import React, {ChangeEvent, useState} from "react";
-import {AppStateType, useAppDispatch, useAppSelector} from "../../app/store";
-import {addNewPackTC, updateNamePackTC} from "../packs/Packs-reducer";
-import {addNewPackModalAC, editPackModalAC, isOpenModalAC} from "./modal-reducer";
-import {useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {updateNamePackTC} from "../packs/Packs-reducer";
 import s from "./BasicModal.module.css"
 import {Button} from "@mui/material";
 
 export const EditPackModal = (props:any) => {
-    //console.log(props.pack)
-    const dispatch = useAppDispatch();
 
-    // const idPack = useAppSelector(state => state.packs.cardPacks)
-    // console.log(idPack)
+    const dispatch = useAppDispatch();
 
     let [currentName, setCurrentName] = useState(props.name);
 
     const updateNamePackHandler = (id: string) => {
         dispatch(updateNamePackTC(id, currentName));
         props.setIsEdit(false)
-      //  dispatch(isOpenModalAC(false));
     };
 
     const closePack = () => {
         props.setIsEdit(false)
-      //  dispatch(editPackModalAC(false))
-      //  dispatch(isOpenModalAC(false));
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
