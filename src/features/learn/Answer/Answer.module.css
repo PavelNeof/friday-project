@@ -1,0 +1,36 @@
+.answerForm {
+    width: 450px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 4px 18px rgba(150, 150, 150, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 1px white solid;
+    gap: 30px;
+}
+
+.question {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tries{
+    opacity: 70%;
+}
+
+.buttonNext {
+    width: 80%;
+    color: white;
+    background-color: #366EFF;
+    border-radius: 30px;
+    height: 40px;
+    box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    text-transform: capitalize;
+}

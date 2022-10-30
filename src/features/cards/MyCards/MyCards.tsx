@@ -1,21 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import stylePacks from '../../packs/Packs.module.css';
 import s from './../Cards.module.css';
-import { BackToPackList } from '../../../common/components/BackToPackList';
-import { Box, Button, IconButton } from '@mui/material';
+import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
+import { Box, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import {AppStateType, useAppDispatch, useAppSelector} from '../../../app/store';
-import { addNewCardTC, deleteCardTC, getCardsTC, updateCardTC } from '../cards-reducer';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { deleteCardTC, getCardsTC, updateCardTC } from '../cards-reducer';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { PATH } from '../../../common/routing/Route/Route';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SchoolIcon from '@mui/icons-material/School';
 import { Delete } from '@mui/icons-material';
-import {updateNamePackTC} from "../../packs/Packs-reducer";
-import {useSelector} from "react-redux";
-import {AddNewCardModel} from "../../modal/AddNewCardModel";
-import {RenderCellCardComponent} from "../../modal/RenderCellCardComponent";
+import { updateNamePackTC } from '../../packs/Packs-reducer';
+import { AddNewCardModel } from '../../modal/AddNewCardModel';
+import { RenderCellCardComponent } from '../../modal/RenderCellCardComponent';
 
 export function MyCards() {
     const dispatch = useAppDispatch();
@@ -24,15 +22,15 @@ export function MyCards() {
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const status = useAppSelector(state => state.app.status);
-    const packName = useAppSelector(state => state.cards.packName)
+    const packName = useAppSelector(state => state.cards.packName);
 
     // const { cards } = data || {};
-     //console.log(cards);
+    //console.log(cards);
 
-    const [isAddCard, setIsAddCard] = useState(false)
+    const [isAddCard, setIsAddCard] = useState(false);
 
-   //console.log(cards);
-   // console.log(cardPackId);
+    //console.log(cards);
+    // console.log(cardPackId);
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
     }, []);
@@ -48,26 +46,31 @@ export function MyCards() {
             width: 150,
             renderCell: params => {
                 console.log({ params });
-                return <RenderCellCardComponent id={params.row._id} name={params.row.question}/>
-              //   return (
-              //       <div>
-              //           {/*<IconButton disabled={status === 'loading'}>
-              //               <SchoolIcon />
-              //           </IconButton>*/}
-              //           <IconButton
-              //               onClick={() => updateCardHandler(params.row._id)}
-              //               disabled={status === 'loading'}
-              //           >
-              //               <BorderColorIcon />
-              //           </IconButton>
-              //           <IconButton
-              //               onClick={() => deleteCardHandler(params.row._id)}
-              //               disabled={status === 'loading'}
-              //           >
-              //               <Delete />
-              //           </IconButton>
-              //       </div>
-              //   );
+                return (
+                    <RenderCellCardComponent
+                        id={params.row._id}
+                        name={params.row.question}
+                    />
+                );
+                //   return (
+                //       <div>
+                //           {/*<IconButton disabled={status === 'loading'}>
+                //               <SchoolIcon />
+                //           </IconButton>*/}
+                //           <IconButton
+                //               onClick={() => updateCardHandler(params.row._id)}
+                //               disabled={status === 'loading'}
+                //           >
+                //               <BorderColorIcon />
+                //           </IconButton>
+                //           <IconButton
+                //               onClick={() => deleteCardHandler(params.row._id)}
+                //               disabled={status === 'loading'}
+                //           >
+                //               <Delete />
+                //           </IconButton>
+                //       </div>
+                //   );
             },
         },
     ];
@@ -80,8 +83,7 @@ export function MyCards() {
 
     const addNewCardHandler = () => {
         //dispatch(addNewCardTC(cardPackId));
-        setIsAddCard(true)
-
+        setIsAddCard(true);
     };
 
     const deleteCardHandler = (cardId: string) => {
@@ -151,7 +153,9 @@ export function MyCards() {
                     />
                 </Box>
             </div>
-            {isAddCard && <AddNewCardModel isAddCard={isAddCard} setIsAddCard={setIsAddCard} />}
+            {isAddCard && (
+                <AddNewCardModel isAddCard={isAddCard} setIsAddCard={setIsAddCard} />
+            )}
         </div>
     );
 }

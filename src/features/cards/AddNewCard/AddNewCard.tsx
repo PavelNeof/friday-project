@@ -2,7 +2,7 @@ import React from 'react';
 import s from '../../packs/Packs.module.css';
 import style from './AddNewCard.module.css';
 import { Button } from '@mui/material';
-import { BackToPackList } from '../../../common/components/BackToPackList';
+import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewCardTC } from '../cards-reducer';
