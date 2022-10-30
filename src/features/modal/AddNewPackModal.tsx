@@ -2,23 +2,27 @@ import BasicModal from "./BasicModal";
 import React, {ChangeEvent, useState} from "react";
 import {AppStateType, useAppDispatch, useAppSelector} from "../../app/store";
 import {addNewPackTC} from "../packs/Packs-reducer";
-import {addNewPackModalAC} from "./modal-reducer";
+import {addNewPackModalAC, isOpenModalAC} from "./modal-reducer";
 import {useSelector} from "react-redux";
 import s from "./BasicModal.module.css"
 import {Button} from "@mui/material";
 
-export const AddNewPackModal = () => {
+export const AddNewPackModal = (props:any) => {
     const dispatch = useAppDispatch();
 
     let [currentName, setCurrentName] = useState('');
 
     const addPackHandler = () => {
         dispatch(addNewPackTC(currentName));
-        dispatch(addNewPackModalAC(false));
+       // dispatch(addNewPackModalAC(false));
+       // dispatch(isOpenModalAC(false));
+        props.setIsEdit(false)
+
     };
 
     const closePack = () => {
-        dispatch(addNewPackModalAC(false));
+      //  dispatch(addNewPackModalAC(false));
+        props.setIsEdit(false)
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +31,7 @@ export const AddNewPackModal = () => {
     };
 
     return (
-        <BasicModal>
+        <BasicModal isOpen={props.isEdit} setIsOpen={props.setIsEdit}>
             <div className={s.modalContainer}>
                 <div className={s.text}>Add new Pack</div>
                 <div>

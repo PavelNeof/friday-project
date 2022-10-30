@@ -8,21 +8,24 @@ import s from "./BasicModal.module.css"
 import {Button} from "@mui/material";
 
 export const EditPackModal = (props:any) => {
-    console.log(props.pack)
+    //console.log(props.pack)
     const dispatch = useAppDispatch();
 
     // const idPack = useAppSelector(state => state.packs.cardPacks)
     // console.log(idPack)
 
-    let [currentName, setCurrentName] = useState(props.pack.name);
+    let [currentName, setCurrentName] = useState(props.name);
 
     const updateNamePackHandler = (id: string) => {
         dispatch(updateNamePackTC(id, currentName));
         props.setIsEdit(false)
+      //  dispatch(isOpenModalAC(false));
     };
 
     const closePack = () => {
         props.setIsEdit(false)
+      //  dispatch(editPackModalAC(false))
+      //  dispatch(isOpenModalAC(false));
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +33,7 @@ export const EditPackModal = (props:any) => {
     };
 
     return (
-        <BasicModal>
+        <BasicModal isOpen={props.isEdit} setIsOpen={props.setIsEdit} >
             <div className={s.modalContainer}>
                 <div className={s.text}>Edit pack</div>
                 <div>
@@ -66,7 +69,7 @@ export const EditPackModal = (props:any) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={()=>updateNamePackHandler(props.pack._id)}> Save</Button> // надо передать айдишник
+                        }} onClick={()=>updateNamePackHandler(props.id)}> Save</Button>
                 </div>
             </div>
         </BasicModal>

@@ -25,6 +25,7 @@ import useDebounce from '../../common/hooks/useDebounce';
 import {AddNewPackModal} from "../modal/AddNewPackModal";
 import {addNewPackModalAC, editPackModalAC, isOpenModalAC} from "../modal/modal-reducer";
 import {EditPackModal} from "../modal/EditPackModal";
+import {RenderCellComponent} from "../modal/RenderCellComponent";
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -44,7 +45,7 @@ export const Packs = () => {
     const addNewPack = useAppSelector(state=>state.modal.AddNewPack)
     const editPack = useAppSelector(state=>state.modal.editPack)
 
-
+    //console.log(editPack)
     const debouncedSearch = useDebounce<string>(search, 1000);
 
     useEffect(() => {
@@ -58,7 +59,7 @@ export const Packs = () => {
         dispatch(changePageCountAC(pageSize));
     };
 
-    const [isEdit, setIsEdit] = useState(false)
+   // const [isEdit, setIsEdit] = useState(false)
 
     const columns: GridColDef[] = [
         {
@@ -90,28 +91,29 @@ export const Packs = () => {
             headerName: 'Actions',
             width: 150,
             renderCell: params => {
+                return <RenderCellComponent id={params.row._id} name={params.row.name}/>;
 
-                return (
-                    <div>
-                        {isEdit && <EditPackModal pack={params.row} setIsEdit={setIsEdit}/>}
-                        <IconButton disabled={status === 'loading'}>
-                            <SchoolIcon />
-                        </IconButton>
-                        <IconButton
-                            //onClick={() => updateNamePackHandler(params.row._id)}
-                            onClick={() => setIsEdit(true)}
-                            disabled={status === 'loading'}
-                        >
-                            <BorderColorIcon />
-                        </IconButton>
-                        <IconButton
-                            onClick={() => deletePackHandler(params.row._id)}
-                            disabled={status === 'loading'}
-                        >
-                            <Delete />
-                        </IconButton>
-                    </div>
-                );
+                // return (
+                //     <div>
+                //         {editPack && <EditPackModal pack={params.row} />} {/*setIsEdit={setIsEdit}*/}
+                //         <IconButton disabled={status === 'loading'}>
+                //             <SchoolIcon />
+                //         </IconButton>
+                //         <IconButton
+                //             onClick={() => updateNamePackHandler(params.row._id)}
+                //           //  onClick={() => setIsEdit(true)}
+                //             disabled={status === 'loading'}
+                //         >
+                //             <BorderColorIcon />
+                //         </IconButton>
+                //         <IconButton
+                //             onClick={() => deletePackHandler(params.row._id)}
+                //             disabled={status === 'loading'}
+                //         >
+                //             <Delete />
+                //         </IconButton>
+                //     </div>
+               // );
             },
         },
     ];
@@ -128,6 +130,7 @@ export const Packs = () => {
         //      dispatch(updateNamePackTC(id, 'New name'));
          dispatch(editPackModalAC(true))
           dispatch(isOpenModalAC(true))
+      //  setIsEdit(false)
 
     };
 
