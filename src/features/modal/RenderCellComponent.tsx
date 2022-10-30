@@ -17,11 +17,11 @@ export const RenderCellComponent = (props: any) => {
     const [isEdit, setIsEdit] = useState(false)
     const [isDelete, setIsDelete] = useState(false)
 
-console.log(isDelete)
-    const deletePackHandler = (id: string) => {
-        dispatch(deletePackTC(id));
-        setIsEdit(false)
-    };
+
+    // const deletePackHandler = (id: string) => {
+    //     dispatch(deletePackTC(id));
+    //     setIsEdit(false)
+    // };
     // const updateNamePackHandler = (id: string, name:string) => {
     //           dispatch(updateNamePackTC(id, name));
     //          // dispatch(updateNamePackTC(id, 'New name'));

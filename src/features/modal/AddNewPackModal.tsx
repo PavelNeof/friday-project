@@ -7,22 +7,22 @@ import {useSelector} from "react-redux";
 import s from "./BasicModal.module.css"
 import {Button} from "@mui/material";
 
-export const AddNewPackModal = (props:any) => {
+export const AddNewPackModal = (props: any) => {
     const dispatch = useAppDispatch();
 
     let [currentName, setCurrentName] = useState('');
 
     const addPackHandler = () => {
         dispatch(addNewPackTC(currentName));
-       // dispatch(addNewPackModalAC(false));
-       // dispatch(isOpenModalAC(false));
-        props.setIsEdit(false)
-
+        // dispatch(addNewPackModalAC(false));
+        // dispatch(isOpenModalAC(false));
+        // props.setIsEdit(false)
+        props.setIsAddPack(false)
     };
 
     const closePack = () => {
-      //  dispatch(addNewPackModalAC(false));
-        props.setIsEdit(false)
+        //  dispatch(addNewPackModalAC(false));
+        props.setIsAddPack(false)
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ export const AddNewPackModal = (props:any) => {
     };
 
     return (
-        <BasicModal isOpen={props.isEdit} setIsOpen={props.setIsEdit}>
+        <BasicModal isOpen={props.isAddPack} setIsOpen={props.setIsAddPack}>
             <div className={s.modalContainer}>
                 <div className={s.text}>Add new Pack</div>
                 <div>

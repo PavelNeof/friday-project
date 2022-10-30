@@ -48,6 +48,8 @@ export const Packs = () => {
     //console.log(editPack)
     const debouncedSearch = useDebounce<string>(search, 1000);
 
+    const [isAddPack, setIsAddPack] = useState(false)
+
     useEffect(() => {
         dispatch(getPacksTC());
     }, [page, pageCount, isMyPacks, debouncedSearch, min, max]);
@@ -119,9 +121,9 @@ export const Packs = () => {
     ];
 
     const addPackHandler = () => {
-        dispatch(addNewPackModalAC(true))
-        dispatch(isOpenModalAC(true))
-
+        //dispatch(addNewPackModalAC(true))
+       // dispatch(isOpenModalAC(true))
+        setIsAddPack(true)
     };
     const deletePackHandler = (id: string) => {
         dispatch(deletePackTC(id));
@@ -182,7 +184,7 @@ export const Packs = () => {
                     onPageSizeChange={onPageSizeChangeHandle} // изменение кол-ва колод на странице
                 />
             </Box>
-            {addNewPack && <AddNewPackModal />}
+            {isAddPack && <AddNewPackModal isAddPack={isAddPack} setIsAddPack={setIsAddPack}/>}
            {/* {editPack && <EditPackModal />}*/}
         </div>
     );
