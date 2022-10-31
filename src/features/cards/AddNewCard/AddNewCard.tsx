@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewCardTC } from '../cards-reducer';
 import { PATH } from '../../../common/routing/Route/Route';
+import {AddNewCardModel} from "../../modal/CardModal/AddNewCardModel";
 
 export const AddNewCard = () => {
     const cards = useAppSelector(state => state.cards.cards);
@@ -15,7 +16,7 @@ export const AddNewCard = () => {
     let { cardPackId } = useParams();
 
     const addPackHandler = () => {
-        dispatch(addNewCardTC(cardPackId));
+        dispatch(addNewCardTC(cardPackId, 'no question', 'no answer'));
     };
     if (cards.length !== 0) {
         navigate(`${PATH.MY_CARDS}/${cardPackId}`);

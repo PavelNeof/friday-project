@@ -47,6 +47,10 @@ export const cardsReducer = (
                         : card,
                 ),
             };
+        case 'CARDS/CHANGE_CARD':{
+            console.log(action.data._id)
+            return { ...state, cards: state.cards.map(el => el._id === action.data._id ? {...action.data} : el) };}
+
         default:
             return state;
     }
@@ -61,6 +65,9 @@ export const deleteCardAC = (cardId: string) =>
     ({ type: 'CARDS/DELETE_CARD', cardId } as const);
 export const updateCardAC = (cardId: string, newQuestion: string) =>
     ({ type: 'CARDS/UPDATE_CARD', cardId, newQuestion } as const);
+export const changeCardAC = (data: CardType) =>
+    ({ type: 'CARDS/CHANGE_CARD', data } as const);
+
 
 // thunks
 export const getCardsTC =
@@ -77,11 +84,11 @@ export const getCardsTC =
     };
 
 export const addNewCardTC =
-    (cardPackId: string | undefined): AppThunkType =>
+    (cardPackId: string | undefined, question: string | undefined, answer:string | undefined): AppThunkType =>
     async dispatch => {
         dispatch(setAppStatusAC('loading'));
         try {
-            const res = await cardsApi.postCard(cardPackId);
+            const res = await cardsApi.postCard(cardPackId, question, answer);
             console.log(res);
             dispatch(addNewCardAC(res.newCard));
             dispatch(setAppStatusAC('succeeded'));
@@ -104,13 +111,14 @@ export const deleteCardTC =
     };
 
 export const updateCardTC =
-    (cardId: string, newQuestion: string): AppThunkType =>
+    (cardId: string, newQuestion: string, newAnswer: string): AppThunkType =>
     async dispatch => {
         dispatch(setAppStatusAC('loading'));
         try {
-            await cardsApi.updateCard(cardId, newQuestion);
+            const res =  await cardsApi.updateCard(cardId, newQuestion, newAnswer);
             dispatch(updateCardAC(cardId, newQuestion));
             dispatch(setAppStatusAC('succeeded'));
+            dispatch(changeCardAC(res.data.updatedCard))
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
         }
@@ -121,7 +129,8 @@ export type CardsActionsType =
     | ReturnType<typeof getCardsAC>
     | ReturnType<typeof addNewCardAC>
     | ReturnType<typeof deleteCardAC>
-    | ReturnType<typeof updateCardAC>;
+    | ReturnType<typeof updateCardAC>
+    | ReturnType<typeof changeCardAC>;
 
 export type CardsResponseType = {
     cards: CardType[];

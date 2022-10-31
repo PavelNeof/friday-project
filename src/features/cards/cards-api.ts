@@ -8,15 +8,15 @@ export const cardsApi = {
         // @ts-ignore
         //return instance.get(`/cards/card`, { cardsPack_id });
     },
-    postCard(cardsPack_id: string | undefined) {
+    postCard(cardsPack_id: string | undefined, question: string | undefined, answer:string | undefined) {
         return instance
-            .post('/cards/card', { card: { cardsPack_id } })
+            .post('/cards/card', { card: { cardsPack_id, question, answer } })
             .then(res => res.data);
     },
     deleteCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`);
     },
-    updateCard(_id: string, question: string) {
-        return instance.put(`/cards/card`, { card: { _id, question } });
+    updateCard(_id: string, question: string, answer: string) {
+        return instance.put(`/cards/card`, { card: { _id, question, answer } });
     },
 };

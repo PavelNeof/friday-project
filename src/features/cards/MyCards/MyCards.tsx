@@ -48,7 +48,7 @@ export function MyCards() {
             width: 150,
             renderCell: params => {
                 console.log({ params });
-                return <RenderCellCardComponent id={params.row._id} name={params.row.question}/>
+                return <RenderCellCardComponent id={params.row._id} name={params.row.question} answer={params.row.answer} cardPackId={cardPackId}/>
             },
         },
     ];
@@ -65,16 +65,16 @@ export function MyCards() {
 
     };
 
-    const deleteCardHandler = (cardId: string) => {
-        dispatch(deleteCardTC(cardId));
-    };
-    const updateCardHandler = (cardId: string) => {
-        dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
-    };
-
-    const updateNamePackHandler = (id: string) => {
-        dispatch(updateNamePackTC(id, 'New name'));
-    };
+    // const deleteCardHandler = (cardId: string) => {
+    //     dispatch(deleteCardTC(cardId));
+    // };
+    // const updateCardHandler = (cardId: string) => {
+    //     dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
+    // };
+    //
+    // const updateNamePackHandler = (id: string) => {
+    //     dispatch(updateNamePackTC(id, 'New name'));
+    // };
 
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);

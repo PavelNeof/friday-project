@@ -16,7 +16,7 @@ export const AddNewCardModel = (props: any) => {
     let {cardPackId} = useParams();
 
     const addNewCardHandler = () => {
-        dispatch(addNewCardTC(cardPackId));
+        dispatch(addNewCardTC(cardPackId, question, answer ));
         props.setIsAddCard(false)
     };
 

@@ -2,22 +2,24 @@ import BasicModal from "../BasicModal/BasicModal";
 import s from "../BasicModal/BasicModal.module.css";
 import {Button} from "@mui/material";
 import {ChangeEvent, useState} from "react";
-import {updateCardTC} from "../../cards/cards-reducer";
+import {getCardsTC, updateCardTC} from "../../cards/cards-reducer";
 import {useAppDispatch} from "../../../app/store";
 
 
 type EditCardModalType = {
     id: string
     name:string
+    answer:string
     setIsEdit:(value:boolean) => void
     isEdit:boolean
+    cardPackId:string | undefined
 }
 
 export const EditCardModal = (props: EditCardModalType) => {
     const dispatch = useAppDispatch();
 
     let [question, setQuestion] = useState(props.name);
-    let [answer, setAnswer] = useState('');
+    let [answer, setAnswer] = useState(props.answer);
 
     const questionChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQuestion(e.currentTarget.value)
@@ -30,8 +32,9 @@ export const EditCardModal = (props: EditCardModalType) => {
     }
 
     const updateCardHandler = (cardId: string) => {
-        dispatch(updateCardTC(cardId, question));
+        dispatch(updateCardTC(cardId, question, answer));
         props.setIsEdit(false)
+      // dispatch(getCardsTC(props.cardPackId))
     };
 
     return (

@@ -11,11 +11,11 @@ import {DeleteCardModal} from "./DeleteCardModal";
 type RenderCellCardComponent = {
     id:string
     name:string
+    answer:string
+    cardPackId: string | undefined
 }
 
 export const RenderCellCardComponent = (props:RenderCellCardComponent) =>{
-
-    //const dispatch = useAppDispatch();
 
     const status = useAppSelector(state => state.app.status);
 
@@ -23,34 +23,32 @@ export const RenderCellCardComponent = (props:RenderCellCardComponent) =>{
     const [isDelete, setIsDelete] = useState(false)
 
 
-    const updateCardHandler = (cardId: string) => {
+    const updateCardHandler = () => {
         setIsEdit(true)
-        //console.log(props.id)
-        //dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
     };
 
-    const deleteCardHandler = (cardId: string) => {
-        //dispatch(deleteCardTC(cardId));
+    const deleteCardHandler = () => {
         setIsDelete(true)
     };
 
     return (
         <div>
 
-            {isEdit && <EditCardModal id={props.id} name={props.name} setIsEdit={setIsEdit} isEdit={isEdit}/>}
+            {isEdit && <EditCardModal id={props.id} name={props.name} answer={props.answer}
+                                      setIsEdit={setIsEdit} isEdit={isEdit} cardPackId={props.cardPackId}/>}
             {isDelete && <DeleteCardModal id={props.id} name={props.name} setIsDelete={setIsDelete} isDelete={isDelete}/>}
 
             <IconButton disabled={status === 'loading'}>
                             <SchoolIcon />
                         </IconButton>
             <IconButton
-                onClick={() => updateCardHandler(props.id)}
+                onClick={() => updateCardHandler()}
                 disabled={status === 'loading'}
             >
                 <BorderColorIcon />
             </IconButton>
             <IconButton
-                onClick={() => deleteCardHandler(props.id)}
+                onClick={() => deleteCardHandler()}
                 disabled={status === 'loading'}
             >
                 <Delete />
