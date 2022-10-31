@@ -1,7 +1,7 @@
-import BasicModal from "./BasicModal/BasicModal";
-import {deleteCardTC} from "../cards/cards-reducer";
-import {useAppDispatch} from "../../app/store";
-import s from "./BasicModal/BasicModal.module.css";
+import BasicModal from "../BasicModal/BasicModal";
+import {deleteCardTC} from "../../cards/cards-reducer";
+import {useAppDispatch} from "../../../app/store";
+import s from "../BasicModal/BasicModal.module.css";
 import {Button} from "@mui/material";
 import React from "react";
 

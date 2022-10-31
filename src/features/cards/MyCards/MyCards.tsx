@@ -14,8 +14,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import { Delete } from '@mui/icons-material';
 import {updateNamePackTC} from "../../packs/Packs-reducer";
 import {useSelector} from "react-redux";
-import {AddNewCardModel} from "../../modal/AddNewCardModel";
-import {RenderCellCardComponent} from "../../modal/RenderCellCardComponent";
+import {AddNewCardModel} from "../../modal/CardModal/AddNewCardModel";
+import {RenderCellCardComponent} from "../../modal/CardModal/RenderCellCardComponent";
 
 export function MyCards() {
     const dispatch = useAppDispatch();

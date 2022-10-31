@@ -4,10 +4,15 @@ import {IconButton} from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {Delete} from "@mui/icons-material";
-import {useAppSelector} from "../../app/store";
+import {useAppSelector} from "../../../app/store";
 import {DeletePackModal} from "./DeletePackModal";
 
-export const RenderCellComponent = (props: any) => {
+type RenderCellComponentType = {
+    id:string
+    name:string
+}
+
+export const RenderCellPackComponent = (props: RenderCellComponentType) => {
 
     const status = useAppSelector(state => state.app.status);
 

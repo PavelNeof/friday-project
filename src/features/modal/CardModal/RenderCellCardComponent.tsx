@@ -3,7 +3,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {Delete} from "@mui/icons-material";
 import React, {useState} from "react";
 import SchoolIcon from '@mui/icons-material/School';
-import {useAppSelector} from "../../app/store";
+import {useAppSelector} from "../../../app/store";
 import {EditCardModal} from "./EditCardModal";
 import {DeleteCardModal} from "./DeleteCardModal";
 

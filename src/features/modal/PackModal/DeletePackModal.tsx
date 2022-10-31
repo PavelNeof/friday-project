@@ -1,12 +1,18 @@
-import BasicModal from "./BasicModal/BasicModal";
-import s from "./BasicModal/BasicModal.module.css";
+import BasicModal from "../BasicModal/BasicModal";
+import s from "../BasicModal/BasicModal.module.css";
 import {Button} from "@mui/material";
 import React from "react";
-import {deletePackTC} from "../packs/Packs-reducer";
-import {useAppDispatch} from "../../app/store";
+import {deletePackTC} from "../../packs/Packs-reducer";
+import {useAppDispatch} from "../../../app/store";
 
+type DeletePackModalType = {
+    id: string
+    name:string
+    setIsDelete: (value: boolean) => void
+    isDelete: boolean
+}
 
-export const DeletePackModal = (props:any) => {
+export const DeletePackModal = (props:DeletePackModalType) => {
 
     const dispatch = useAppDispatch();
 

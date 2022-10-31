@@ -1,33 +1,38 @@
-import BasicModal from "./BasicModal/BasicModal";
+import BasicModal from "../BasicModal/BasicModal";
 import React, {ChangeEvent, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../app/store";
-import {updateNamePackTC} from "../packs/Packs-reducer";
-import s from "./BasicModal/BasicModal.module.css"
+import {useAppDispatch, useAppSelector} from "../../../app/store";
+import {addNewPackTC} from "../../packs/Packs-reducer";
+import s from "../BasicModal/BasicModal.module.css"
 import {Button} from "@mui/material";
 
-export const EditPackModal = (props:any) => {
+type AddNewPackModalType = {
+    isAddPack:boolean
+    setIsAddPack: (value:boolean)=> void
+}
 
+export const AddNewPackModal = (props: AddNewPackModalType) => {
     const dispatch = useAppDispatch();
 
-    let [currentName, setCurrentName] = useState(props.name);
+    let [currentName, setCurrentName] = useState('');
 
-    const updateNamePackHandler = (id: string) => {
-        dispatch(updateNamePackTC(id, currentName));
-        props.setIsEdit(false)
+    const addPackHandler = () => {
+        dispatch(addNewPackTC(currentName));
+        props.setIsAddPack(false)
     };
 
     const closePack = () => {
-        props.setIsEdit(false)
+        props.setIsAddPack(false)
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.value);
         setCurrentName(e.currentTarget.value);
     };
 
     return (
-        <BasicModal isOpen={props.isEdit} setIsOpen={props.setIsEdit} >
+        <BasicModal isOpen={props.isAddPack} setIsOpen={props.setIsAddPack}>
             <div className={s.modalContainer}>
-                <div className={s.text}>Edit pack</div>
+                <div className={s.text}>Add new Pack</div>
                 <div>
                     <input onChange={onNameChange}
                            value={currentName}
@@ -61,7 +66,7 @@ export const EditPackModal = (props:any) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={()=>updateNamePackHandler(props.id)}> Save</Button>
+                        }} onClick={addPackHandler}> Save</Button>
                 </div>
             </div>
         </BasicModal>
