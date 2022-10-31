@@ -4,10 +4,16 @@ import {Button} from "@mui/material";
 import {ChangeEvent, useState} from "react";
 import {updateCardTC} from "../cards/cards-reducer";
 import {useAppDispatch} from "../../app/store";
-import {useParams} from "react-router-dom";
 
 
-export const EditCardModal = (props: any) => {
+type EditCardModalType = {
+    id: string
+    name:string
+    setIsEdit:(value:boolean) => void
+    isEdit:boolean
+}
+
+export const EditCardModal = (props: EditCardModalType) => {
     const dispatch = useAppDispatch();
 
     let [question, setQuestion] = useState(props.name);

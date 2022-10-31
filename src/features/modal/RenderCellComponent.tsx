@@ -17,7 +17,7 @@ export const RenderCellComponent = (props: any) => {
     return (
         <div>
             {isEdit && <EditPackModal id={props.id} name={props.name} setIsEdit={setIsEdit} isEdit={isEdit}/>}
-            {isDelete && <DeletePackModal id={props.id} setIsDelete={setIsDelete} isDelete={isDelete}/>}
+            {isDelete && <DeletePackModal id={props.id} name={props.name} setIsDelete={setIsDelete} isDelete={isDelete}/>}
             <IconButton disabled={status === 'loading'}>
                 <SchoolIcon/>
             </IconButton>

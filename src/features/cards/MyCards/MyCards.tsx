@@ -49,25 +49,6 @@ export function MyCards() {
             renderCell: params => {
                 console.log({ params });
                 return <RenderCellCardComponent id={params.row._id} name={params.row.question}/>
-              //   return (
-              //       <div>
-              //           {/*<IconButton disabled={status === 'loading'}>
-              //               <SchoolIcon />
-              //           </IconButton>*/}
-              //           <IconButton
-              //               onClick={() => updateCardHandler(params.row._id)}
-              //               disabled={status === 'loading'}
-              //           >
-              //               <BorderColorIcon />
-              //           </IconButton>
-              //           <IconButton
-              //               onClick={() => deleteCardHandler(params.row._id)}
-              //               disabled={status === 'loading'}
-              //           >
-              //               <Delete />
-              //           </IconButton>
-              //       </div>
-              //   );
             },
         },
     ];

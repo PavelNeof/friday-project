@@ -23,7 +23,7 @@ export const DeletePackModal = (props:any) => {
         <BasicModal isOpen={props.isDelete} setIsOpen={props.setIsDelete} >
             <div className={s.modalContainer}>
                 <div className={s.text}>Delete pack</div>
-                <div>Do you really want to remove Pack Name? All cards will be deleted.</div>
+                <div>Do you really want to remove <span style={{fontWeight: 'bold'}}>{props.name}</span>? All cards will be deleted.</div>
 
                 <div className={s.divButton}>
                     <Button
