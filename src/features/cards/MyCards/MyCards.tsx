@@ -14,6 +14,10 @@ import { Delete } from '@mui/icons-material';
 import { updateNamePackTC } from '../../packs/Packs-reducer';
 import { AddNewCardModel } from '../../modal/AddNewCardModel';
 import { RenderCellCardComponent } from '../../modal/RenderCellCardComponent';
+import {updateNamePackTC} from "../../packs/Packs-reducer";
+import {useSelector} from "react-redux";
+import {AddNewCardModel} from "../../modal/CardModal/AddNewCardModel";
+import {RenderCellCardComponent} from "../../modal/CardModal/RenderCellCardComponent";
 
 export function MyCards() {
     const dispatch = useAppDispatch();
@@ -46,31 +50,7 @@ export function MyCards() {
             width: 150,
             renderCell: params => {
                 console.log({ params });
-                return (
-                    <RenderCellCardComponent
-                        id={params.row._id}
-                        name={params.row.question}
-                    />
-                );
-                //   return (
-                //       <div>
-                //           {/*<IconButton disabled={status === 'loading'}>
-                //               <SchoolIcon />
-                //           </IconButton>*/}
-                //           <IconButton
-                //               onClick={() => updateCardHandler(params.row._id)}
-                //               disabled={status === 'loading'}
-                //           >
-                //               <BorderColorIcon />
-                //           </IconButton>
-                //           <IconButton
-                //               onClick={() => deleteCardHandler(params.row._id)}
-                //               disabled={status === 'loading'}
-                //           >
-                //               <Delete />
-                //           </IconButton>
-                //       </div>
-                //   );
+                return <RenderCellCardComponent id={params.row._id} name={params.row.question} answer={params.row.answer} cardPackId={cardPackId}/>
             },
         },
     ];
@@ -86,16 +66,16 @@ export function MyCards() {
         setIsAddCard(true);
     };
 
-    const deleteCardHandler = (cardId: string) => {
-        dispatch(deleteCardTC(cardId));
-    };
-    const updateCardHandler = (cardId: string) => {
-        dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
-    };
-
-    const updateNamePackHandler = (id: string) => {
-        dispatch(updateNamePackTC(id, 'New name'));
-    };
+    // const deleteCardHandler = (cardId: string) => {
+    //     dispatch(deleteCardTC(cardId));
+    // };
+    // const updateCardHandler = (cardId: string) => {
+    //     dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
+    // };
+    //
+    // const updateNamePackHandler = (id: string) => {
+    //     dispatch(updateNamePackTC(id, 'New name'));
+    // };
 
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);

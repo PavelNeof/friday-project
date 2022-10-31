@@ -1,25 +1,25 @@
-import BasicModal from "./BasicModal/BasicModal";
-import s from "./BasicModal/BasicModal.module.css";
-import {useParams} from "react-router-dom";
-import {useAppDispatch} from "../../app/store";
-import {addNewCardTC} from "../cards/cards-reducer";
-import {ChangeEvent, useState} from "react";
+import BasicModal from "../BasicModal/BasicModal";
+import s from "../BasicModal/BasicModal.module.css";
 import {Button} from "@mui/material";
+import {ChangeEvent, useState} from "react";
+import {getCardsTC, updateCardTC} from "../../cards/cards-reducer";
+import {useAppDispatch} from "../../../app/store";
 
 
-export const AddNewCardModel = (props: any) => {
+type EditCardModalType = {
+    id: string
+    name:string
+    answer:string
+    setIsEdit:(value:boolean) => void
+    isEdit:boolean
+    cardPackId:string | undefined
+}
+
+export const EditCardModal = (props: EditCardModalType) => {
     const dispatch = useAppDispatch();
 
-    let [question, setQuestion] = useState('');
-    let [answer, setAnswer] = useState('');
-
-    let {cardPackId} = useParams();
-
-    const addNewCardHandler = () => {
-        dispatch(addNewCardTC(cardPackId));
-        props.setIsAddCard(false)
-    };
-
+    let [question, setQuestion] = useState(props.name);
+    let [answer, setAnswer] = useState(props.answer);
 
     const questionChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQuestion(e.currentTarget.value)
@@ -31,8 +31,14 @@ export const AddNewCardModel = (props: any) => {
         console.log(answer)
     }
 
+    const updateCardHandler = (cardId: string) => {
+        dispatch(updateCardTC(cardId, question, answer));
+        props.setIsEdit(false)
+      // dispatch(getCardsTC(props.cardPackId))
+    };
+
     return (
-        <BasicModal isOpen={props.isAddCard} setIsOpen={props.setIsAddCard}>
+        <BasicModal isOpen={props.isEdit} setIsOpen={props.setIsEdit}>
             <div className={s.modalContainer}>
                 <div className={s.text}>Add new card</div>
 
@@ -64,9 +70,10 @@ export const AddNewCardModel = (props: any) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '60%',
-                        }} onClick={addNewCardHandler}>add card</Button>
+                        }} onClick={()=>updateCardHandler(props.id)}>update card</Button>
                 </div>
             </div>
         </BasicModal>
     )
 }
+

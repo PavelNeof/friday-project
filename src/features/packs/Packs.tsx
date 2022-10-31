@@ -18,6 +18,8 @@ import { Reset } from './Reset/Reset';
 import useDebounce from '../../common/hooks/useDebounce';
 import { AddNewPackModal } from '../modal/AddNewPackModal';
 import { RenderCellComponent } from '../modal/RenderCellComponent';
+import {AddNewPackModal} from "../modal/PackModal/AddNewPackModal";
+import {RenderCellPackComponent} from "../modal/PackModal/RenderCellPackComponent";
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -80,7 +82,7 @@ export const Packs = () => {
             headerName: 'Actions',
             width: 150,
             renderCell: params => {
-                return <RenderCellComponent id={params.row._id} name={params.row.name} />;
+                return <RenderCellPackComponent id={params.row._id} name={params.row.name}/>;
             },
         },
     ];
