@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     CardPacksType,
     changePageAC,
     changePageCountAC,
     getPacksTC,
 } from './Packs-reducer';
-import {useAppDispatch, useAppSelector} from '../../app/store';
-import {DataGrid, GridColDef} from '@mui/x-data-grid';
-import {Box, Button} from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../app/store';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Box, Button } from '@mui/material';
 import s from './Packs.module.css';
-import {NavLink, useNavigate} from 'react-router-dom';
-import {PATH} from '../../common/routing/Route/Route';
-import {Search} from './Search/Search';
-import {MyPacksToggle} from './MyPacksToggle/MyPacksToggle';
-import {Slider} from './Slider/Slider';
-import {Reset} from './Reset/Reset';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { PATH } from '../../common/routing/Route/Route';
+import { Search } from './Search/Search';
+import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
+import { Slider } from './Slider/Slider';
+import { Reset } from './Reset/Reset';
 import useDebounce from '../../common/hooks/useDebounce';
-import {AddNewPackModal} from "../modal/AddNewPackModal";
-import {RenderCellComponent} from "../modal/RenderCellComponent";
+import { AddNewPackModal } from '../modal/AddNewPackModal';
+import { RenderCellComponent } from '../modal/RenderCellComponent';
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -35,10 +35,9 @@ export const Packs = () => {
     const min = useAppSelector(state => state.packs.min);
     const max = useAppSelector(state => state.packs.max);
 
-
     const debouncedSearch = useDebounce<string>(search, 1000);
 
-    const [isAddPack, setIsAddPack] = useState(false)
+    const [isAddPack, setIsAddPack] = useState(false);
 
     useEffect(() => {
         dispatch(getPacksTC());
@@ -73,21 +72,21 @@ export const Packs = () => {
                 );
             },
         },
-        {field: 'cardsCount', headerName: 'Cards', width: 150},
-        {field: 'updated', headerName: 'Last updated', width: 150},
-        {field: 'user_name', headerName: 'Created by', width: 150},
+        { field: 'cardsCount', headerName: 'Cards', width: 150 },
+        { field: 'updated', headerName: 'Last updated', width: 150 },
+        { field: 'user_name', headerName: 'Created by', width: 150 },
         {
             field: '',
             headerName: 'Actions',
             width: 150,
             renderCell: params => {
-                return <RenderCellComponent id={params.row._id} name={params.row.name}/>;
+                return <RenderCellComponent id={params.row._id} name={params.row.name} />;
             },
         },
     ];
 
     const addPackHandler = () => {
-        setIsAddPack(true)
+        setIsAddPack(true);
     };
 
     if (!isLoggedIn) {
@@ -118,13 +117,13 @@ export const Packs = () => {
             </div>
 
             <div className={s.rowAboveTable}>
-                <Search/>
-                <MyPacksToggle/>
-                <Slider/>
-                <Reset/>
+                <Search />
+                <MyPacksToggle />
+                <Slider />
+                <Reset />
             </div>
 
-            <Box sx={{height: 400, width: '100%'}}>
+            <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
                     getRowId={(row: CardPacksType) => row._id}
                     rows={packs}
@@ -138,7 +137,9 @@ export const Packs = () => {
                     onPageSizeChange={onPageSizeChangeHandle} // изменение кол-ва колод на странице
                 />
             </Box>
-            {isAddPack && <AddNewPackModal isAddPack={isAddPack} setIsAddPack={setIsAddPack}/>}
+            {isAddPack && (
+                <AddNewPackModal isAddPack={isAddPack} setIsAddPack={setIsAddPack} />
+            )}
         </div>
     );
 };

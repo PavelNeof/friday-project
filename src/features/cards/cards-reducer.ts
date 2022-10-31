@@ -47,6 +47,18 @@ export const cardsReducer = (
                         : card,
                 ),
             };
+        case 'CARDS/UPDATE_GRADE_CARD':
+            return {
+                ...state,
+                cards: state.cards.map(card =>
+                    card._id === action.cardId
+                        ? {
+                              ...card,
+                              grade: action.grade,
+                          }
+                        : card,
+                ),
+            };
         default:
             return state;
     }
@@ -61,6 +73,8 @@ export const deleteCardAC = (cardId: string) =>
     ({ type: 'CARDS/DELETE_CARD', cardId } as const);
 export const updateCardAC = (cardId: string, newQuestion: string) =>
     ({ type: 'CARDS/UPDATE_CARD', cardId, newQuestion } as const);
+export const updateGradeCardAC = (grade: number, cardId: string | undefined) =>
+    ({ type: 'CARDS/UPDATE_GRADE_CARD', grade, cardId } as const);
 
 // thunks
 export const getCardsTC =
@@ -116,12 +130,26 @@ export const updateCardTC =
         }
     };
 
+export const updateGradeCardTC =
+    (grade: number, cardId: string | undefined): AppThunkType =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'));
+        try {
+            await cardsApi.updateGradeCard(grade, cardId);
+            dispatch(updateGradeCardAC(grade, cardId));
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (e) {
+            errorsHandling(e as Error | AxiosError, dispatch);
+        }
+    };
+
 // types
 export type CardsActionsType =
     | ReturnType<typeof getCardsAC>
     | ReturnType<typeof addNewCardAC>
     | ReturnType<typeof deleteCardAC>
-    | ReturnType<typeof updateCardAC>;
+    | ReturnType<typeof updateCardAC>
+    | ReturnType<typeof updateGradeCardAC>;
 
 export type CardsResponseType = {
     cards: CardType[];

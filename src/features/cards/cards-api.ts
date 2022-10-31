@@ -19,4 +19,7 @@ export const cardsApi = {
     updateCard(_id: string, question: string) {
         return instance.put(`/cards/card`, { card: { _id, question } });
     },
+    updateGradeCard(grade: number, card_id: string | undefined) {
+        return instance.put(`cards/grade`, { grade, card_id });
+    },
 };
