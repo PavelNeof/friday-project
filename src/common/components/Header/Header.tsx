@@ -3,9 +3,10 @@ import { AppBar, Button, Toolbar } from '@mui/material';
 import { logoutTC } from '../../../features/auth/auth-reducer';
 import { Navigate, NavLink } from 'react-router-dom';
 import { PATH } from '../../routing/Route/Route';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
 import LinearProgress from '@mui/material/LinearProgress';
 import ErrorSnackbars from '../ErrorSnackbars/ErrorSnackbars';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 export function Header() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);

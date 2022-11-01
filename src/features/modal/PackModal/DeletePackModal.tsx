@@ -1,35 +1,38 @@
-import BasicModal from "../BasicModal/BasicModal";
-import s from "../BasicModal/BasicModal.module.css";
-import {Button} from "@mui/material";
-import React from "react";
-import {deletePackTC} from "../../packs/Packs-reducer";
-import {useAppDispatch} from "../../../app/store";
+import BasicModal from '../BasicModal/BasicModal';
+import s from '../BasicModal/BasicModal.module.css';
+import { Button } from '@mui/material';
+import React from 'react';
+import { deletePackTC } from '../../packs/Packs-reducer';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 
 type DeletePackModalType = {
-    id: string
-    name:string
-    setIsDelete: (value: boolean) => void
-    isDelete: boolean
-}
+    id: string;
+    name: string;
+    setIsDelete: (value: boolean) => void;
+    isDelete: boolean;
+};
 
-export const DeletePackModal = (props:DeletePackModalType) => {
-
+export const DeletePackModal = (props: DeletePackModalType) => {
     const dispatch = useAppDispatch();
 
     const deletePackHandler = (id: string) => {
         dispatch(deletePackTC(id));
-        props.setIsDelete(false)
+        props.setIsDelete(false);
     };
 
     const closePack = () => {
-        props.setIsDelete(false)
+        props.setIsDelete(false);
     };
 
-    return(
-        <BasicModal isOpen={props.isDelete} setIsOpen={props.setIsDelete} >
+    return (
+        <BasicModal isOpen={props.isDelete} setIsOpen={props.setIsDelete}>
             <div className={s.modalContainer}>
                 <div className={s.text}>Delete pack</div>
-                <div>Do you really want to remove <span style={{fontWeight: 'bold'}}>{props.name}</span>? All cards will be deleted.</div>
+                <div>
+                    Do you really want to remove{' '}
+                    <span style={{ fontWeight: 'bold' }}>{props.name}</span>? All cards
+                    will be deleted.
+                </div>
 
                 <div className={s.divButton}>
                     <Button
@@ -43,7 +46,12 @@ export const DeletePackModal = (props:DeletePackModalType) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={closePack}> Cansel</Button>
+                        }}
+                        onClick={closePack}
+                    >
+                        {' '}
+                        Cansel
+                    </Button>
                     <Button
                         style={{
                             color: 'white',
@@ -55,9 +63,14 @@ export const DeletePackModal = (props:DeletePackModalType) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={()=>deletePackHandler(props.id)}> Delete</Button>
+                        }}
+                        onClick={() => deletePackHandler(props.id)}
+                    >
+                        {' '}
+                        Delete
+                    </Button>
                 </div>
             </div>
         </BasicModal>
-    )
-}
+    );
+};

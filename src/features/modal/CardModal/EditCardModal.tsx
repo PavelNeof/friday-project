@@ -1,19 +1,18 @@
-import BasicModal from "../BasicModal/BasicModal";
-import s from "../BasicModal/BasicModal.module.css";
-import {Button} from "@mui/material";
-import {ChangeEvent, useState} from "react";
-import {getCardsTC, updateCardTC} from "../../cards/cards-reducer";
-import {useAppDispatch} from "../../../app/store";
-
+import BasicModal from '../BasicModal/BasicModal';
+import s from '../BasicModal/BasicModal.module.css';
+import { Button } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
+import { getCardsTC, updateCardTC } from '../../cards/cards-reducer';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 
 type EditCardModalType = {
-    id: string
-    name:string
-    answer:string
-    setIsEdit:(value:boolean) => void
-    isEdit:boolean
-    cardPackId:string | undefined
-}
+    id: string;
+    name: string;
+    answer: string;
+    setIsEdit: (value: boolean) => void;
+    isEdit: boolean;
+    cardPackId: string | undefined;
+};
 
 export const EditCardModal = (props: EditCardModalType) => {
     const dispatch = useAppDispatch();
@@ -22,19 +21,19 @@ export const EditCardModal = (props: EditCardModalType) => {
     let [answer, setAnswer] = useState(props.answer);
 
     const questionChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuestion(e.currentTarget.value)
-        console.log(question)
-    }
+        setQuestion(e.currentTarget.value);
+        console.log(question);
+    };
 
     const answerChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setAnswer(e.currentTarget.value)
-        console.log(answer)
-    }
+        setAnswer(e.currentTarget.value);
+        console.log(answer);
+    };
 
     const updateCardHandler = (cardId: string) => {
         dispatch(updateCardTC(cardId, question, answer));
-        props.setIsEdit(false)
-      // dispatch(getCardsTC(props.cardPackId))
+        props.setIsEdit(false);
+        // dispatch(getCardsTC(props.cardPackId))
     };
 
     return (
@@ -42,20 +41,26 @@ export const EditCardModal = (props: EditCardModalType) => {
             <div className={s.modalContainer}>
                 <div className={s.text}>Add new card</div>
 
-                <div>Question
+                <div>
+                    Question
                     <div>
-                        <input onChange={questionChange}
-                               value={question}
-                               placeholder={'question'}
-                               className={s.input}/>
+                        <input
+                            onChange={questionChange}
+                            value={question}
+                            placeholder={'question'}
+                            className={s.input}
+                        />
                     </div>
                 </div>
-                <div>Answer
+                <div>
+                    Answer
                     <div>
-                        <input onChange={answerChange}
-                               value={answer}
-                               placeholder={'question'}
-                               className={s.input}/>
+                        <input
+                            onChange={answerChange}
+                            value={answer}
+                            placeholder={'question'}
+                            className={s.input}
+                        />
                     </div>
                 </div>
                 <div className={s.button}>
@@ -70,10 +75,13 @@ export const EditCardModal = (props: EditCardModalType) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '60%',
-                        }} onClick={()=>updateCardHandler(props.id)}>update card</Button>
+                        }}
+                        onClick={() => updateCardHandler(props.id)}
+                    >
+                        update card
+                    </Button>
                 </div>
             </div>
         </BasicModal>
-    )
-}
-
+    );
+};

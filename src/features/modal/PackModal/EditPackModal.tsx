@@ -1,30 +1,30 @@
-import BasicModal from "../BasicModal/BasicModal";
-import React, {ChangeEvent, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../../app/store";
-import {updateNamePackTC} from "../../packs/Packs-reducer";
-import s from "../BasicModal/BasicModal.module.css"
-import {Button} from "@mui/material";
+import BasicModal from '../BasicModal/BasicModal';
+import React, { ChangeEvent, useState } from 'react';
+import { updateNamePackTC } from '../../packs/Packs-reducer';
+import s from '../BasicModal/BasicModal.module.css';
+import { Button } from '@mui/material';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 type EditPackModalType = {
-    id: string
-    name:string
-    setIsEdit:(value:boolean) => void
-    isEdit:boolean
-}
+    id: string;
+    name: string;
+    setIsEdit: (value: boolean) => void;
+    isEdit: boolean;
+};
 
-export const EditPackModal = (props:EditPackModalType) => {
-
+export const EditPackModal = (props: EditPackModalType) => {
     const dispatch = useAppDispatch();
 
     let [currentName, setCurrentName] = useState(props.name);
 
     const updateNamePackHandler = (id: string) => {
         dispatch(updateNamePackTC(id, currentName));
-        props.setIsEdit(false)
+        props.setIsEdit(false);
     };
 
     const closePack = () => {
-        props.setIsEdit(false)
+        props.setIsEdit(false);
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,16 +32,19 @@ export const EditPackModal = (props:EditPackModalType) => {
     };
 
     return (
-        <BasicModal isOpen={props.isEdit} setIsOpen={props.setIsEdit} >
+        <BasicModal isOpen={props.isEdit} setIsOpen={props.setIsEdit}>
             <div className={s.modalContainer}>
                 <div className={s.text}>Edit pack</div>
                 <div>
-                    <input onChange={onNameChange}
-                           value={currentName}
-                           placeholder={'Name Pack'}
-                           className={s.input}/>
+                    <input
+                        onChange={onNameChange}
+                        value={currentName}
+                        placeholder={'Name Pack'}
+                        className={s.input}
+                    />
                 </div>
-                <div className={s.text}><input type={'checkbox'}/>
+                <div className={s.text}>
+                    <input type={'checkbox'} />
                     Private pack
                 </div>
                 <div className={s.divButton}>
@@ -56,7 +59,12 @@ export const EditPackModal = (props:EditPackModalType) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={closePack}> Cansel</Button>
+                        }}
+                        onClick={closePack}
+                    >
+                        {' '}
+                        Cansel
+                    </Button>
                     <Button
                         style={{
                             color: 'white',
@@ -68,9 +76,14 @@ export const EditPackModal = (props:EditPackModalType) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={()=>updateNamePackHandler(props.id)}> Save</Button>
+                        }}
+                        onClick={() => updateNamePackHandler(props.id)}
+                    >
+                        {' '}
+                        Save
+                    </Button>
                 </div>
             </div>
         </BasicModal>
-    )
-}
+    );
+};

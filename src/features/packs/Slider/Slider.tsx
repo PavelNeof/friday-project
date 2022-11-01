@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import s from './Slider.module.css';
 import { Box, Slider as SliderMUI } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { changeMinMaxCurrentAC } from '../Packs-reducer';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 export const Slider = () => {
     const minCardsCount = useAppSelector(state => state.packs.minCardsCount);

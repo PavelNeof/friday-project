@@ -17,7 +17,8 @@ import { PATH } from '../../../common/routing/Route/Route';
 import { useFormik } from 'formik';
 import styles from '../Registration/Registration.module.css';
 import { loginTC } from '../auth-reducer';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 type FormikLogErrorType = {
     email?: string;

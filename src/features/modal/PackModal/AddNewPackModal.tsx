@@ -1,14 +1,15 @@
-import BasicModal from "../BasicModal/BasicModal";
-import React, {ChangeEvent, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../../app/store";
-import {addNewPackTC} from "../../packs/Packs-reducer";
-import s from "../BasicModal/BasicModal.module.css"
-import {Button} from "@mui/material";
+import BasicModal from '../BasicModal/BasicModal';
+import React, { ChangeEvent, useState } from 'react';
+import { addNewPackTC } from '../../packs/Packs-reducer';
+import s from '../BasicModal/BasicModal.module.css';
+import { Button } from '@mui/material';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 type AddNewPackModalType = {
-    isAddPack:boolean
-    setIsAddPack: (value:boolean)=> void
-}
+    isAddPack: boolean;
+    setIsAddPack: (value: boolean) => void;
+};
 
 export const AddNewPackModal = (props: AddNewPackModalType) => {
     const dispatch = useAppDispatch();
@@ -17,11 +18,11 @@ export const AddNewPackModal = (props: AddNewPackModalType) => {
 
     const addPackHandler = () => {
         dispatch(addNewPackTC(currentName));
-        props.setIsAddPack(false)
+        props.setIsAddPack(false);
     };
 
     const closePack = () => {
-        props.setIsAddPack(false)
+        props.setIsAddPack(false);
     };
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,12 +35,15 @@ export const AddNewPackModal = (props: AddNewPackModalType) => {
             <div className={s.modalContainer}>
                 <div className={s.text}>Add new Pack</div>
                 <div>
-                    <input onChange={onNameChange}
-                           value={currentName}
-                           placeholder={'Name Pack'}
-                           className={s.input}/>
+                    <input
+                        onChange={onNameChange}
+                        value={currentName}
+                        placeholder={'Name Pack'}
+                        className={s.input}
+                    />
                 </div>
-                <div className={s.text}><input type={'checkbox'}/>
+                <div className={s.text}>
+                    <input type={'checkbox'} />
                     Private pack
                 </div>
                 <div className={s.divButton}>
@@ -54,7 +58,12 @@ export const AddNewPackModal = (props: AddNewPackModalType) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={closePack}> Cansel</Button>
+                        }}
+                        onClick={closePack}
+                    >
+                        {' '}
+                        Cansel
+                    </Button>
                     <Button
                         style={{
                             color: 'white',
@@ -66,9 +75,14 @@ export const AddNewPackModal = (props: AddNewPackModalType) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '113px',
-                        }} onClick={addPackHandler}> Save</Button>
+                        }}
+                        onClick={addPackHandler}
+                    >
+                        {' '}
+                        Save
+                    </Button>
                 </div>
             </div>
         </BasicModal>
-    )
-}
+    );
+};

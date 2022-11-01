@@ -4,16 +4,17 @@ import { IconButton } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { Delete } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { DeletePackModal } from './DeletePackModal';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../../common/routing/Route/Route';
 import { getCardsTC } from '../../cards/cards-reducer';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 type RenderCellComponentType = {
-    id:string
-    name:string
-}
+    id: string;
+    name: string;
+};
 
 export const RenderCellPackComponent = (props: RenderCellComponentType) => {
     const navigate = useNavigate();
@@ -30,10 +31,24 @@ export const RenderCellPackComponent = (props: RenderCellComponentType) => {
 
     return (
         <div>
-            {isEdit && <EditPackModal id={props.id} name={props.name} setIsEdit={setIsEdit} isEdit={isEdit}/>}
-            {isDelete && <DeletePackModal id={props.id} name={props.name} setIsDelete={setIsDelete} isDelete={isDelete}/>}
+            {isEdit && (
+                <EditPackModal
+                    id={props.id}
+                    name={props.name}
+                    setIsEdit={setIsEdit}
+                    isEdit={isEdit}
+                />
+            )}
+            {isDelete && (
+                <DeletePackModal
+                    id={props.id}
+                    name={props.name}
+                    setIsDelete={setIsDelete}
+                    isDelete={isDelete}
+                />
+            )}
             <IconButton disabled={status === 'loading'}>
-                <SchoolIcon/>
+                <SchoolIcon />
             </IconButton>
             <IconButton onClick={() => setIsEdit(true)} disabled={status === 'loading'}>
                 <BorderColorIcon />

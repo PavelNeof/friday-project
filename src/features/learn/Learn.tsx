@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styles from './Learn.module.css';
 import ErrorSnackbars from '../../common/components/ErrorSnackbars/ErrorSnackbars';
 import { BackToPackList } from '../../common/components/BackToPackList/BackToPackList';
-import { useAppDispatch, useAppSelector } from '../../app/store';
 import { CardType, updateGradeCardTC } from '../cards/cards-reducer';
 import { Button } from '@mui/material';
+import { useAppDispatch } from '../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../common/hooks/useAppSelector';
 
 const getCard = (cards: CardType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);

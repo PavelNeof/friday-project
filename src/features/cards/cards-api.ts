@@ -1,4 +1,4 @@
-import { instance } from '../../api/api-config';
+import { instance } from '../../common/api/api-config';
 
 export const cardsApi = {
     getCards(cardsPack_id: string | undefined) {
@@ -8,7 +8,11 @@ export const cardsApi = {
         // @ts-ignore
         //return instance.get(`/cards/card`, { cardsPack_id });
     },
-    postCard(cardsPack_id: string | undefined, question: string | undefined, answer:string | undefined) {
+    postCard(
+        cardsPack_id: string | undefined,
+        question: string | undefined,
+        answer: string | undefined,
+    ) {
         return instance
             .post('/cards/card', { card: { cardsPack_id, question, answer } })
             .then(res => res.data);

@@ -1,18 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import stylePacks from '../../packs/Packs.module.css';
 import s from './../Cards.module.css';
-import {BackToPackList} from '../../../common/components/BackToPackList/BackToPackList';
-import {Box, Button} from '@mui/material';
-import {useNavigate, useParams} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../../app/store';
-import {getCardsTC} from '../cards-reducer';
-import {DataGrid, GridColDef} from '@mui/x-data-grid';
-import {PATH} from '../../../common/routing/Route/Route';
+import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
+import { Box, Button } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getCardsTC } from '../cards-reducer';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { PATH } from '../../../common/routing/Route/Route';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SchoolIcon from '@mui/icons-material/School';
-import {Delete} from '@mui/icons-material';
-import {AddNewCardModel} from "../../modal/CardModal/AddNewCardModel";
-import {RenderCellCardComponent} from "../../modal/CardModal/RenderCellCardComponent";
+import { Delete } from '@mui/icons-material';
+import { AddNewCardModel } from '../../modal/CardModal/AddNewCardModel';
+import { RenderCellCardComponent } from '../../modal/CardModal/RenderCellCardComponent';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 export function MyCards() {
     const dispatch = useAppDispatch();
@@ -45,7 +46,14 @@ export function MyCards() {
             width: 150,
             renderCell: params => {
                 console.log({ params });
-                return <RenderCellCardComponent id={params.row._id} name={params.row.question} answer={params.row.answer} cardPackId={cardPackId}/>
+                return (
+                    <RenderCellCardComponent
+                        id={params.row._id}
+                        name={params.row.question}
+                        answer={params.row.answer}
+                        cardPackId={cardPackId}
+                    />
+                );
             },
         },
     ];

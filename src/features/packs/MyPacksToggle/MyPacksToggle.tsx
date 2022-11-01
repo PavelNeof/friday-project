@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { changeIsMyPacksAC } from '../Packs-reducer';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 export const MyPacksToggle = () => {
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);

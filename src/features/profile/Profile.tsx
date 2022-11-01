@@ -2,13 +2,15 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { AppStateType, useAppDispatch, useAppSelector } from '../../app/store';
+import { AppStateType } from '../../app/store';
 import { logoutTC, updateName } from '../auth/auth-reducer';
 import { PATH } from '../../common/routing/Route/Route';
 import { Button, FormControl, Grid } from '@mui/material';
 import styles from '../auth/Registration/Registration.module.css';
 import styleProfile from './Profile.module.css';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import { useAppDispatch } from '../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../common/hooks/useAppSelector';
 
 export const Profile = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);

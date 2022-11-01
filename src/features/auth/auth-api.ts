@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { RegisterResponseType, UserDataType } from './auth-reducer';
-import { instance } from '../../api/api-config';
+import { instance } from '../../common/api/api-config';
 
 export const authAPI = {
     login(data: LoginParamsType) {

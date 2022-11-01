@@ -3,11 +3,12 @@ import s from '../../packs/Packs.module.css';
 import style from './AddNewCard.module.css';
 import { Button } from '@mui/material';
 import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewCardTC } from '../cards-reducer';
 import { PATH } from '../../../common/routing/Route/Route';
-import {AddNewCardModel} from "../../modal/CardModal/AddNewCardModel";
+import { AddNewCardModel } from '../../modal/CardModal/AddNewCardModel';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 export const AddNewCard = () => {
     const cards = useAppSelector(state => state.cards.cards);

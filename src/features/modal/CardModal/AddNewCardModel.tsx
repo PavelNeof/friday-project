@@ -1,11 +1,10 @@
-import BasicModal from "../BasicModal/BasicModal";
-import s from "../BasicModal/BasicModal.module.css";
-import {useParams} from "react-router-dom";
-import {useAppDispatch} from "../../../app/store";
-import {addNewCardTC} from "../../cards/cards-reducer";
-import {ChangeEvent, useState} from "react";
-import {Button} from "@mui/material";
-
+import BasicModal from '../BasicModal/BasicModal';
+import s from '../BasicModal/BasicModal.module.css';
+import { useParams } from 'react-router-dom';
+import { addNewCardTC } from '../../cards/cards-reducer';
+import { ChangeEvent, useState } from 'react';
+import { Button } from '@mui/material';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 
 export const AddNewCardModel = (props: any) => {
     const dispatch = useAppDispatch();
@@ -13,43 +12,48 @@ export const AddNewCardModel = (props: any) => {
     let [question, setQuestion] = useState('');
     let [answer, setAnswer] = useState('');
 
-    let {cardPackId} = useParams();
+    let { cardPackId } = useParams();
 
     const addNewCardHandler = () => {
-        dispatch(addNewCardTC(cardPackId, question, answer ));
-        props.setIsAddCard(false)
+        dispatch(addNewCardTC(cardPackId, question, answer));
+        props.setIsAddCard(false);
     };
 
-
     const questionChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuestion(e.currentTarget.value)
-        console.log(question)
-    }
+        setQuestion(e.currentTarget.value);
+        console.log(question);
+    };
 
     const answerChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setAnswer(e.currentTarget.value)
-        console.log(answer)
-    }
+        setAnswer(e.currentTarget.value);
+        console.log(answer);
+    };
 
     return (
         <BasicModal isOpen={props.isAddCard} setIsOpen={props.setIsAddCard}>
             <div className={s.modalContainer}>
                 <div className={s.text}>Add new card</div>
 
-                <div>Question
+                <div>
+                    Question
                     <div>
-                        <input onChange={questionChange}
-                               value={question}
-                               placeholder={'question'}
-                               className={s.input}/>
+                        <input
+                            onChange={questionChange}
+                            value={question}
+                            placeholder={'question'}
+                            className={s.input}
+                        />
                     </div>
                 </div>
-                <div>Answer
+                <div>
+                    Answer
                     <div>
-                        <input onChange={answerChange}
-                               value={answer}
-                               placeholder={'question'}
-                               className={s.input}/>
+                        <input
+                            onChange={answerChange}
+                            value={answer}
+                            placeholder={'question'}
+                            className={s.input}
+                        />
                     </div>
                 </div>
                 <div className={s.button}>
@@ -64,9 +68,13 @@ export const AddNewCardModel = (props: any) => {
                             fontSize: '16px',
                             textTransform: 'capitalize',
                             width: '60%',
-                        }} onClick={addNewCardHandler}>add card</Button>
+                        }}
+                        onClick={addNewCardHandler}
+                    >
+                        add card
+                    </Button>
                 </div>
             </div>
         </BasicModal>
-    )
-}
+    );
+};

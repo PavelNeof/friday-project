@@ -1,4 +1,4 @@
-import { instance } from '../../api/api-config';
+import { instance } from '../../common/api/api-config';
 import { PacksResponseType } from './Packs-reducer';
 
 export const packsApi = {

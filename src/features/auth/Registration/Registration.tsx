@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { useFormik } from 'formik';
 import {
     Button,
@@ -17,6 +16,8 @@ import { setRegistrationTC } from '../auth-reducer';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import styles from './Registration.module.css';
 import ErrorSnackbars from '../../../common/components/ErrorSnackbars/ErrorSnackbars';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 type FormikRegErrorType = {
     email?: string;

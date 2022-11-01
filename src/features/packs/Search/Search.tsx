@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch } from '../../../app/store';
 import { changeSearchAC } from '../Packs-reducer';
 import useDebounce from '../../../common/hooks/useDebounce';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 
 export const Search = () => {
     const [text, setText] = useState<string>('');

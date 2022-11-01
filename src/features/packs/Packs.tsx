@@ -5,11 +5,10 @@ import {
     changePageCountAC,
     getPacksTC,
 } from './Packs-reducer';
-import { useAppDispatch, useAppSelector } from '../../app/store';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Box, Button } from '@mui/material';
 import s from './Packs.module.css';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { Search } from './Search/Search';
 import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
@@ -17,13 +16,13 @@ import { Slider } from './Slider/Slider';
 import { Reset } from './Reset/Reset';
 import { RenderCellPackComponent } from '../modal/PackModal/RenderCellPackComponent';
 import { AddNewPackModal } from '../modal/PackModal/AddNewPackModal';
+import { useAppDispatch } from '../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../common/hooks/useAppSelector';
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     const packs = useAppSelector(state => state.packs.cardPacks);
-    // const status = useAppSelector(state => state.app.status);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const userId = useAppSelector(state => state.auth.data._id);
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
@@ -34,11 +33,15 @@ export const Packs = () => {
     const min = useAppSelector(state => state.packs.min);
     const max = useAppSelector(state => state.packs.max);
 
-    const [isAddPack, setIsAddPack] = useState(false);
-
     useEffect(() => {
         dispatch(getPacksTC());
     }, [page, pageCount, isMyPacks, search, min, max]);
+
+    const [isAddPack, setIsAddPack] = useState(false);
+
+    const addPackHandler = () => {
+        setIsAddPack(true);
+    };
 
     const onPageChangeHandle = (page: number) => {
         dispatch(changePageAC(page + 1));
@@ -85,12 +88,8 @@ export const Packs = () => {
         },
     ];
 
-    const addPackHandler = () => {
-        setIsAddPack(true);
-    };
-
     if (!isLoggedIn) {
-        navigate(`${PATH.LOGIN}`);
+        return <Navigate to={PATH.LOGIN} />;
     }
 
     return (
@@ -129,12 +128,12 @@ export const Packs = () => {
                     rows={packs}
                     columns={columns}
                     paginationMode={'server'}
-                    page={page - 1} // текущая страница
-                    pageSize={pageCount} // кол-во колод на странице
-                    rowsPerPageOptions={[5, 10, 15]} // варианты кол-ва колод на странице
-                    rowCount={cardPacksTotalCount} // сколько всего колод
-                    onPageChange={onPageChangeHandle} // переход на страницу
-                    onPageSizeChange={onPageSizeChangeHandle} // изменение кол-ва колод на странице
+                    page={page - 1} // current page
+                    pageSize={pageCount} // number of decks per page
+                    rowsPerPageOptions={[5, 10, 15]} // options for the number of decks per page
+                    rowCount={cardPacksTotalCount} // how many decks
+                    onPageChange={onPageChangeHandle} // go to page
+                    onPageSizeChange={onPageSizeChangeHandle} // changing the number of decks per page
                 />
             </Box>
             {isAddPack && (

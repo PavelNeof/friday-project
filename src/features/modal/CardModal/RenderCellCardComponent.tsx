@@ -1,44 +1,57 @@
-import {IconButton} from "@mui/material";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import {Delete} from "@mui/icons-material";
-import React, {useState} from "react";
+import { IconButton } from '@mui/material';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import { Delete } from '@mui/icons-material';
+import React, { useState } from 'react';
 import SchoolIcon from '@mui/icons-material/School';
-import {useAppSelector} from "../../../app/store";
-import {EditCardModal} from "./EditCardModal";
-import {DeleteCardModal} from "./DeleteCardModal";
+import { EditCardModal } from './EditCardModal';
+import { DeleteCardModal } from './DeleteCardModal';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 type RenderCellCardComponent = {
-    id:string
-    name:string
-    answer:string
-    cardPackId: string | undefined
-}
-export const RenderCellCardComponent = (props:RenderCellCardComponent) =>{
-
+    id: string;
+    name: string;
+    answer: string;
+    cardPackId: string | undefined;
+};
+export const RenderCellCardComponent = (props: RenderCellCardComponent) => {
     const status = useAppSelector(state => state.app.status);
 
-    const [isEdit, setIsEdit] = useState(false)
-    const [isDelete, setIsDelete] = useState(false)
-
+    const [isEdit, setIsEdit] = useState(false);
+    const [isDelete, setIsDelete] = useState(false);
 
     const updateCardHandler = () => {
-        setIsEdit(true)
+        setIsEdit(true);
     };
 
     const deleteCardHandler = () => {
-        setIsDelete(true)
+        setIsDelete(true);
     };
 
     return (
         <div>
-            {isEdit && <EditCardModal id={props.id} name={props.name} answer={props.answer}
-                                      setIsEdit={setIsEdit} isEdit={isEdit} cardPackId={props.cardPackId}/>}
+            {isEdit && (
+                <EditCardModal
+                    id={props.id}
+                    name={props.name}
+                    answer={props.answer}
+                    setIsEdit={setIsEdit}
+                    isEdit={isEdit}
+                    cardPackId={props.cardPackId}
+                />
+            )}
 
-            {isDelete && <DeleteCardModal id={props.id} name={props.name} setIsDelete={setIsDelete} isDelete={isDelete}/>}
+            {isDelete && (
+                <DeleteCardModal
+                    id={props.id}
+                    name={props.name}
+                    setIsDelete={setIsDelete}
+                    isDelete={isDelete}
+                />
+            )}
 
             <IconButton disabled={status === 'loading'}>
-                            <SchoolIcon />
-                        </IconButton>
+                <SchoolIcon />
+            </IconButton>
             <IconButton
                 onClick={() => updateCardHandler()}
                 disabled={status === 'loading'}
@@ -53,4 +66,4 @@ export const RenderCellCardComponent = (props:RenderCellCardComponent) =>{
             </IconButton>
         </div>
     );
-}
+};

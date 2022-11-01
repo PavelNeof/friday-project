@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { forgotPasswordTC } from '../auth-reducer';
 import styles from '../Registration/Registration.module.css';
 import { Button, FormControl, Grid } from '@mui/material';
 import s from './ForgotPassword.module.css';
 import { NavLink } from 'react-router-dom';
 import { PATH } from '../../../common/routing/Route/Route';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
 export const ForgotPassword = () => {
     let [newEmail, setNewEmail] = useState('');

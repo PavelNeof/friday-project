@@ -7,7 +7,8 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { getCardsTC } from './cards-reducer';
-import { useAppDispatch, useAppSelector } from '../../app/store';
+import { useAppDispatch } from '../../common/hooks/useAppDispatch';
+import { useAppSelector } from '../../common/hooks/useAppSelector';
 
 export function Cards() {
     const dispatch = useAppDispatch();
