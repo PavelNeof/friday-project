@@ -7,14 +7,12 @@ import {useAppSelector} from "../../../app/store";
 import {EditCardModal} from "./EditCardModal";
 import {DeleteCardModal} from "./DeleteCardModal";
 
-
 type RenderCellCardComponent = {
     id:string
     name:string
     answer:string
     cardPackId: string | undefined
 }
-
 export const RenderCellCardComponent = (props:RenderCellCardComponent) =>{
 
     const status = useAppSelector(state => state.app.status);
@@ -33,9 +31,9 @@ export const RenderCellCardComponent = (props:RenderCellCardComponent) =>{
 
     return (
         <div>
-
             {isEdit && <EditCardModal id={props.id} name={props.name} answer={props.answer}
                                       setIsEdit={setIsEdit} isEdit={isEdit} cardPackId={props.cardPackId}/>}
+
             {isDelete && <DeleteCardModal id={props.id} name={props.name} setIsDelete={setIsDelete} isDelete={isDelete}/>}
 
             <IconButton disabled={status === 'loading'}>

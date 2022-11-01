@@ -4,19 +4,11 @@ import { IconButton } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { Delete } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { DeletePackModal } from './DeletePackModal';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '../../common/routing/Route/Route';
-import { getCardsTC } from '../cards/cards-reducer';
-import React, {useState} from 'react'
-import {EditPackModal} from "./EditPackModal";
-import {IconButton} from "@mui/material";
-import SchoolIcon from "@mui/icons-material/School";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import {Delete} from "@mui/icons-material";
-import {useAppSelector} from "../../../app/store";
-import {DeletePackModal} from "./DeletePackModal";
+import { PATH } from '../../../common/routing/Route/Route';
+import { getCardsTC } from '../../cards/cards-reducer';
 
 type RenderCellComponentType = {
     id:string

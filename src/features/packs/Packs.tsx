@@ -16,10 +16,8 @@ import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
 import { Slider } from './Slider/Slider';
 import { Reset } from './Reset/Reset';
 import useDebounce from '../../common/hooks/useDebounce';
-import { AddNewPackModal } from '../modal/AddNewPackModal';
-import { RenderCellComponent } from '../modal/RenderCellComponent';
-import {AddNewPackModal} from "../modal/PackModal/AddNewPackModal";
 import {RenderCellPackComponent} from "../modal/PackModal/RenderCellPackComponent";
+import {AddNewPackModal} from "../modal/PackModal/AddNewPackModal";
 
 export const Packs = () => {
     const dispatch = useAppDispatch();

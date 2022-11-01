@@ -157,7 +157,7 @@ export type CardsActionsType =
     | ReturnType<typeof addNewCardAC>
     | ReturnType<typeof deleteCardAC>
     | ReturnType<typeof updateCardAC>
-    | ReturnType<typeof updateGradeCardAC>;
+    | ReturnType<typeof updateGradeCardAC>
     | ReturnType<typeof updateCardAC>
     | ReturnType<typeof changeCardAC>;
 
