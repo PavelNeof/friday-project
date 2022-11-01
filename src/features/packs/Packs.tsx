@@ -15,9 +15,8 @@ import { Search } from './Search/Search';
 import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
 import { Slider } from './Slider/Slider';
 import { Reset } from './Reset/Reset';
-import useDebounce from '../../common/hooks/useDebounce';
-import {RenderCellPackComponent} from "../modal/PackModal/RenderCellPackComponent";
-import {AddNewPackModal} from "../modal/PackModal/AddNewPackModal";
+import { RenderCellPackComponent } from '../modal/PackModal/RenderCellPackComponent';
+import { AddNewPackModal } from '../modal/PackModal/AddNewPackModal';
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -35,17 +34,16 @@ export const Packs = () => {
     const min = useAppSelector(state => state.packs.min);
     const max = useAppSelector(state => state.packs.max);
 
-    const debouncedSearch = useDebounce<string>(search, 1000);
-
     const [isAddPack, setIsAddPack] = useState(false);
 
     useEffect(() => {
         dispatch(getPacksTC());
-    }, [page, pageCount, isMyPacks, debouncedSearch, min, max]);
+    }, [page, pageCount, isMyPacks, search, min, max]);
 
     const onPageChangeHandle = (page: number) => {
         dispatch(changePageAC(page + 1));
     };
+
     const onPageSizeChangeHandle = (pageSize: number) => {
         dispatch(changePageCountAC(pageSize));
     };
@@ -80,7 +78,9 @@ export const Packs = () => {
             headerName: 'Actions',
             width: 150,
             renderCell: params => {
-                return <RenderCellPackComponent id={params.row._id} name={params.row.name}/>;
+                return (
+                    <RenderCellPackComponent id={params.row._id} name={params.row.name} />
+                );
             },
         },
     ];

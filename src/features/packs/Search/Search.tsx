@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { useAppDispatch } from '../../../app/store';
 import { changeSearchAC } from '../Packs-reducer';
+import useDebounce from '../../../common/hooks/useDebounce';
 
 export const Search = () => {
-    const search = useAppSelector(state => state.packs.search);
+    const [text, setText] = useState<string>('');
+    const debouncedText = useDebounce<string>(text, 1000);
+
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(changeSearchAC(debouncedText));
+    }, [debouncedText]);
 
     const onChangeHandler = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-        dispatch(changeSearchAC(e.currentTarget.value));
+        setText(e.currentTarget.value);
     };
 
     return (
@@ -22,7 +29,7 @@ export const Search = () => {
                     size="small"
                     placeholder="Search by pack name"
                     sx={{ width: '465px', marginBottom: '8px' }}
-                    value={search}
+                    value={text}
                     onChange={onChangeHandler}
                 />
             </div>
