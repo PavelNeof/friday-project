@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { memo } from 'react';
 import s from './Reset.module.css';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
+import { resetFilterTC } from '../Packs-reducer';
 
-export const Reset = () => {
+export const Reset = memo(() => {
+    const dispatch = useAppDispatch();
+
+    const onClickHandler = () => dispatch(resetFilterTC());
+
     return (
         <div className={s.filter}>
             <div className={s.filterBox}>
-                <FilterAltIcon />
+                <FilterAltOffIcon sx={{ cursor: 'pointer' }} onClick={onClickHandler} />
             </div>
         </div>
     );
-};
+});

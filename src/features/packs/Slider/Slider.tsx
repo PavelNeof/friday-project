@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import s from './Slider.module.css';
 import { Box, Slider as SliderMUI } from '@mui/material';
 import { changeMinMaxCurrentAC } from '../Packs-reducer';
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
-export const Slider = () => {
-    const minCardsCount = useAppSelector(state => state.packs.minCardsCount);
-    const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
+export const Slider = memo(() => {
     const dispatch = useAppDispatch();
 
+    const minCardsCount = useAppSelector(state => state.packs.minCardsCount);
+    const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
+    const minMaxCardsCount = useAppSelector(state => state.packs.minMaxCardsCount);
+
     const [value, setValue] = React.useState<number[]>([minCardsCount, maxCardsCount]);
+
+    useEffect(() => {
+        setValue(minMaxCardsCount);
+    }, [minMaxCardsCount, dispatch]);
 
     useEffect(() => {
         setValue([minCardsCount, maxCardsCount]);
@@ -25,7 +31,7 @@ export const Slider = () => {
         value: number | number[],
     ) => {
         if (Array.isArray(value)) {
-            dispatch(changeMinMaxCurrentAC(value[0], value[1]));
+            dispatch(changeMinMaxCurrentAC(value));
         }
     };
 
@@ -50,4 +56,4 @@ export const Slider = () => {
             </div>
         </div>
     );
-};
+});

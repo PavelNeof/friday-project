@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Button } from '@mui/material';
 import { changeIsMyPacksAC } from '../Packs-reducer';
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
-export const MyPacksToggle = () => {
+export const MyPacksToggle = memo(() => {
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
     const dispatch = useAppDispatch();
 
@@ -26,4 +26,4 @@ export const MyPacksToggle = () => {
             </div>
         </div>
     );
-};
+});

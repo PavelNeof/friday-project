@@ -8,7 +8,7 @@ import {
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Box, Button } from '@mui/material';
 import s from './Packs.module.css';
-import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { Search } from './Search/Search';
 import { MyPacksToggle } from './MyPacksToggle/MyPacksToggle';
@@ -30,12 +30,11 @@ export const Packs = () => {
     const page = useAppSelector(state => state.packs.page);
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
     const search = useAppSelector(state => state.packs.search);
-    const min = useAppSelector(state => state.packs.min);
-    const max = useAppSelector(state => state.packs.max);
+    const minMaxCardsCount = useAppSelector(state => state.packs.minMaxCardsCount);
 
     useEffect(() => {
         dispatch(getPacksTC());
-    }, [page, pageCount, isMyPacks, search, min, max]);
+    }, [page, pageCount, isMyPacks, search, minMaxCardsCount]);
 
     const [isAddPack, setIsAddPack] = useState(false);
 
