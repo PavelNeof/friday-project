@@ -11,8 +11,7 @@ const initState = {
     cardPacksTotalCount: 14,
     minCardsCount: 0,
     maxCardsCount: 6,
-    min: 0,
-    max: 6,
+    minMaxCardsCount: [0, 6] as number[],
     isMyPacks: false,
     search: '',
     token: '',
@@ -82,19 +81,39 @@ export const changeIsMyPacksAC = (isMyPacks: boolean) =>
     ({ type: 'PACKS/CHANGE_IS_MY_PACKS', isMyPacks } as const);
 export const changeSearchAC = (search: string) =>
     ({ type: 'PACKS/CHANGE_SEARCH', search } as const);
-export const changeMinMaxCurrentAC = (min: number, max: number) =>
-    ({ type: 'PACKS/CHANGE_MIN_MAX_CURRENT', payload: { min, max } } as const);
+export const changeMinMaxCurrentAC = (minMaxCardsCount: number[]) =>
+    ({ type: 'PACKS/CHANGE_MIN_MAX_CURRENT', payload: { minMaxCardsCount } } as const);
 
 // thunks
 export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     dispatch(setAppStatusAC('loading'));
     try {
         const userId = getState().auth.data._id;
-        const { page, pageCount, isMyPacks, search, min, max } = getState().packs;
+        const { page, pageCount, isMyPacks, search, minMaxCardsCount } = getState().packs;
         const user_id = isMyPacks ? userId : '';
-        const res = await packsApi.getPacks(page, pageCount, user_id, search, min, max);
-        console.log(res);
+        const res = await packsApi.getPacks(
+            page,
+            pageCount,
+            user_id,
+            search,
+            minMaxCardsCount[0],
+            minMaxCardsCount[1],
+        );
         dispatch(getPacksAC(res));
+    } catch (e) {
+        errorsHandling(e as Error | AxiosError, dispatch);
+    } finally {
+        dispatch(setAppStatusAC('succeeded'));
+    }
+};
+
+export const resetFilterTC = (): AppThunkType => async (dispatch, getState) => {
+    dispatch(setAppStatusAC('loading'));
+    try {
+        const { minCardsCount, maxCardsCount } = getState().packs;
+        dispatch(changeMinMaxCurrentAC([minCardsCount, maxCardsCount]));
+        dispatch(changeSearchAC(''));
+        dispatch(changeIsMyPacksAC(false));
     } catch (e) {
         errorsHandling(e as Error | AxiosError, dispatch);
     } finally {
