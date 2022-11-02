@@ -47,7 +47,7 @@ export const RenderCellPackComponent = (props: RenderCellComponentType) => {
                     isDelete={isDelete}
                 />
             )}
-            <IconButton disabled={status === 'loading'}>
+            <IconButton onClick={learnPackHandler} disabled={status === 'loading'}>
                 <SchoolIcon />
             </IconButton>
             <IconButton onClick={() => setIsEdit(true)} disabled={status === 'loading'}>

@@ -27,6 +27,7 @@ export const PATH = {
     MY_CARDS: '/my-cards',
     ADD_NEW_CARD: '/add-new-card',
     LEARN: '/learn',
+    NOTHING_LEARN: '/nothing-learn',
 };
 
 function Router() {

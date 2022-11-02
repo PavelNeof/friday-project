@@ -6,7 +6,6 @@ import { BackToPackList } from '../../../common/components/BackToPackList/BackTo
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewCardTC } from '../cards-reducer';
 import { PATH } from '../../../common/routing/Route/Route';
-import { AddNewCardModel } from '../../modal/CardModal/AddNewCardModel';
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
@@ -14,8 +13,9 @@ export const AddNewCard = () => {
     const cards = useAppSelector(state => state.cards.cards);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    let { cardPackId } = useParams();
-
+    let { cardPackIdParam } = useParams();
+    const cardPackId = cardPackIdParam?.substring(1, cardPackIdParam?.length);
+    console.log(cardPackId);
     const addPackHandler = () => {
         dispatch(addNewCardTC(cardPackId, 'no question', 'no answer'));
     };

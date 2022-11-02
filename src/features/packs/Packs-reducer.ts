@@ -93,6 +93,7 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
         const { page, pageCount, isMyPacks, search, min, max } = getState().packs;
         const user_id = isMyPacks ? userId : '';
         const res = await packsApi.getPacks(page, pageCount, user_id, search, min, max);
+        console.log(res);
         dispatch(getPacksAC(res));
     } catch (e) {
         errorsHandling(e as Error | AxiosError, dispatch);

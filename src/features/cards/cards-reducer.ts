@@ -4,9 +4,9 @@ import { cardsApi } from './cards-api';
 import { setAppStatusAC } from '../../app/app-reducer';
 import { errorsHandling } from '../../common/utils/error-utils';
 
-const initState: CardsResponseType = {
-    cards: [],
-    cardsTotalCount: 3,
+const initState = {
+    cards: [] as CardType[],
+    cardsTotalCount: 14,
     maxGrade: 5,
     minGrade: 2,
     packCreated: '',
@@ -16,10 +16,14 @@ const initState: CardsResponseType = {
     packUpdated: '',
     packUserId: '',
     page: 1,
-    pageCount: 4,
+    pageCount: 5,
     token: '',
     tokenDeathTime: '',
+    min: 0,
+    max: 10,
 };
+
+export type CardsResponseType = typeof initState;
 
 export const cardsReducer = (
     state = initState,
@@ -59,17 +63,26 @@ export const cardsReducer = (
                         : card,
                 ),
             };
-        case 'CARDS/CHANGE_CARD':{
-            console.log(action.data._id)
-            return { ...state, cards: state.cards.map(el => el._id === action.data._id ? {...action.data} : el) };}
-
+        case 'CARDS/CHANGE_CARD': {
+            console.log(action.data._id);
+            return {
+                ...state,
+                cards: state.cards.map(el =>
+                    el._id === action.data._id ? { ...action.data } : el,
+                ),
+            };
+        }
+        case 'PACKS/CHANGE_CARDS_PAGE':
+            return { ...state, page: action.page };
+        case 'PACKS/CHANGE_CARDS_PAGE_COUNT':
+            return { ...state, pageCount: action.pageSize };
         default:
             return state;
     }
 };
 
 // actions
-export const getCardsAC = (data: CardsResponseType[]) =>
+export const getCardsAC = (data: CardsResponseType) =>
     ({ type: 'CARDS/GET_CARDS', data } as const);
 export const addNewCardAC = (data: CardType) =>
     ({ type: 'CARDS/ADD_NEW_CARD', data } as const);
@@ -79,26 +92,43 @@ export const updateCardAC = (cardId: string, newQuestion: string) =>
     ({ type: 'CARDS/UPDATE_CARD', cardId, newQuestion } as const);
 export const changeCardAC = (data: CardType) =>
     ({ type: 'CARDS/CHANGE_CARD', data } as const);
-
 export const updateGradeCardAC = (grade: number, cardId: string | undefined) =>
     ({ type: 'CARDS/UPDATE_GRADE_CARD', grade, cardId } as const);
+export const changeCardsPageAC = (page: number) =>
+    ({ type: 'PACKS/CHANGE_CARDS_PAGE', page } as const);
+export const changeCardsPageCountAC = (pageSize: number) =>
+    ({ type: 'PACKS/CHANGE_CARDS_PAGE_COUNT', pageSize } as const);
 
 // thunks
 export const getCardsTC =
     (cardPackId: string | undefined): AppThunkType =>
-    async dispatch => {
+    async (dispatch, getState) => {
         dispatch(setAppStatusAC('loading'));
         try {
-            const res = await cardsApi.getCards(cardPackId);
+            const { page, pageCount, cardsTotalCount, min, max } = getState().cards;
+            const res = await cardsApi.getCards(
+                page,
+                pageCount,
+                cardsTotalCount,
+                cardPackId,
+                min,
+                max,
+            );
+            console.log(res);
             dispatch(getCardsAC(res));
-            dispatch(setAppStatusAC('succeeded'));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
+        } finally {
+            dispatch(setAppStatusAC('succeeded'));
         }
     };
 
 export const addNewCardTC =
-    (cardPackId: string | undefined, question: string | undefined, answer:string | undefined): AppThunkType =>
+    (
+        cardPackId: string | undefined,
+        question: string | undefined,
+        answer: string | undefined,
+    ): AppThunkType =>
     async dispatch => {
         dispatch(setAppStatusAC('loading'));
         try {
@@ -129,10 +159,10 @@ export const updateCardTC =
     async dispatch => {
         dispatch(setAppStatusAC('loading'));
         try {
-            const res =  await cardsApi.updateCard(cardId, newQuestion, newAnswer);
+            const res = await cardsApi.updateCard(cardId, newQuestion, newAnswer);
             dispatch(updateCardAC(cardId, newQuestion));
             dispatch(setAppStatusAC('succeeded'));
-            dispatch(changeCardAC(res.data.updatedCard))
+            dispatch(changeCardAC(res.data.updatedCard));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
         }
@@ -159,24 +189,9 @@ export type CardsActionsType =
     | ReturnType<typeof updateCardAC>
     | ReturnType<typeof updateGradeCardAC>
     | ReturnType<typeof updateCardAC>
-    | ReturnType<typeof changeCardAC>;
-
-export type CardsResponseType = {
-    cards: CardType[];
-    cardsTotalCount: number;
-    maxGrade: number;
-    minGrade: number;
-    packCreated: string;
-    packDeckCover: null;
-    packName: string;
-    packPrivate: boolean;
-    packUpdated: string;
-    packUserId: string;
-    page: number;
-    pageCount: number;
-    token: string;
-    tokenDeathTime: string;
-};
+    | ReturnType<typeof changeCardAC>
+    | ReturnType<typeof changeCardsPageAC>
+    | ReturnType<typeof changeCardsPageCountAC>;
 
 export type CardType = {
     answer: string;

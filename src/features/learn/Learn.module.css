@@ -24,7 +24,7 @@ h1 {
 
 .learnForm {
     width: 500px;
-    padding: 20px;
+    padding: 40px 0;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -4,7 +4,12 @@ import s from './../Cards.module.css';
 import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
 import { Box, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getCardsTC } from '../cards-reducer';
+import {
+    CardType,
+    changeCardsPageAC,
+    changeCardsPageCountAC,
+    getCardsTC,
+} from '../cards-reducer';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { PATH } from '../../../common/routing/Route/Route';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -15,7 +20,7 @@ import { RenderCellCardComponent } from '../../modal/CardModal/RenderCellCardCom
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 import { useAppSelector } from '../../../common/hooks/useAppSelector';
 
-export function MyCards() {
+export const MyCards = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     let { cardPackId } = useParams();
@@ -23,17 +28,20 @@ export function MyCards() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const status = useAppSelector(state => state.app.status);
     const packName = useAppSelector(state => state.cards.packName);
-
+    const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount);
+    const pageCount = useAppSelector(state => state.cards.pageCount);
+    const page = useAppSelector(state => state.cards.page);
+    //const cardPackId = cardPackIdParam?.substring(1, cardPackIdParam?.length);
     // const { cards } = data || {};
     //console.log(cards);
-
+    console.log(cardsTotalCount);
     const [isAddCard, setIsAddCard] = useState(false);
 
     //console.log(cards);
     // console.log(cardPackId);
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
-    }, []);
+    }, [page, pageCount]);
 
     const columns: GridColDef[] = [
         { field: 'question', headerName: 'Question', width: 150 },
@@ -67,6 +75,14 @@ export function MyCards() {
     const addNewCardHandler = () => {
         //dispatch(addNewCardTC(cardPackId));
         setIsAddCard(true);
+    };
+
+    const onPageChangeHandle = (page: number) => {
+        dispatch(changeCardsPageAC(page + 1));
+    };
+
+    const onPageSizeChangeHandle = (pageSize: number) => {
+        dispatch(changeCardsPageCountAC(pageSize));
     };
 
     // const deleteCardHandler = (cardId: string) => {
@@ -127,12 +143,16 @@ export function MyCards() {
                 </div>
                 <Box sx={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        getRowId={(row: any) => row._id}
-                        rows={cards || []}
+                        getRowId={(row: CardType) => row._id}
+                        rows={cards}
                         columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                        onRowClick={params => console.log(params)}
+                        paginationMode={'server'}
+                        page={page - 1} // current page
+                        pageSize={pageCount} // number of decks per page
+                        rowsPerPageOptions={[5, 10, 15]} // options for the number of decks per page
+                        rowCount={cardsTotalCount} // how many decks
+                        onPageChange={onPageChangeHandle} // go to page
+                        onPageSizeChange={onPageSizeChangeHandle} // changing the number of decks per page
                     />
                 </Box>
             </div>
@@ -141,4 +161,4 @@ export function MyCards() {
             )}
         </div>
     );
-}
+};

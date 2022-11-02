@@ -1,9 +1,25 @@
 import { instance } from '../../common/api/api-config';
+import { CardsResponseType } from './cards-reducer';
 
 export const cardsApi = {
-    getCards(cardsPack_id: string | undefined) {
+    getCards(
+        page: number,
+        pageCount: number,
+        cardsTotalCount: number,
+        cardsPack_id: string | undefined,
+        min: number,
+        max: number,
+    ) {
         return instance
-            .get(`/cards/card?cardsPack_id=${cardsPack_id}`)
+            .get<CardsResponseType>(`/cards/card`, {
+                params: {
+                    page,
+                    pageCount,
+                    cardsPack_id,
+                    min,
+                    max,
+                },
+            })
             .then(res => res.data);
         // @ts-ignore
         //return instance.get(`/cards/card`, { cardsPack_id });
@@ -14,7 +30,9 @@ export const cardsApi = {
         answer: string | undefined,
     ) {
         return instance
-            .post('/cards/card', { card: { cardsPack_id, question, answer } })
+            .post('/cards/card', {
+                card: { cardsPack_id, question, answer },
+            })
             .then(res => res.data);
     },
     deleteCard(id: string) {
