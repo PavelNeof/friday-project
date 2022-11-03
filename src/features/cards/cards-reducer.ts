@@ -21,6 +21,7 @@ const initState = {
     tokenDeathTime: '',
     min: 0,
     max: 10,
+    search: '',
 };
 
 export type CardsResponseType = typeof initState;
@@ -72,10 +73,12 @@ export const cardsReducer = (
                 ),
             };
         }
-        case 'PACKS/CHANGE_CARDS_PAGE':
+        case 'CARDS/CHANGE_CARDS_PAGE':
             return { ...state, page: action.page };
-        case 'PACKS/CHANGE_CARDS_PAGE_COUNT':
+        case 'CARDS/CHANGE_CARDS_PAGE_COUNT':
             return { ...state, pageCount: action.pageSize };
+        case 'CARDS/CHANGE_SEARCH':
+            return { ...state, search: action.search };
         default:
             return state;
     }
@@ -95,9 +98,11 @@ export const changeCardAC = (data: CardType) =>
 export const updateGradeCardAC = (grade: number, cardId: string | undefined) =>
     ({ type: 'CARDS/UPDATE_GRADE_CARD', grade, cardId } as const);
 export const changeCardsPageAC = (page: number) =>
-    ({ type: 'PACKS/CHANGE_CARDS_PAGE', page } as const);
+    ({ type: 'CARDS/CHANGE_CARDS_PAGE', page } as const);
 export const changeCardsPageCountAC = (pageSize: number) =>
-    ({ type: 'PACKS/CHANGE_CARDS_PAGE_COUNT', pageSize } as const);
+    ({ type: 'CARDS/CHANGE_CARDS_PAGE_COUNT', pageSize } as const);
+export const changeSearchCardsAC = (search: string) =>
+    ({ type: 'CARDS/CHANGE_SEARCH', search } as const);
 
 // thunks
 export const getCardsTC =
@@ -105,7 +110,8 @@ export const getCardsTC =
     async (dispatch, getState) => {
         dispatch(setAppStatusAC('loading'));
         try {
-            const { page, pageCount, cardsTotalCount, min, max } = getState().cards;
+            const { page, pageCount, cardsTotalCount, min, max, search } =
+                getState().cards;
             const res = await cardsApi.getCards(
                 page,
                 pageCount,
@@ -113,6 +119,7 @@ export const getCardsTC =
                 cardPackId,
                 min,
                 max,
+                search,
             );
             console.log(res);
             dispatch(getCardsAC(res));
@@ -191,6 +198,7 @@ export type CardsActionsType =
     | ReturnType<typeof updateCardAC>
     | ReturnType<typeof changeCardAC>
     | ReturnType<typeof changeCardsPageAC>
+    | ReturnType<typeof changeSearchCardsAC>
     | ReturnType<typeof changeCardsPageCountAC>;
 
 export type CardType = {

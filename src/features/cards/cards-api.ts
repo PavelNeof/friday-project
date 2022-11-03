@@ -9,6 +9,7 @@ export const cardsApi = {
         cardsPack_id: string | undefined,
         min: number,
         max: number,
+        cardQuestion: string,
     ) {
         return instance
             .get<CardsResponseType>(`/cards/card`, {
@@ -18,6 +19,7 @@ export const cardsApi = {
                     cardsPack_id,
                     min,
                     max,
+                    cardQuestion,
                 },
             })
             .then(res => res.data);

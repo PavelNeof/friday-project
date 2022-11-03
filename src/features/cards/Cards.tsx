@@ -1,30 +1,28 @@
 import React, { useEffect } from 'react';
 import stylePacks from '../packs/Packs.module.css';
-import s from './Cards.module.css';
 import { BackToPackList } from '../../common/components/BackToPackList/BackToPackList';
 import { Box, Button } from '@mui/material';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, NavLink, useParams } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { getCardsTC } from './cards-reducer';
 import { useAppDispatch } from '../../common/hooks/useAppDispatch';
 import { useAppSelector } from '../../common/hooks/useAppSelector';
+import { Search } from './Search/Search';
 
 export function Cards() {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     let { cardPackId } = useParams();
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-    const userId = useAppSelector(state => state.auth.data._id);
-    const packUserId = useAppSelector(state => state.cards.packUserId);
     const packName = useAppSelector(state => state.cards.packName);
+    const search = useAppSelector(state => state.cards.search);
     // const { cards } = data || {};
     // console.log(data);
 
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
-    }, []);
+    }, [search]);
 
     const columns: GridColDef[] = [
         { field: 'question', headerName: 'Question', width: 150 },
@@ -50,7 +48,7 @@ export function Cards() {
         */
 
     if (!isLoggedIn) {
-        navigate(`${PATH.LOGIN}`);
+        return <Navigate to={PATH.LOGIN} />;
     }
 
     return (
@@ -84,12 +82,7 @@ export function Cards() {
                         </NavLink>
                     </Button>
                 </div>
-                <div>
-                    <div>Search</div>
-                    <div>
-                        <input className={s.input} placeholder={'Provide your text'} />
-                    </div>
-                </div>
+                <Search />
                 <Box sx={{ height: 400, width: '100%' }}>
                     <DataGrid
                         getRowId={(row: any) => row._id}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import stylePacks from '../../packs/Packs.module.css';
-import s from './../Cards.module.css';
+import s from './MyCards.module.css';
 import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
 import { Box, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
