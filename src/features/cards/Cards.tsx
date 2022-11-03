@@ -5,7 +5,12 @@ import { Box, Button } from '@mui/material';
 import { Navigate, NavLink, useParams } from 'react-router-dom';
 import { PATH } from '../../common/routing/Route/Route';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { getCardsTC } from './cards-reducer';
+import {
+    CardType,
+    changeCardsPageAC,
+    changeCardsPageCountAC,
+    getCardsTC,
+} from './cards-reducer';
 import { useAppDispatch } from '../../common/hooks/useAppDispatch';
 import { useAppSelector } from '../../common/hooks/useAppSelector';
 import { Search } from './Search/Search';
@@ -13,16 +18,18 @@ import { Search } from './Search/Search';
 export function Cards() {
     const dispatch = useAppDispatch();
     let { cardPackId } = useParams();
+
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const packName = useAppSelector(state => state.cards.packName);
     const search = useAppSelector(state => state.cards.search);
-    // const { cards } = data || {};
-    // console.log(data);
+    const page = useAppSelector(state => state.cards.page);
+    const pageCount = useAppSelector(state => state.cards.pageCount);
+    const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount);
 
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
-    }, [search]);
+    }, [search, page, pageCount]);
 
     const columns: GridColDef[] = [
         { field: 'question', headerName: 'Question', width: 150 },
@@ -30,6 +37,14 @@ export function Cards() {
         { field: 'updated', headerName: 'Last updated', width: 150 },
         { field: 'grade', headerName: 'Grade', width: 150 },
     ];
+
+    const onPageChangeHandler = (page: number) => {
+        dispatch(changeCardsPageAC(page + 1));
+    };
+
+    const onPageSizeChangeHandler = (pageSize: number) => {
+        dispatch(changeCardsPageCountAC(pageSize));
+    };
 
     /*
         const addNewCardHandler = () => {
@@ -85,11 +100,16 @@ export function Cards() {
                 <Search />
                 <Box sx={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        getRowId={(row: any) => row._id}
+                        getRowId={(row: CardType) => row._id}
                         rows={cards || []}
                         columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
+                        page={page - 1}
+                        pageSize={pageCount}
+                        rowsPerPageOptions={[5, 10, 15]}
+                        paginationMode={'server'}
+                        rowCount={cardsTotalCount} // how many cards
+                        onPageChange={onPageChangeHandler} // go to page
+                        onPageSizeChange={onPageSizeChangeHandler} // changing the number of cards per page
                         onRowClick={params => console.log(params.row.name)}
                     />
                 </Box>

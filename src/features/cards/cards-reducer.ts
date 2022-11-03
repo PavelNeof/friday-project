@@ -121,7 +121,6 @@ export const getCardsTC =
                 max,
                 search,
             );
-            console.log(res);
             dispatch(getCardsAC(res));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);

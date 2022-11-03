@@ -42,11 +42,11 @@ export const Packs = () => {
         setIsAddPack(true);
     };
 
-    const onPageChangeHandle = (page: number) => {
+    const onPageChangeHandler = (page: number) => {
         dispatch(changePageAC(page + 1));
     };
 
-    const onPageSizeChangeHandle = (pageSize: number) => {
+    const onPageSizeChangeHandler = (pageSize: number) => {
         dispatch(changePageCountAC(pageSize));
     };
 
@@ -130,9 +130,9 @@ export const Packs = () => {
                     page={page - 1} // current page
                     pageSize={pageCount} // number of decks per page
                     rowsPerPageOptions={[5, 10, 15]} // options for the number of decks per page
-                    rowCount={cardPacksTotalCount} // how many decks
-                    onPageChange={onPageChangeHandle} // go to page
-                    onPageSizeChange={onPageSizeChangeHandle} // changing the number of decks per page
+                    rowCount={cardPacksTotalCount} // how many packs
+                    onPageChange={onPageChangeHandler} // go to page
+                    onPageSizeChange={onPageSizeChangeHandler} // changing the number of packs per page
                 />
             </Box>
             {isAddPack && (
