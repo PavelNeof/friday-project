@@ -33,7 +33,6 @@ export const EditCardModal = (props: EditCardModalType) => {
     const updateCardHandler = (cardId: string) => {
         dispatch(updateCardTC(cardId, question, answer));
         props.setIsEdit(false);
-        // dispatch(getCardsTC(props.cardPackId))
     };
 
     return (
@@ -58,7 +57,7 @@ export const EditCardModal = (props: EditCardModalType) => {
                         <input
                             onChange={answerChange}
                             value={answer}
-                            placeholder={'question'}
+                            placeholder={'answer'}
                             className={s.input}
                         />
                     </div>

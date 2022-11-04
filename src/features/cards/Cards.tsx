@@ -47,16 +47,6 @@ export function Cards() {
     };
 
     /*
-        const addNewCardHandler = () => {
-            dispatch(addNewCardTC(cardPackId));
-        };
-
-        const deleteCardHandler = (cardId: string) => {
-            dispatch(deleteCardTC(cardId));
-        };
-        const updateCardHandler = (cardId: string) => {
-            dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
-        };
         if (!cards) {
             navigate(`${PATH.ADD_NEW_CARD}`);
         }

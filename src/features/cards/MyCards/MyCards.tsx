@@ -26,7 +26,6 @@ export const MyCards = () => {
     let { cardPackId } = useParams();
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-    const status = useAppSelector(state => state.app.status);
     const packName = useAppSelector(state => state.cards.packName);
     const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount);
     const pageCount = useAppSelector(state => state.cards.pageCount);
@@ -37,8 +36,6 @@ export const MyCards = () => {
     console.log(cardsTotalCount);
     const [isAddCard, setIsAddCard] = useState(false);
 
-    //console.log(cards);
-    // console.log(cardPackId);
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
     }, [page, pageCount]);
@@ -66,14 +63,7 @@ export const MyCards = () => {
         },
     ];
 
-    // if (packUserId === userId) {
-    //     alert('my');
-    // } else {
-    //     alert('friend');
-    // }
-
     const addNewCardHandler = () => {
-        //dispatch(addNewCardTC(cardPackId));
         setIsAddCard(true);
     };
 
@@ -84,17 +74,6 @@ export const MyCards = () => {
     const onPageSizeChangeHandle = (pageSize: number) => {
         dispatch(changeCardsPageCountAC(pageSize));
     };
-
-    // const deleteCardHandler = (cardId: string) => {
-    //     dispatch(deleteCardTC(cardId));
-    // };
-    // const updateCardHandler = (cardId: string) => {
-    //     dispatch(updateCardTC(cardId, 'New question is cool! Before it was too boring'));
-    // };
-    //
-    // const updateNamePackHandler = (id: string) => {
-    //     dispatch(updateNamePackTC(id, 'New name'));
-    // };
 
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);
