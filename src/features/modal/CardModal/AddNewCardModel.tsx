@@ -51,7 +51,7 @@ export const AddNewCardModel = (props: any) => {
                         <input
                             onChange={answerChange}
                             value={answer}
-                            placeholder={'question'}
+                            placeholder={'answer'}
                             className={s.input}
                         />
                     </div>

@@ -7,6 +7,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import ErrorSnackbars from '../ErrorSnackbars/ErrorSnackbars';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import s from './Header.module.css';
 
 export function Header() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -14,6 +15,8 @@ export function Header() {
     const dispatch = useAppDispatch();
 
     const onClickHandlerProfile = () => {};
+
+    const name = useAppSelector(state => state.auth.data.name);
 
     //  return <Navigate to={PATH.PROFILE}
 
@@ -34,18 +37,19 @@ export function Header() {
             >
                 {/*<div style={{ height: '100%', width: '90%', margin: '0 auto' }}>*/}
                 <Toolbar>
-                    <Button
-                        style={{
-                            color: 'white',
-                            backgroundColor: '#366EFF',
-                            boxShadow:
-                                '0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
-                            borderRadius: '30px',
-                            padding: '5px 25px 5px 25px',
-                            fontFamily: 'Montserrat',
-                            textTransform: 'capitalize',
-                        }}
-                    >
+                    {/*<Button*/}
+                    {/*    style={{*/}
+                    {/*        color: 'white',*/}
+                    {/*        backgroundColor: '#366EFF',*/}
+                    {/*        boxShadow:*/}
+                    {/*            '0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',*/}
+                    {/*        borderRadius: '30px',*/}
+                    {/*        padding: '5px 25px 5px 25px',*/}
+                    {/*        fontFamily: 'Montserrat',*/}
+                    {/*        textTransform: 'capitalize',*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    <div>
                         {isLoggedIn ? (
                             <NavLink
                                 to={PATH.PROFILE}
@@ -54,6 +58,7 @@ export function Header() {
                                     color: 'white',
                                 }}
                             >
+                                <div className={s.name}>{name}</div>
                                 Profile
                             </NavLink>
                         ) : (
@@ -67,7 +72,8 @@ export function Header() {
                                 Sign In
                             </NavLink>
                         )}
-                    </Button>
+                    {/*</Button>*/}
+                    </div>
                 </Toolbar>
                 {/*</div>*/}
             </AppBar>
