@@ -59,9 +59,9 @@ export const Packs = () => {
                 let link;
                 if (params.row.user_id === userId) {
                     link = PATH.MY_CARDS;
-                    if (params.row.cardsCount === 0) {
-                        link = PATH.ADD_NEW_CARD;
-                    }
+                    // if (params.row.cardsCount === 0) {
+                    //     link = PATH.ADD_NEW_CARD;
+                    // }
                 } else {
                     link = PATH.CARDS;
                 }

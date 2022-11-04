@@ -136,6 +136,7 @@ export const addNewCardTC =
         answer: string | undefined,
     ): AppThunkType =>
     async dispatch => {
+
         dispatch(setAppStatusAC('loading'));
         try {
             const res = await cardsApi.postCard(cardPackId, question, answer);

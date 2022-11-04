@@ -15,13 +15,14 @@ export const AddNewCard = () => {
     const navigate = useNavigate();
     let { cardPackIdParam } = useParams();
     const cardPackId = cardPackIdParam?.substring(1, cardPackIdParam?.length);
-    console.log(cardPackId);
+    console.log(cardPackIdParam);
     const addPackHandler = () => {
         dispatch(addNewCardTC(cardPackId, 'no question', 'no answer'));
     };
     if (cards.length !== 0) {
         navigate(`${PATH.MY_CARDS}/${cardPackId}`);
     }
+
 
     return (
         <div className={s.container}>
