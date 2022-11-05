@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useState} from 'react';
+import {ChangeEvent, KeyboardEventHandler, useEffect, useState} from 'react';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {Navigate} from 'react-router-dom';
@@ -14,6 +14,7 @@ import {useAppSelector} from '../../common/hooks/useAppSelector';
 import IconButton from '@mui/material/IconButton';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import {InputTypeFile} from "../../common/components/InputTypeFile/InputTypeFile";
+import {BackToPackList} from "../../common/components/BackToPackList/BackToPackList";
 
 export const Profile = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -52,8 +53,14 @@ export const Profile = () => {
         return <Navigate to={PATH.LOGIN}/>;
     }
 
-    const inputDispatchAvatar = (avatar: string) =>{
+    const inputDispatchAvatar = (avatar: string) => {
         dispatch(updateAvatar(avatar))
+    }
+
+    const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.charCode === 13) {
+            deactivateEditMode()
+        }
     }
 
 
@@ -70,9 +77,9 @@ export const Profile = () => {
                             {avatar
                                 ? <img className={styleProfile.avatar} src={avatar} alt="avatar"/>
                                 : <div className={styleProfile.avatarNoPhoto}></div>}
-                            <InputTypeFile save={ inputDispatchAvatar }>
+                            <InputTypeFile save={inputDispatchAvatar}>
                                 <IconButton component="span" className={styleProfile.iconButton}>
-                                    <AddAPhotoIcon />
+                                    <AddAPhotoIcon/>
                                 </IconButton>
                             </InputTypeFile>
                         </div>
@@ -88,7 +95,9 @@ export const Profile = () => {
                                         onClick={activateEditMode}
                                     >
                                         {' '}
+                                        <IconButton>
                                         <BorderColorIcon/>{' '}
+                                            </IconButton>
                                     </span>
                                 </div>
                             )}
@@ -98,6 +107,7 @@ export const Profile = () => {
                                         autoFocus={true}
                                         onChange={onNameChange}
                                         onBlur={deactivateEditMode}
+                                        onKeyPress={onKeyPressHandler}
                                         value={currentName}
                                     />
                                     <button

@@ -6,6 +6,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import ErrorSnackbars from '../ErrorSnackbars/ErrorSnackbars';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import s from './Header.module.css';
+import {BackToPackList} from "../BackToPackList/BackToPackList";
 
 export function Header() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -28,7 +29,7 @@ export function Header() {
                     backgroundColor: 'white',
                 }}
             >
-                <div>
+                <div className={s.header}>
 
                     <div >
                         {isLoggedIn ? (
