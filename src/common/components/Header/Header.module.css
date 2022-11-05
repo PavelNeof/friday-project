@@ -1,3 +1,12 @@
+.block{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-right: 10px;
+    width: 90px;
+    justify-content: space-between;
+}
+
 .name {
     font-family: 'Montserrat';
     font-style: normal;
@@ -5,5 +14,20 @@
     font-size: 16px;
     line-height: 24px;
     color: black;
-    border-bottom: 1px dashed #000000;
+    display: flex;
+    align-items: center;
+
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.avatarNoPhoto {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #cbcbcb;
 }
