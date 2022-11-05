@@ -8,7 +8,6 @@ const initState = {
     isLoggedIn: false,
     disableButton: false,
     name: '',
-    avatar:'',
     data: {} as UserDataType,
     registrationError: '',
     registrationDone: false,
@@ -25,7 +24,7 @@ export const authReducer = (
         case 'AUTH/SET_NAME':
             return { ...state, name: action.name };
         case 'AUTH/SET_AVATAR':
-            return { ...state, avatar: action.avatar };
+            return { ...state, data: {...state.data, avatar:action.avatar} };
         case 'AUTH/SET-DATA':
             return { ...state, data: action.data };
         case 'AUTH/TOGGLE_IS_FOLLOWING_PROGRESS':
@@ -115,7 +114,6 @@ export const updateAvatar =
                     if (!res.data.error) {
                         dispatch(setAvatar(res.data.updatedUser.avatar));
                     }
-                    //dispatch(setAppStatusAC('succeeded'))
                 })
                 .finally(() => {
                     dispatch(disableButtonAC(false));
@@ -179,6 +177,7 @@ export type AuthActionsType =
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setName>
     | ReturnType<typeof setAvatar>
+    // | ReturnType<typeof setProfile>
     | ReturnType<typeof setDataAC>
     | ReturnType<typeof disableButtonAC>
     | ReturnType<typeof setRegistrationDoneAC>;

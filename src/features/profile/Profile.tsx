@@ -52,7 +52,11 @@ export const Profile = () => {
         return <Navigate to={PATH.LOGIN}/>;
     }
 
-    // @ts-ignore
+    const inputDispatchAvatar = (avatar: string) =>{
+        dispatch(updateAvatar(avatar))
+    }
+
+
     return (
         <>
             <Grid container className={styles.container}>
@@ -66,7 +70,7 @@ export const Profile = () => {
                             {avatar
                                 ? <img className={styleProfile.avatar} src={avatar} alt="avatar"/>
                                 : <div className={styleProfile.avatarNoPhoto}></div>}
-                            <InputTypeFile save={(avatar: string) => dispatch(updateAvatar(avatar))}>
+                            <InputTypeFile save={ inputDispatchAvatar }>
                                 <IconButton component="span" className={styleProfile.iconButton}>
                                     <AddAPhotoIcon />
                                 </IconButton>
