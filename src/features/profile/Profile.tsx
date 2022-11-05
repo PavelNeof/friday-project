@@ -49,6 +49,7 @@ export const Profile = () => {
         return <Navigate to={PATH.LOGIN} />;
     }
 
+    // @ts-ignore
     return (
         <>
             <Grid container className={styles.container}>
@@ -59,7 +60,12 @@ export const Profile = () => {
                     <div className={styleProfile.profile}>
                         <h1>Personal Information</h1>
 
-                        <div>avatar: {avatar}</div>
+                        {/*<div>avatar: {avatar}</div>*/}
+                        <div className={styleProfile.avatarBorder}>
+                            {/*<img className={styleProfile.avatar} src={avatar} alt="avatar" />*/}
+                            <img className={styleProfile.avatar} src={'https://vjoy.cc/wp-content/uploads/2019/07/7-30.jpg'} alt="avatar"/>
+                            </div>
+
                         <div>
                             {!editMode && (
                                 <div>

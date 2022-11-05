@@ -6,6 +6,19 @@
     align-items: center;
 }
 
+.avatar{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+
+.avatarBorder{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: black 1px solid;
+}
+
 .textName {
     color: #868686;
     border: solid 1px red;
