@@ -8,6 +8,7 @@ const initState = {
     isLoggedIn: false,
     disableButton: false,
     name: '',
+    avatar:'',
     data: {} as UserDataType,
     registrationError: '',
     registrationDone: false,
@@ -23,6 +24,8 @@ export const authReducer = (
             return { ...state, isLoggedIn: action.value };
         case 'AUTH/SET_NAME':
             return { ...state, name: action.name };
+        case 'AUTH/SET_AVATAR':
+            return { ...state, avatar: action.avatar };
         case 'AUTH/SET-DATA':
             return { ...state, data: action.data };
         case 'AUTH/TOGGLE_IS_FOLLOWING_PROGRESS':
@@ -39,6 +42,8 @@ export const setIsLoggedInAC = (value: boolean) =>
     ({ type: 'AUTH/SET-IS-LOGGED-IN', value } as const);
 
 export const setName = (name: string) => ({ type: 'AUTH/SET_NAME', name } as const);
+
+export const setAvatar = (avatar: string) => ({ type: 'AUTH/SET_AVATAR', avatar } as const);
 
 export const setDataAC = (data: UserDataType) =>
     ({ type: 'AUTH/SET-DATA', data } as const);
@@ -100,6 +105,23 @@ export const updateName =
             });
     };
 
+export const updateAvatar =
+    (avatar: string): AppThunkType =>
+        dispatch => {
+            dispatch(disableButtonAC(true));
+            authAPI
+                .updateAvatar(avatar)
+                .then(res => {
+                    if (!res.data.error) {
+                        dispatch(setAvatar(res.data.updatedUser.avatar));
+                    }
+                    //dispatch(setAppStatusAC('succeeded'))
+                })
+                .finally(() => {
+                    dispatch(disableButtonAC(false));
+                });
+        };
+
 export const forgotPasswordTC =
     (newEmail: string): AppThunkType =>
     dispatch => {
@@ -156,6 +178,7 @@ export const setRegistrationTC =
 export type AuthActionsType =
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setName>
+    | ReturnType<typeof setAvatar>
     | ReturnType<typeof setDataAC>
     | ReturnType<typeof disableButtonAC>
     | ReturnType<typeof setRegistrationDoneAC>;

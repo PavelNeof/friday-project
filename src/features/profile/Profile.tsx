@@ -1,16 +1,19 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { AppStateType } from '../../app/store';
-import { logoutTC, updateName } from '../auth/auth-reducer';
-import { PATH } from '../../common/routing/Route/Route';
-import { Button, FormControl, Grid } from '@mui/material';
+import {useSelector} from 'react-redux';
+import {Navigate} from 'react-router-dom';
+import {AppStateType} from '../../app/store';
+import {logoutTC, updateAvatar, updateName} from '../auth/auth-reducer';
+import {PATH} from '../../common/routing/Route/Route';
+import {Button, FormControl, Grid} from '@mui/material';
 import styles from '../auth/Registration/Registration.module.css';
 import styleProfile from './Profile.module.css';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { useAppDispatch } from '../../common/hooks/useAppDispatch';
-import { useAppSelector } from '../../common/hooks/useAppSelector';
+import {useAppDispatch} from '../../common/hooks/useAppDispatch';
+import {useAppSelector} from '../../common/hooks/useAppSelector';
+import IconButton from '@mui/material/IconButton';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import {InputTypeFile} from "../../common/components/InputTypeFile/InputTypeFile";
 
 export const Profile = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -46,7 +49,7 @@ export const Profile = () => {
     };
 
     if (!isLoggedIn) {
-        return <Navigate to={PATH.LOGIN} />;
+        return <Navigate to={PATH.LOGIN}/>;
     }
 
     // @ts-ignore
@@ -55,16 +58,20 @@ export const Profile = () => {
             <Grid container className={styles.container}>
                 <FormControl
                     className={styles.signUpForm}
-                    style={{ border: '1px white solid' }}
+                    style={{border: '1px white solid'}}
                 >
                     <div className={styleProfile.profile}>
                         <h1>Personal Information</h1>
-
-                        {/*<div>avatar: {avatar}</div>*/}
-                        <div className={styleProfile.avatarBorder}>
-                            {/*<img className={styleProfile.avatar} src={avatar} alt="avatar" />*/}
-                            <img className={styleProfile.avatar} src={'https://vjoy.cc/wp-content/uploads/2019/07/7-30.jpg'} alt="avatar"/>
-                            </div>
+                        <div>
+                            {avatar
+                                ? <img className={styleProfile.avatar} src={avatar} alt="avatar"/>
+                                : <div className={styleProfile.avatarNoPhoto}></div>}
+                            <InputTypeFile save={(avatar: string) => dispatch(updateAvatar(avatar))}>
+                                <IconButton component="span" className={styleProfile.iconButton}>
+                                    <AddAPhotoIcon />
+                                </IconButton>
+                            </InputTypeFile>
+                        </div>
 
                         <div>
                             {!editMode && (
@@ -73,11 +80,11 @@ export const Profile = () => {
                                         {currentName || email || '---'}
                                     </span>
                                     <span
-                                        style={{ color: '#414141' }}
+                                        style={{color: '#414141'}}
                                         onClick={activateEditMode}
                                     >
                                         {' '}
-                                        <BorderColorIcon />{' '}
+                                        <BorderColorIcon/>{' '}
                                     </span>
                                 </div>
                             )}
@@ -103,7 +110,7 @@ export const Profile = () => {
                             )}
                         </div>
 
-                        <span style={{ color: '#868686FF' }}> {email} </span>
+                        <span style={{color: '#868686FF'}}> {email} </span>
                         <Button
                             style={{
                                 color: 'black',

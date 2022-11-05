@@ -18,6 +18,9 @@ export const authAPI = {
     updateName(name: string) {
         return instance.put(`auth/me`, { name });
     },
+    updateAvatar(avatar:  string) {
+        return instance.put(`auth/me`, { avatar });
+    },
     forgotPassword(newEmail: string) {
         const message = {
             email: newEmail,

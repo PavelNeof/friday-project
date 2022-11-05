@@ -12,14 +12,18 @@
     border-radius: 50%;
 }
 
-.avatarBorder{
+.avatarNoPhoto{
     width: 130px;
     height: 130px;
     border-radius: 50%;
-    border: black 1px solid;
+    background-color: #cbcbcb;
 }
 
 .textName {
     color: #868686;
     border: solid 1px red;
+}
+
+.iconButton {
+
 }
