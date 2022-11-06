@@ -1,29 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import stylePacks from '../../packs/Packs.module.css';
 import s from './MyCards.module.css';
-import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
-import { Box, Button } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import {BackToPackList} from '../../../common/components/BackToPackList/BackToPackList';
+import {Box, Button, Popover, Typography} from '@mui/material';
+import {useNavigate, useParams} from 'react-router-dom';
 import {
     CardType,
     changeCardsPageAC,
     changeCardsPageCountAC,
     getCardsTC,
 } from '../cards-reducer';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { PATH } from '../../../common/routing/Route/Route';
+import {DataGrid, GridColDef} from '@mui/x-data-grid';
+import {PATH} from '../../../common/routing/Route/Route';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SchoolIcon from '@mui/icons-material/School';
-import { Delete } from '@mui/icons-material';
-import { AddNewCardModel } from '../../modal/CardModal/AddNewCardModel';
-import { RenderCellCardComponent } from '../../modal/CardModal/RenderCellCardComponent';
-import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
-import { useAppSelector } from '../../../common/hooks/useAppSelector';
+import {Delete} from '@mui/icons-material';
+import {AddNewCardModel} from '../../modal/CardModal/AddNewCardModel';
+import {RenderCellCardComponent} from '../../modal/CardModal/RenderCellCardComponent';
+import {useAppDispatch} from '../../../common/hooks/useAppDispatch';
+import {useAppSelector} from '../../../common/hooks/useAppSelector';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import IconButton from "@mui/material/IconButton";
+import BasicPopover from "../../../common/components/Popover/Popover";
+import {updateNamePackTC} from "../../packs/Packs-reducer";
+
 
 export const MyCards = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    let { cardPackId } = useParams();
+    let {cardPackId} = useParams();
     const cards = useAppSelector(state => state.cards.cards);
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const packName = useAppSelector(state => state.cards.packName);
@@ -35,22 +40,28 @@ export const MyCards = () => {
     //console.log(cards);
     console.log(cardsTotalCount);
     const [isAddCard, setIsAddCard] = useState(false);
+    let [isEdit, setIsEdit] = useState(false);
+    let [currentName, setCurrentName] = useState(packName);
 
     useEffect(() => {
         dispatch(getCardsTC(cardPackId));
     }, [page, pageCount]);
 
+    useEffect(() => {
+        setCurrentName(packName)
+    }, [packName]);
+
     const columns: GridColDef[] = [
-        { field: 'question', headerName: 'Question', width: 150 },
-        { field: 'answer', headerName: 'Answer', width: 150 },
-        { field: 'updated', headerName: 'Last updated', width: 150 },
-        { field: 'grade', headerName: 'Grade', width: 150 },
+        {field: 'question', headerName: 'Question', width: 150},
+        {field: 'answer', headerName: 'Answer', width: 150},
+        {field: 'updated', headerName: 'Last updated', width: 150},
+        {field: 'grade', headerName: 'Grade', width: 150},
         {
             field: '',
             headerName: '',
             width: 150,
             renderCell: params => {
-                console.log({ params });
+                console.log({params});
                 return (
                     <RenderCellCardComponent
                         id={params.row._id}
@@ -75,26 +86,58 @@ export const MyCards = () => {
         dispatch(changeCardsPageCountAC(pageSize));
     };
 
+    const inputEl = useRef<HTMLInputElement>(null);
+
+    const onEditChange = () => {
+        setIsEdit(true)
+    }
+
+    useEffect(() => {
+        isEdit  && inputEl.current?.focus();
+    },[isEdit])
+
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);
     }
 
+    const updateNamePackHandler = (id: string | undefined) => {
+        id && dispatch(updateNamePackTC(id, currentName))
+        //setIsEdit(false);
+    }
+    const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.charCode === 13) {
+            updateNamePackHandler(cardPackId)
+            setIsEdit(false)
+        }
+    }
+    const onClickHandler = () => {
+            updateNamePackHandler(cardPackId)
+            setIsEdit(false)
+
+    }
+
+    const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.value)
+        setCurrentName(e.currentTarget.value);
+    };
+
     return (
         <div>
             <div className={stylePacks.container}>
-                <BackToPackList />
+                <BackToPackList/>
                 <div className={stylePacks.packsHeader}>
                     <div className={stylePacks.packsHeaderIcon}>
-                        <h1>{packName}</h1>
-                        <div style={{ color: '#757575' }}>
-                            <BorderColorIcon />
-                        </div>
-                        <div style={{ color: '#757575' }}>
-                            <Delete />
-                        </div>
-                        <div style={{ color: '#757575' }}>
-                            <SchoolIcon />
-                        </div>
+                        {isEdit ?<div><input onChange={onNameChange}
+                                        value={currentName}
+                                        autoFocus={true}
+                                        ref={inputEl}
+                                        className={s.input}
+                                        onKeyPress={onKeyPressHandler}/>
+                            <button onClick={onClickHandler}>save</button> </div>:
+                        <h1>{packName}</h1>}
+                    </div>
+                    <div>
+                    <BasicPopover isEdit={isEdit} setIsEdit={onEditChange}/>
                     </div>
                     <Button
                         style={{
@@ -117,10 +160,10 @@ export const MyCards = () => {
                 <div>
                     <div>Search</div>
                     <div>
-                        <input className={s.input} placeholder={'Provide your text'} />
+                        <input className={s.input} placeholder={'Provide your text'}/>
                     </div>
                 </div>
-                <Box sx={{ height: 400, width: '100%' }}>
+                <Box sx={{height: 400, width: '100%'}}>
                     <DataGrid
                         getRowId={(row: CardType) => row._id}
                         rows={cards}
@@ -136,7 +179,7 @@ export const MyCards = () => {
                 </Box>
             </div>
             {isAddCard && (
-                <AddNewCardModel isAddCard={isAddCard} setIsAddCard={setIsAddCard} />
+                <AddNewCardModel isAddCard={isAddCard} setIsAddCard={setIsAddCard}/>
             )}
         </div>
     );

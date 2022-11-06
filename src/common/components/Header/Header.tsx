@@ -42,11 +42,10 @@ export function Header() {
                             >
                                 <div className={s.block}>
                                 <div className={s.name}>{name}</div>
-                                {avatar
+                                   {avatar
                                     ? <img className={s.avatar} src={avatar} alt="avatar"/>
                                     : <div className={s.avatarNoPhoto}></div>}
                                 </div>
-                                Profile
                             </NavLink>
                         ) : (
                             <NavLink

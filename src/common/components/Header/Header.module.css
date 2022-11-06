@@ -3,7 +3,6 @@
     flex-direction: row;
     padding-top: 10px;
     padding-right: 10px;
-    width: 90px;
     justify-content: space-between;
 }
 
@@ -16,7 +15,6 @@
     color: black;
     display: flex;
     align-items: center;
-
 }
 
 .avatar {

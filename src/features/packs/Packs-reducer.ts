@@ -155,6 +155,7 @@ export const updateNamePackTC =
         dispatch(setAppStatusAC('loading'));
         try {
             await packsApi.updatePack(id, name);
+            console.log(name)
             dispatch(updatePackAC(id, name));
         } catch (e) {
             errorsHandling(e as Error | AxiosError, dispatch);
