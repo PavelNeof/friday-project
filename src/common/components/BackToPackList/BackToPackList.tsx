@@ -1,13 +1,14 @@
-import { NavLink } from 'react-router-dom';
-import { PATH } from '../../routing/Route/Route';
+import {NavLink} from 'react-router-dom';
+import {PATH} from '../../routing/Route/Route';
 import WestIcon from '@mui/icons-material/West';
 import React from 'react';
 import styles from './BackToPackList.module.css';
+import IconButton from "@mui/material/IconButton";
 
 export const BackToPackList = () => {
     return (
-        <div className={styles.back}>
-            <WestIcon />
+        <div>
+
             <NavLink
                 to={PATH.PACKS}
                 style={{
@@ -15,7 +16,13 @@ export const BackToPackList = () => {
                     color: 'black',
                 }}
             >
-                Back to Pack List
+                <div className={styles.back}>
+                    <IconButton>
+                        <WestIcon/>
+                    </IconButton>
+                    Back to Pack List
+                </div>
+
             </NavLink>
         </div>
     );
