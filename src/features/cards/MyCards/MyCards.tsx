@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import stylePacks from '../../packs/Packs.module.css';
 import s from './MyCards.module.css';
 import {BackToPackList} from '../../../common/components/BackToPackList/BackToPackList';
@@ -47,6 +47,10 @@ export const MyCards = () => {
         dispatch(getCardsTC(cardPackId));
     }, [page, pageCount]);
 
+    useEffect(() => {
+        setCurrentName(packName)
+    }, [packName]);
+
     const columns: GridColDef[] = [
         {field: 'question', headerName: 'Question', width: 150},
         {field: 'answer', headerName: 'Answer', width: 150},
@@ -82,6 +86,16 @@ export const MyCards = () => {
         dispatch(changeCardsPageCountAC(pageSize));
     };
 
+    const inputEl = useRef<HTMLInputElement>(null);
+
+    const onEditChange = () => {
+        setIsEdit(true)
+    }
+
+    useEffect(() => {
+        isEdit  && inputEl.current?.focus();
+    },[isEdit])
+
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);
     }
@@ -96,6 +110,11 @@ export const MyCards = () => {
             setIsEdit(false)
         }
     }
+    const onClickHandler = () => {
+            updateNamePackHandler(cardPackId)
+            setIsEdit(false)
+
+    }
 
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         console.log(e.currentTarget.value)
@@ -108,25 +127,17 @@ export const MyCards = () => {
                 <BackToPackList/>
                 <div className={stylePacks.packsHeader}>
                     <div className={stylePacks.packsHeaderIcon}>
-                        {isEdit ?<input onChange={onNameChange}
+                        {isEdit ?<div><input onChange={onNameChange}
                                         value={currentName}
                                         autoFocus={true}
+                                        ref={inputEl}
                                         className={s.input}
-                                        onKeyPress={onKeyPressHandler}
-                            onBlur={()=> updateNamePackHandler(cardPackId)}/>:
+                                        onKeyPress={onKeyPressHandler}/>
+                            <button onClick={onClickHandler}>save</button> </div>:
                         <h1>{packName}</h1>}
-                        {/*<div style={{color: '#757575'}}>*/}
-                        {/*    <BorderColorIcon/>*/}
-                        {/*</div>*/}
-                        {/*<div style={{color: '#757575'}}>*/}
-                        {/*    <Delete/>*/}
-                        {/*</div>*/}
-                        {/*<div style={{color: '#757575'}}>*/}
-                        {/*    <SchoolIcon/>*/}
-                        {/*</div>*/}
                     </div>
                     <div>
-                    <BasicPopover id={cardPackId} name={packName} isEdit={isEdit} setIsEdit={setIsEdit}/>
+                    <BasicPopover isEdit={isEdit} setIsEdit={onEditChange}/>
                     </div>
                     <Button
                         style={{

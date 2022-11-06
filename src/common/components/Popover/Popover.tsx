@@ -12,10 +12,8 @@ import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useState} from "react";
 
 type BasicPopoverType = {
-    name:string
-    id:string | undefined
     isEdit:boolean
-    setIsEdit:(value:boolean) => void
+    setIsEdit:() => void
 
 }
 
@@ -33,8 +31,7 @@ export default function BasicPopover(props: BasicPopoverType) {
 
     const handleClick1 = (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
-        console.log(props.id)
-        console.log(props.name)
+
         console.log("button: ")
        console.log(event)
     };
@@ -43,23 +40,25 @@ export default function BasicPopover(props: BasicPopoverType) {
         setAnchorEl(null);
     };
 
+    const isEditHandler = () => {
+        handleClose();
+        props.setIsEdit();
+    }
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    const isEditHandler=()=>{
-        props.setIsEdit(true)
-        console.log(props.isEdit)
-    }
+    // <label >
+    //     <div /*onClick={handleClick}*/>
+    //         <IconButton>
+    //             <ErrorOutlineIcon/>
+    //         </IconButton>
+    //     </div>
+    // </label>
 
     return (
         <div>
-            <label >
-                <div /*onClick={handleClick}*/>
-            <IconButton>
-                <ErrorOutlineIcon/>
-            </IconButton>
-                </div>
-                </label>
+
             <Button aria-describedby={id} variant="contained" onClick={handleClick1}>
                 Open Popover
             </Button>
@@ -74,7 +73,6 @@ export default function BasicPopover(props: BasicPopoverType) {
                 }}
             >
                 <Typography sx={{p: 2}}>
-                {/*<IconButton onClick={() => props.id && updateNamePackHandler(props.id)}>*/}
                 <IconButton onClick={isEditHandler}>
                         <BorderColorIcon/> Edit
                     </IconButton>
