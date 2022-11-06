@@ -93,8 +93,8 @@ export const MyCards = () => {
     }
 
     useEffect(() => {
-        isEdit  && inputEl.current?.focus();
-    },[isEdit])
+        isEdit && inputEl.current?.focus();
+    }, [isEdit])
 
     if (!isLoggedIn) {
         navigate(`${PATH.LOGIN}`);
@@ -111,8 +111,8 @@ export const MyCards = () => {
         }
     }
     const onClickHandler = () => {
-            updateNamePackHandler(cardPackId)
-            setIsEdit(false)
+        updateNamePackHandler(cardPackId)
+        setIsEdit(false)
 
     }
 
@@ -125,18 +125,19 @@ export const MyCards = () => {
         <div>
             <div className={stylePacks.container}>
                 <div className={stylePacks.backToPackList}>
-                <BackToPackList/>
+                    <BackToPackList/>
                 </div>
                 <div className={stylePacks.packsHeader}>
                     <div className={stylePacks.packsHeaderIcon}>
-                        {isEdit ?<div><input onChange={onNameChange}
-                                        value={currentName}
-                                        autoFocus={true}
-                                        ref={inputEl}
-                                        className={stylePacks.input}
-                                        onKeyPress={onKeyPressHandler}/>
-                            <button onClick={onClickHandler} className={stylePacks.button}>save</button> </div>:
-                        <h1>{packName}</h1>}
+                        {isEdit ? <div><input onChange={onNameChange}
+                                              value={currentName}
+                                              autoFocus={true}
+                                              ref={inputEl}
+                                              className={stylePacks.input}
+                                              onKeyPress={onKeyPressHandler}/>
+                                <button onClick={onClickHandler} className={stylePacks.button}>save</button>
+                            </div> :
+                            <h1>{packName}</h1>}
                         <BasicPopover isEdit={isEdit} setIsEdit={onEditChange}/>
                     </div>
                     <Button

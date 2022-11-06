@@ -1,18 +1,18 @@
-.container{
+.container {
     height: 100%;
     width: 90%;
     margin: 0 auto;
 }
 
-.backToPackList{
+.backToPackList {
     display: flex;
     justify-content: flex-start;
 }
 
-.button{
+.button {
     color: white;
     background-color: #366EFF;
-    box-shadow:0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
     border-radius: 30px;
     padding: 5px 25px 5px 25px;
     font-family: Montserrat;
@@ -22,25 +22,26 @@
     border: none;
 }
 
-.input{
+.input {
     box-sizing: border-box;
-
+    margin: 16px 0px;
     border-radius: 2px;
     font-weight: bold;
     font-size: 22px;
 }
 
-.packsHeader{
+.packsHeader {
     display: flex;
     justify-content: space-between;
 }
-.packsHeaderIcon{
+
+.packsHeaderIcon {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.rowAboveTable{
+.rowAboveTable {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
