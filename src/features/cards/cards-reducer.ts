@@ -60,6 +60,7 @@ export const cardsReducer = (
                         ? {
                               ...card,
                               grade: action.grade,
+                              shots: card.shots++,
                           }
                         : card,
                 ),
@@ -136,7 +137,6 @@ export const addNewCardTC =
         answer: string | undefined,
     ): AppThunkType =>
     async dispatch => {
-
         dispatch(setAppStatusAC('loading'));
         try {
             const res = await cardsApi.postCard(cardPackId, question, answer);

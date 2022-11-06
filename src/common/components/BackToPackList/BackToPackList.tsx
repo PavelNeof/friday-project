@@ -6,17 +6,8 @@ import styles from './BackToPackList.module.css';
 
 export const BackToPackList = () => {
     return (
-        <div className={styles.back}>
-            <WestIcon />
-            <NavLink
-                to={PATH.PACKS}
-                style={{
-                    textDecoration: 'none',
-                    color: 'black',
-                }}
-            >
-                Back to Pack List
-            </NavLink>
-        </div>
+        <NavLink to={PATH.PACKS} style={{}} className={styles.back}>
+            <WestIcon /> Back to Pack List
+        </NavLink>
     );
 };

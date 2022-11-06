@@ -11,7 +11,7 @@ import { Packs } from '../../../features/packs/Packs';
 import { AddNewCard } from '../../../features/cards/AddNewCard/AddNewCard';
 import { Cards } from '../../../features/cards/Cards';
 import { MyCards } from '../../../features/cards/MyCards/MyCards';
-import { Learn } from '../../../features/learn/Learn';
+import { LearnContainer } from '../../../features/learn/LearnContainer';
 
 export const PATH = {
     MAIN: '/',
@@ -48,7 +48,7 @@ function Router() {
                     path={`${PATH.ADD_NEW_CARD}/:cardPackId`}
                     element={<AddNewCard />}
                 />
-                <Route path={`${PATH.LEARN}/:cardPackId`} element={<Learn />} />
+                <Route path={`${PATH.LEARN}/:cardPackId`} element={<LearnContainer />} />
                 <Route path={'*'} element={<Navigate to={PATH.ERROR_404} />} />
             </Routes>
         </div>
