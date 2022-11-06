@@ -124,20 +124,20 @@ export const MyCards = () => {
     return (
         <div>
             <div className={stylePacks.container}>
+                <div className={stylePacks.backToPackList}>
                 <BackToPackList/>
+                </div>
                 <div className={stylePacks.packsHeader}>
                     <div className={stylePacks.packsHeaderIcon}>
                         {isEdit ?<div><input onChange={onNameChange}
                                         value={currentName}
                                         autoFocus={true}
                                         ref={inputEl}
-                                        className={s.input}
+                                        className={stylePacks.input}
                                         onKeyPress={onKeyPressHandler}/>
-                            <button onClick={onClickHandler}>save</button> </div>:
+                            <button onClick={onClickHandler} className={stylePacks.button}>save</button> </div>:
                         <h1>{packName}</h1>}
-                    </div>
-                    <div>
-                    <BasicPopover isEdit={isEdit} setIsEdit={onEditChange}/>
+                        <BasicPopover isEdit={isEdit} setIsEdit={onEditChange}/>
                     </div>
                     <Button
                         style={{
@@ -150,7 +150,7 @@ export const MyCards = () => {
                             fontFamily: 'Montserrat',
                             textTransform: 'capitalize',
                             height: '40px',
-                            margin: '25px 10px 0px 0px',
+                            margin: '7px 10px 0px 0px',
                         }}
                         onClick={addNewCardHandler}
                     >

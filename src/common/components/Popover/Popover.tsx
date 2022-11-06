@@ -55,13 +55,16 @@ export default function BasicPopover(props: BasicPopoverType) {
     //         </IconButton>
     //     </div>
     // </label>
+    // <Button aria-describedby={id} variant="contained" onClick={handleClick1}>
+    //     Open Popover
+    // </Button>
 
     return (
         <div>
+            <IconButton onClick={handleClick1}>
+                            <ErrorOutlineIcon/>
+            </IconButton>
 
-            <Button aria-describedby={id} variant="contained" onClick={handleClick1}>
-                Open Popover
-            </Button>
             <Popover
                 id={id}
                 open={open}
