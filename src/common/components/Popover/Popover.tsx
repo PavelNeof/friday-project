@@ -7,14 +7,14 @@ import IconButton from "@mui/material/IconButton";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {Delete} from "@mui/icons-material";
 import SchoolIcon from "@mui/icons-material/School";
-import {updateNamePackTC} from "../../../features/packs/Packs-reducer";
+import {deletePackTC, updateNamePackTC} from "../../../features/packs/Packs-reducer";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useState} from "react";
 
 type BasicPopoverType = {
-    isEdit:boolean
-    setIsEdit:() => void
-
+    isEdit: boolean
+    setIsEdit: () => void
+    cardPackId: string | undefined
 }
 
 export default function BasicPopover(props: BasicPopoverType) {
@@ -30,10 +30,10 @@ export default function BasicPopover(props: BasicPopoverType) {
     // };
 
     const handleClick1 = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
 
         console.log("button: ")
-       console.log(event)
+        console.log(event)
     };
 
     const handleClose = () => {
@@ -43,6 +43,11 @@ export default function BasicPopover(props: BasicPopoverType) {
     const isEditHandler = () => {
         handleClose();
         props.setIsEdit();
+    }
+
+    const isDeleteHandler = () => {
+        props.cardPackId && dispatch(deletePackTC(props.cardPackId))
+
     }
 
     const open = Boolean(anchorEl);
@@ -62,7 +67,7 @@ export default function BasicPopover(props: BasicPopoverType) {
     return (
         <div>
             <IconButton onClick={handleClick1}>
-                            <ErrorOutlineIcon/>
+                <ErrorOutlineIcon/>
             </IconButton>
 
             <Popover
@@ -76,19 +81,19 @@ export default function BasicPopover(props: BasicPopoverType) {
                 }}
             >
                 <Typography sx={{p: 2}}>
-                <IconButton onClick={isEditHandler}>
+                    <IconButton onClick={isEditHandler}>
                         <BorderColorIcon/> Edit
                     </IconButton>
                 </Typography>
                 <Typography sx={{p: 2}}>
-                    <div style={{color: '#757575'}}>
+                    <IconButton onClick={isDeleteHandler}>
                         <Delete/> Delete
-                    </div>
+                    </IconButton>
                 </Typography>
                 <Typography sx={{p: 2}}>
-                    <div style={{color: '#757575'}}>
+                    <IconButton style={{color: '#757575'}}>
                         <SchoolIcon/> Learn
-                    </div>
+                    </IconButton>
                 </Typography>
             </Popover>
         </div>

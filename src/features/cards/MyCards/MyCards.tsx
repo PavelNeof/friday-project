@@ -138,7 +138,7 @@ export const MyCards = () => {
                                 <button onClick={onClickHandler} className={stylePacks.button}>save</button>
                             </div> :
                             <h1>{packName}</h1>}
-                        <BasicPopover isEdit={isEdit} setIsEdit={onEditChange}/>
+                        <BasicPopover isEdit={isEdit} setIsEdit={onEditChange} cardPackId={cardPackId}/>
                     </div>
                     <Button
                         style={{
