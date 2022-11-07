@@ -10,6 +10,8 @@ import SchoolIcon from "@mui/icons-material/School";
 import {deletePackTC, updateNamePackTC} from "../../../features/packs/Packs-reducer";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useState} from "react";
+import {NavLink, useNavigate} from "react-router-dom";
+import {PATH} from "../../routing/Route/Route";
 
 type BasicPopoverType = {
     isEdit: boolean
@@ -45,9 +47,11 @@ export default function BasicPopover(props: BasicPopoverType) {
         props.setIsEdit();
     }
 
+    const navigate = useNavigate()
+
     const isDeleteHandler = () => {
         props.cardPackId && dispatch(deletePackTC(props.cardPackId))
-
+        navigate(PATH.PACKS)
     }
 
     const open = Boolean(anchorEl);

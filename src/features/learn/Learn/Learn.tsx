@@ -6,7 +6,7 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector';
 import { CardType, updateGradeCardTC } from '../../cards/cards-reducer';
 import ErrorSnackbars from '../../../common/components/ErrorSnackbars/ErrorSnackbars';
 import { Answer } from '../Answer/Answer';
-import { getCard } from '../../../common/getCard/GetCard';
+import { getCard } from '../../../common/hooks/getCard/GetCard';
 
 export const Learn = () => {
     const dispatch = useAppDispatch();
