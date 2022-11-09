@@ -1,16 +1,14 @@
 import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import IconButton from "@mui/material/IconButton";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {Delete} from "@mui/icons-material";
 import SchoolIcon from "@mui/icons-material/School";
-import {deletePackTC, updateNamePackTC} from "../../../features/packs/Packs-reducer";
+import {deletePackTC} from "../../../features/packs/Packs-reducer";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {PATH} from "../../routing/Route/Route";
 
 type BasicPopoverType = {
@@ -22,6 +20,7 @@ type BasicPopoverType = {
 export default function BasicPopover(props: BasicPopoverType) {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate()
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -47,8 +46,6 @@ export default function BasicPopover(props: BasicPopoverType) {
         props.setIsEdit();
     }
 
-    const navigate = useNavigate()
-
     const isDeleteHandler = () => {
         props.cardPackId && dispatch(deletePackTC(props.cardPackId))
         navigate(PATH.PACKS)
@@ -57,16 +54,6 @@ export default function BasicPopover(props: BasicPopoverType) {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    // <label >
-    //     <div /*onClick={handleClick}*/>
-    //         <IconButton>
-    //             <ErrorOutlineIcon/>
-    //         </IconButton>
-    //     </div>
-    // </label>
-    // <Button aria-describedby={id} variant="contained" onClick={handleClick1}>
-    //     Open Popover
-    // </Button>
 
     return (
         <div>

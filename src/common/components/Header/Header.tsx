@@ -7,6 +7,7 @@ import ErrorSnackbars from '../ErrorSnackbars/ErrorSnackbars';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import s from './Header.module.css';
 import {BackToPackList} from "../BackToPackList/BackToPackList";
+import PopoverHeader from "../Popover/PopoverHeader";
 
 export function Header() {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -31,34 +32,35 @@ export function Header() {
             >
                 <div className={s.header}>
 
-                    <div >
-                        {isLoggedIn ? (
-                            <NavLink
-                                to={PATH.PROFILE}
-                                style={{
-                                    textDecoration: 'none',
-                                    color: 'white',
-                                }}
-                            >
-                                <div className={s.block}>
-                                <div className={s.name}>{name}</div>
-                                   {avatar
-                                    ? <img className={s.avatar} src={avatar} alt="avatar"/>
-                                    : <div className={s.avatarNoPhoto}></div>}
-                                </div>
-                            </NavLink>
-                        ) : (
-                            <NavLink
-                                to={PATH.LOGIN}
-                                style={{
-                                    textDecoration: 'none',
-                                    color: 'white',
-                                }}
-                            >
-                                Sign In
-                            </NavLink>
-                        )}
-                    </div>
+                    {/*<div >*/}
+                    {/*    {isLoggedIn ? (*/}
+                    {/*        <NavLink*/}
+                    {/*            to={PATH.PROFILE}*/}
+                    {/*            style={{*/}
+                    {/*                textDecoration: 'none',*/}
+                    {/*                color: 'white',*/}
+                    {/*            }}*/}
+                    {/*        >*/}
+                    {/*            <div className={s.block}>*/}
+                    {/*            <div className={s.name}>{name}</div>*/}
+                    {/*               {avatar*/}
+                    {/*                ? <img className={s.avatar} src={avatar} alt="avatar"/>*/}
+                    {/*                : <div className={s.avatarNoPhoto}></div>}*/}
+                    {/*            </div>*/}
+                    {/*        </NavLink>*/}
+                    {/*    ) : (*/}
+                    {/*        <NavLink*/}
+                    {/*            to={PATH.LOGIN}*/}
+                    {/*            style={{*/}
+                    {/*                textDecoration: 'none',*/}
+                    {/*                color: 'white',*/}
+                    {/*            }}*/}
+                    {/*        >*/}
+                    {/*            Sign In*/}
+                    {/*        </NavLink>*/}
+                    {/*    )}*/}
+                    {/*</div>*/}
+                    <PopoverHeader/>
                 </div>
             </AppBar>
         </div>

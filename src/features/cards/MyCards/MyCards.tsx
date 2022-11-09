@@ -21,7 +21,7 @@ import {useAppDispatch} from '../../../common/hooks/useAppDispatch';
 import {useAppSelector} from '../../../common/hooks/useAppSelector';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import IconButton from "@mui/material/IconButton";
-import BasicPopover from "../../../common/components/Popover/Popover";
+import BasicPopover from "../../../common/components/Popover/PopoverMyPack";
 import {updateNamePackTC} from "../../packs/Packs-reducer";
 
 
