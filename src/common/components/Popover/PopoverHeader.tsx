@@ -12,35 +12,32 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {PATH} from "../../routing/Route/Route";
 import s from "../Header/Header.module.css";
 import {useAppSelector} from "../../hooks/useAppSelector";
+import {Button} from "@mui/material";
 
-type BasicPopoverType = {
-
-}
+type BasicPopoverType = {}
 
 export default function PopoverHeader(props: BasicPopoverType) {
 
-    const dispatch = useAppDispatch();
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+    const avatar = useAppSelector(state => state.auth.data.avatar);
+    const name = useAppSelector(state => state.auth.data.name);
+
     const navigate = useNavigate()
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
-
 
     const handleClick1 = (event: React.MouseEvent<HTMLDivElement>) => {
         setAnchorEl(event.currentTarget);
         console.log("button: ")
         console.log(event)
     };
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-    const status = useAppSelector(state => state.app.status);
-    const avatar = useAppSelector(state => state.auth.data.avatar);
-    const name = useAppSelector(state => state.auth.data.name);
 
     const profileTapHandler = () => {
         navigate(PATH.PROFILE)
@@ -53,14 +50,19 @@ export default function PopoverHeader(props: BasicPopoverType) {
     return (
         <div>
 
-            <div >
+            <div>
                 {isLoggedIn ? (
+                    <Button>
                         <div className={s.block} onClick={handleClick1}>
-                            <div className={s.name}>{name}</div>
+                            <div style={{
+                                color: 'black',
+                            }} className={s.name}>{`${name} `}{' '}</div>
                             {avatar
                                 ? <img className={s.avatar} src={avatar} alt="avatar"/>
                                 : <div className={s.avatarNoPhoto}></div>}
+
                         </div>
+                    </Button>
                 ) : (
                     <NavLink
                         to={PATH.LOGIN}
@@ -84,11 +86,14 @@ export default function PopoverHeader(props: BasicPopoverType) {
                 }}
             >
                 <Typography sx={{p: 1}}>
-                   <button onClick={profileTapHandler}>Profile</button>
-
+                    <IconButton>
+                        <span onClick={profileTapHandler}>Profile</span>
+                    </IconButton>
                 </Typography>
-                    <Typography sx={{p: 1}}>
-                   <button onClick={packListTapHandler}>Packs List</button>
+                <Typography sx={{p: 1}}>
+                    <IconButton>
+                        <span onClick={packListTapHandler}>Packs List</span>
+                    </IconButton>
                 </Typography>
             </Popover>
         </div>

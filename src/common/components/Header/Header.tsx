@@ -10,10 +10,8 @@ import {BackToPackList} from "../BackToPackList/BackToPackList";
 import PopoverHeader from "../Popover/PopoverHeader";
 
 export function Header() {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
     const status = useAppSelector(state => state.app.status);
-    const avatar = useAppSelector(state => state.auth.data.avatar);
-    const name = useAppSelector(state => state.auth.data.name);
 
     return (
         <div>
@@ -31,35 +29,6 @@ export function Header() {
                 }}
             >
                 <div className={s.header}>
-
-                    {/*<div >*/}
-                    {/*    {isLoggedIn ? (*/}
-                    {/*        <NavLink*/}
-                    {/*            to={PATH.PROFILE}*/}
-                    {/*            style={{*/}
-                    {/*                textDecoration: 'none',*/}
-                    {/*                color: 'white',*/}
-                    {/*            }}*/}
-                    {/*        >*/}
-                    {/*            <div className={s.block}>*/}
-                    {/*            <div className={s.name}>{name}</div>*/}
-                    {/*               {avatar*/}
-                    {/*                ? <img className={s.avatar} src={avatar} alt="avatar"/>*/}
-                    {/*                : <div className={s.avatarNoPhoto}></div>}*/}
-                    {/*            </div>*/}
-                    {/*        </NavLink>*/}
-                    {/*    ) : (*/}
-                    {/*        <NavLink*/}
-                    {/*            to={PATH.LOGIN}*/}
-                    {/*            style={{*/}
-                    {/*                textDecoration: 'none',*/}
-                    {/*                color: 'white',*/}
-                    {/*            }}*/}
-                    {/*        >*/}
-                    {/*            Sign In*/}
-                    {/*        </NavLink>*/}
-                    {/*    )}*/}
-                    {/*</div>*/}
                     <PopoverHeader/>
                 </div>
             </AppBar>
