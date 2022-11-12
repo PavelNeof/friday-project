@@ -162,7 +162,7 @@ export const updateNamePackTC =
         } finally {
             dispatch(setAppStatusAC('succeeded'));
         }
-    };
+    }
 
 // types
 export type PacksActionsType =

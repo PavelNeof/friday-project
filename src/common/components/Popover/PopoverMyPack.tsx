@@ -73,7 +73,7 @@ export default function BasicPopover(props: BasicPopoverType) {
             >
                 <Typography sx={{p: 2}}>
                     <IconButton onClick={isEditHandler}>
-                        <BorderColorIcon/> Edit
+                        <BorderColorIcon/> Edit name
                     </IconButton>
                 </Typography>
                 <Typography sx={{p: 2}}>

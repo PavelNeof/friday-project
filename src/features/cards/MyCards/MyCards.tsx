@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import stylePacks from '../../packs/Packs.module.css';
 import s from './MyCards.module.css';
 import {BackToPackList} from '../../../common/components/BackToPackList/BackToPackList';
-import {Box, Button, Popover, Typography} from '@mui/material';
+import {Box, Button} from '@mui/material';
 import {useNavigate, useParams} from 'react-router-dom';
 import {
     CardType,
@@ -12,15 +12,10 @@ import {
 } from '../cards-reducer';
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
 import {PATH} from '../../../common/routing/Route/Route';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
-import SchoolIcon from '@mui/icons-material/School';
-import {Delete} from '@mui/icons-material';
 import {AddNewCardModel} from '../../modal/CardModal/AddNewCardModel';
 import {RenderCellCardComponent} from '../../modal/CardModal/RenderCellCardComponent';
 import {useAppDispatch} from '../../../common/hooks/useAppDispatch';
 import {useAppSelector} from '../../../common/hooks/useAppSelector';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import IconButton from "@mui/material/IconButton";
 import BasicPopover from "../../../common/components/Popover/PopoverMyPack";
 import {updateNamePackTC} from "../../packs/Packs-reducer";
 
