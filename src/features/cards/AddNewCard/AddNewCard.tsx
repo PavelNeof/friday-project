@@ -1,21 +1,21 @@
 import React from 'react';
 import s from '../../packs/Packs.module.css';
 import style from './AddNewCard.module.css';
-import { Button } from '@mui/material';
-import { BackToPackList } from '../../../common/components/BackToPackList/BackToPackList';
-import { useNavigate, useParams } from 'react-router-dom';
-import { addNewCardTC } from '../cards-reducer';
-import { PATH } from '../../../common/routing/Route/Route';
-import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
-import { useAppSelector } from '../../../common/hooks/useAppSelector';
+import {Button} from '@mui/material';
+import {BackToPackList} from '../../../common/components/BackToPackList/BackToPackList';
+import {useNavigate, useParams} from 'react-router-dom';
+import {addNewCardTC} from '../cards-reducer';
+import {PATH} from '../../../common/routing/Route/Route';
+import {useAppDispatch} from '../../../common/hooks/useAppDispatch';
+import {useAppSelector} from '../../../common/hooks/useAppSelector';
 
 export const AddNewCard = () => {
     const cards = useAppSelector(state => state.cards.cards);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    let { cardPackIdParam } = useParams();
-    const cardPackId = cardPackIdParam?.substring(1, cardPackIdParam?.length);
-    console.log(cardPackIdParam);
+    let {cardPackId} = useParams();
+    //const cardPackId = cardPackIdParam?.substring(1, cardPackIdParam?.length);
+    //console.log(cardPackIdParam);
     const addPackHandler = () => {
         dispatch(addNewCardTC(cardPackId, 'no question', 'no answer'));
     };
@@ -26,11 +26,11 @@ export const AddNewCard = () => {
 
     return (
         <div className={s.container}>
-            <BackToPackList />
+            <BackToPackList/>
             <h1>Name Pack</h1>
             <div className={style.addNewCardCentre}>
                 <div className={style.oneUnderTheOther}>
-                    <div style={{ color: '#868686FF' }}>
+                    <div style={{color: '#868686FF'}}>
                         This pack empty. Click add new card to fill this pack
                     </div>
                     <div className={style.button}>
