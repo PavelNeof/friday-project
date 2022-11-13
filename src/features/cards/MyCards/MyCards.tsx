@@ -34,6 +34,7 @@ export const MyCards = () => {
     // const { cards } = data || {};
     //console.log(cards);
     console.log(cardsTotalCount);
+
     const [isAddCard, setIsAddCard] = useState(false);
     let [isEdit, setIsEdit] = useState(false);
     let [currentName, setCurrentName] = useState(packName);
@@ -98,6 +99,7 @@ export const MyCards = () => {
     const updateNamePackHandler = (id: string | undefined) => {
         id && dispatch(updateNamePackTC(id, currentName))
         //setIsEdit(false);
+
     }
     const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.charCode === 13) {
@@ -132,7 +134,7 @@ export const MyCards = () => {
                                               onKeyPress={onKeyPressHandler}/>
                                 <button onClick={onClickHandler} className={stylePacks.button}>save</button>
                             </div> :
-                            <h1>{packName}</h1>}
+                            <h1>{currentName}</h1>}
                         <BasicPopover isEdit={isEdit} setIsEdit={onEditChange} cardPackId={cardPackId}/>
                     </div>
                     <Button
